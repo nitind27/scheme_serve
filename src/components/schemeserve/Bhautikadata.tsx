@@ -105,23 +105,23 @@ interface BhautikData {
 }
 
 interface BhautikDataall {
-  totalpopulation: string;         // e.g., "50|30|80"
-  tribalpopulation: string;        // e.g., "40|20|60"
-  tribalpopulationtkkwari: string;
-  totalfamilynumbers: string;
-  tribalwholefamilynumbers: string;
-  aadhaarcard: string;
-  voteridcard: string;
-  rationcard: string;
-  jobcard: string;
-  pmfarmercard: string;
-  ayushmancard: string;
-  electrificationforfamilies: string;
-  elementaryschool: string;
-  middleschool: string;
-  riverlake: string;
-  id: number;
-  status: string;
+    totalpopulation: string;         // e.g., "50|30|80"
+    tribalpopulation: string;        // e.g., "40|20|60"
+    tribalpopulationtkkwari: string;
+    totalfamilynumbers: string;
+    tribalwholefamilynumbers: string;
+    aadhaarcard: string;
+    voteridcard: string;
+    rationcard: string;
+    jobcard: string;
+    pmfarmercard: string;
+    ayushmancard: string;
+    electrificationforfamilies: string;
+    elementaryschool: string;
+    middleschool: string;
+    riverlake: string;
+    id: number;
+    status: string;
 }
 
 interface Props {
@@ -525,17 +525,17 @@ const Bhautikadata: React.FC<Props> = ({
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
                     <div className="max-w-7xl mx-auto p-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Ekun Sankhya */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <h3 className="text-lg font-semibold mb-4">Ekun Sankhya</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className='flex mb-5 gap-4'>
+
+
+                            <div className="bg-white p-4 rounded-lg shadow col-span-1 md:col-span-3">
+                                <h3 className="text-lg font-semibold mb-2">Total Population</h3>
+                                <div className="grid grid-cols-3 gap-3">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Female</label>
                                         <input
                                             type="text"
-                                            placeholder="Female"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.ekunSankhya.female}
                                             onChange={(e) => handleNestedChange('ekunSankhya', 'female', e.target.value)}
                                         />
@@ -544,8 +544,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Male</label>
                                         <input
                                             type="text"
-                                            placeholder="Male"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.ekunSankhya.male}
                                             onChange={(e) => handleNestedChange('ekunSankhya', 'male', e.target.value)}
                                         />
@@ -554,8 +553,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Total</label>
                                         <input
                                             type="text"
-                                            placeholder="Total"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.ekunSankhya.total}
                                             onChange={(e) => handleNestedChange('ekunSankhya', 'total', e.target.value)}
                                         />
@@ -563,16 +561,15 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
                             </div>
 
-                            {/* Tribal Population */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <h3 className="text-lg font-semibold mb-4">Tribal population</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            {/* Tribal population */}
+                            <div className="bg-white p-4 rounded-lg shadow col-span-1 md:col-span-3">
+                                <h3 className="text-lg font-semibold mb-2">Tribal population</h3>
+                                <div className="grid grid-cols-3 gap-3">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Female</label>
                                         <input
                                             type="text"
-                                            placeholder="Female"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.tribalPopulation.female}
                                             onChange={(e) => handleNestedChange('tribalPopulation', 'female', e.target.value)}
                                         />
@@ -581,8 +578,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Male</label>
                                         <input
                                             type="text"
-                                            placeholder="Male"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.tribalPopulation.male}
                                             onChange={(e) => handleNestedChange('tribalPopulation', 'male', e.target.value)}
                                         />
@@ -591,660 +587,592 @@ const Bhautikadata: React.FC<Props> = ({
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Total</label>
                                         <input
                                             type="text"
-                                            placeholder="Total"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.tribalPopulation.total}
                                             onChange={(e) => handleNestedChange('tribalPopulation', 'total', e.target.value)}
                                         />
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="">
+                            {/* Total Population */}
 
-                            {/* Tribal Population TK Wari */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Tribal Population Tk Wari</label>
-                                <input
-                                    type="text"
-                                    placeholder="Tribal Population Tk Wari"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.tribalPopulationTkWari}
-                                    onChange={(e) => handleChange('tribalPopulationTkWari', e.target.value)}
-                                />
-                            </div>
 
-                            {/* Total family numbers */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Total family numbers</label>
-                                <input
-                                    type="text"
-                                    placeholder="Total family numbers"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.totalFamilyNumbers}
-                                    onChange={(e) => handleChange('totalFamilyNumbers', e.target.value)}
-                                />
-                            </div>
-
-                            {/* Tribals as a whole Family numbers */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Tribals as a whole Family numbers</label>
-                                <input
-                                    type="text"
-                                    placeholder="Tribals family numbers"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.tribalsWholeFamilyNumbers}
-                                    onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
-                                />
-                            </div>
-
-                            {/* Vaitik Aadivasi */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Vaitik Aadivasi</label>
-                                <input
-                                    type="text"
-                                    placeholder="Vaitik Aadivasi"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.vaitikAadivasi}
-                                    onChange={(e) => handleChange('vaitikAadivasi', e.target.value)}
-                                />
-                            </div>
-
-                            {/* Samuhik Vanpatta */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Samuhik Vanpatta</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="samuhikVanpatta"
-                                            value="yes"
-                                            checked={formData.samuhikVanpatta === "yes"}
-                                            onChange={() => handleChange("samuhikVanpatta", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="samuhikVanpatta"
-                                            value="no"
-                                            checked={formData.samuhikVanpatta === "no"}
-                                            onChange={() => handleChange("samuhikVanpatta", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                            {/* Other fields in 3-column layout */}
+                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">आदिवासी टीके वारी</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.tribalPopulationTkWari}
+                                        onChange={(e) => handleChange('tribalPopulationTkWari', e.target.value)}
+                                    />
                                 </div>
-                            </div>
 
-                            {/* CFRM Aarakhda */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">CFRM Aarakhda</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="cfrmAarakhda"
-                                            value="yes"
-                                            checked={formData.cfrmAarakhda === "yes"}
-                                            onChange={() => handleChange("cfrmAarakhda", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="cfrmAarakhda"
-                                            value="no"
-                                            checked={formData.cfrmAarakhda === "no"}
-                                            onChange={() => handleChange("cfrmAarakhda", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंब संख्या</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.totalFamilyNumbers}
+                                        onChange={(e) => handleChange('totalFamilyNumbers', e.target.value)}
+                                    />
                                 </div>
-                            </div>
 
-                            {/* Aadhar Card */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Aadharcard</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.aadharcard.asleli}
-                                            onChange={(e) => handleNestedChange('aadharcard', 'asleli', e.target.value)}
-                                        />
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">संपूर्ण आदिवासी कुटुंब संख्या</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.tribalsWholeFamilyNumbers}
+                                        onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">वैतिक आदिवासी</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.vaitikAadivasi}
+                                        onChange={(e) => handleChange('vaitikAadivasi', e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">सामूहिक वनपट्ट</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="samuhikVanpatta"
+                                                value="yes"
+                                                checked={formData.samuhikVanpatta === "yes"}
+                                                onChange={() => handleChange("samuhikVanpatta", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="samuhikVanpatta"
+                                                value="no"
+                                                checked={formData.samuhikVanpatta === "no"}
+                                                onChange={() => handleChange("samuhikVanpatta", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.aadharcard.nasleli}
-                                            onChange={(e) => handleNestedChange('aadharcard', 'nasleli', e.target.value)}
-                                        />
+                                </div>
+
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">CFRM आराखडा</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="cfrmAarakhda"
+                                                value="yes"
+                                                checked={formData.cfrmAarakhda === "yes"}
+                                                onChange={() => handleChange("cfrmAarakhda", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="cfrmAarakhda"
+                                                value="no"
+                                                checked={formData.cfrmAarakhda === "no"}
+                                                onChange={() => handleChange("cfrmAarakhda", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
+                            <div className='flex gap-4 mb-5'>
 
-                            {/* Matdar Olakhap */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Matdar Olakhap</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.matdarOlahkhap.asleli}
-                                            onChange={(e) => handleNestedChange('matdarOlahkhap', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.matdarOlahkhap.nasleli}
-                                            onChange={(e) => handleNestedChange('matdarOlahkhap', 'nasleli', e.target.value)}
-                                        />
+
+                                {/* Aadhar Card */}
+                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                    <h3 className="text-sm font-semibold mb-2">आधारकार्ड</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.aadharcard.asleli}
+                                                onChange={(e) => handleNestedChange('aadharcard', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.aadharcard.nasleli}
+                                                onChange={(e) => handleNestedChange('aadharcard', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Jatiche Gmanap */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Jatiche Gmanap</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.jaticheGmanap.asleli}
-                                            onChange={(e) => handleNestedChange('jaticheGmanap', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.jaticheGmanap.nasleli}
-                                            onChange={(e) => handleNestedChange('jaticheGmanap', 'nasleli', e.target.value)}
-                                        />
+                                {/* Matdar Olakhap */}
+                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                    <h3 className="text-sm font-semibold mb-2">मतदार ओळखप</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.matdarOlahkhap.asleli}
+                                                onChange={(e) => handleNestedChange('matdarOlahkhap', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.matdarOlahkhap.nasleli}
+                                                onChange={(e) => handleNestedChange('matdarOlahkhap', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Rashion Card */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Rashion Card</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.rashionCard.asleli}
-                                            onChange={(e) => handleNestedChange('rashionCard', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.rashionCard.nasleli}
-                                            onChange={(e) => handleNestedChange('rashionCard', 'nasleli', e.target.value)}
-                                        />
+                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                    <h3 className="text-sm font-semibold mb-2">जातीचे गणणप</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.jaticheGmanap.asleli}
+                                                onChange={(e) => handleNestedChange('jaticheGmanap', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.jaticheGmanap.nasleli}
+                                                onChange={(e) => handleNestedChange('jaticheGmanap', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             {/* Job Card */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Job Card</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.jobCard.asleli}
-                                            onChange={(e) => handleNestedChange('jobCard', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.jobCard.nasleli}
-                                            onChange={(e) => handleNestedChange('jobCard', 'nasleli', e.target.value)}
-                                        />
+                            {/* Job Card */}
+                            <div className='flex gap-4 mb-5'>
+
+                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                    <h3 className="text-sm font-semibold mb-2">जॉब कार्ड</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.jobCard.asleli}
+                                                onChange={(e) => handleNestedChange('jobCard', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.jobCard.nasleli}
+                                                onChange={(e) => handleNestedChange('jobCard', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* PM Kisan Card */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">PM Kisan Card</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.pmKisanCard.asleli}
-                                            onChange={(e) => handleNestedChange('pmKisanCard', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.pmKisanCard.nasleli}
-                                            onChange={(e) => handleNestedChange('pmKisanCard', 'nasleli', e.target.value)}
-                                        />
+                                {/* PM Kisan Card */}
+                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                    <h3 className="text-sm font-semibold mb-2">पीएम किसान कार्ड</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.pmKisanCard.asleli}
+                                                onChange={(e) => handleNestedChange('pmKisanCard', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.pmKisanCard.nasleli}
+                                                onChange={(e) => handleNestedChange('pmKisanCard', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Ayushman Card */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Ayushman Card</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.ayushmanCard.asleli}
-                                            onChange={(e) => handleNestedChange('ayushmanCard', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.ayushmanCard.nasleli}
-                                            onChange={(e) => handleNestedChange('ayushmanCard', 'nasleli', e.target.value)}
-                                        />
+                                {/* Ayushman Card */}
+                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                    <h3 className="text-sm font-semibold mb-2">आयुष्मान कार्ड</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी कुटुंब संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.ayushmanCard.asleli}
+                                                onChange={(e) => handleNestedChange('ayushmanCard', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी कुटुंब संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.ayushmanCard.nasleli}
+                                                onChange={(e) => handleNestedChange('ayushmanCard', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Aadivasi House */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Aadivasi House</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3 mb-5">
+                                <h3 className="text-sm font-semibold mb-2">आदिवासी घर</h3>
+                                <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Pakke Ghar</label>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">पक्के घर</label>
                                         <input
                                             type="text"
-                                            placeholder="Pakke Ghar"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.aadivasiHouse.pakkeGhar}
                                             onChange={(e) => handleNestedChange('aadivasiHouse', 'pakkeGhar', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Kuda/Mati Ghar</label>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">कुडा/माती घर</label>
                                         <input
                                             type="text"
-                                            placeholder="Kuda/Mati Ghar"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                             value={formData.aadivasiHouse.kudaMatiGhar}
                                             onChange={(e) => handleNestedChange('aadivasiHouse', 'kudaMatiGhar', e.target.value)}
                                         />
                                     </div>
                                 </div>
                             </div>
-
-                            {/* PM Awas Yojana */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">PM Awas Yojana</label>
-                                <input
-                                    type="text"
-                                    placeholder="PM Awas Yojana"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.pmAwasYojana}
-                                    onChange={(e) => handleChange('pmAwasYojana', e.target.value)}
-                                />
-                            </div>
-
-                            {/* Panya Panyachi Suvidha */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Panya Panyachi Suvidha</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.panyaPanyachiSuvidha.asleli}
-                                            onChange={(e) => handleNestedChange('panyaPanyachiSuvidha', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.panyaPanyachiSuvidha.nasleli}
-                                            onChange={(e) => handleNestedChange('panyaPanyachiSuvidha', 'nasleli', e.target.value)}
-                                        />
-                                    </div>
+                            {/* Jatiche Gmanap */}
+                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
+                                {/* Continue with other sections in similar compact format */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">पीएम आवास योजना</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.pmAwasYojana}
+                                        onChange={(e) => handleChange('pmAwasYojana', e.target.value)}
+                                    />
                                 </div>
-                            </div>
 
-                            {/* Har Ghar Nal Yojana */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Har Ghar Nal Yojana</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.harGharNalYojana.asleli}
-                                            onChange={(e) => handleNestedChange('harGharNalYojana', 'asleli', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.harGharNalYojana.nasleli}
-                                            onChange={(e) => handleNestedChange('harGharNalYojana', 'nasleli', e.target.value)}
-                                        />
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        आरोग्य उपचार केंद्र/PHC
+                                    </label>
+                                    <div className="flex gap-4 mt-2">
+                                        <label className="flex items-center gap-1 text-sm">
+                                            <input
+                                                type="radio"
+                                                name="arogyUpcharKendra"
+                                                value="yes"
+                                                checked={formData.arogyUpcharKendra === "yes"}
+                                                onChange={() => handleChange("arogyUpcharKendra", "yes")}
+                                            />
+                                            होय
+                                        </label>
+                                        <label className="flex items-center gap-1 text-sm">
+                                            <input
+                                                type="radio"
+                                                name="arogyUpcharKendra"
+                                                value="no"
+                                                checked={formData.arogyUpcharKendra === "no"}
+                                                onChange={() => handleChange("arogyUpcharKendra", "no")}
+                                            />
+                                            नाही
+                                        </label>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Vidyutikaran */}
-                            <div className="bg-white p-6 rounded-lg shadow md:col-span-2">
-                                <h3 className="text-lg font-semibold mb-4">Vidyutikaran</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Asleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Asleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.vidyutikaran.asleli}
-                                            onChange={(e) => handleNestedChange('vidyutikaran', 'asleli', e.target.value)}
-                                        />
+
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">सामान्य आरोग्य तपासणी</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.generalHealthCheckup}
+                                        onChange={(e) => handleChange('generalHealthCheckup', e.target.value)}
+                                    />
+                                </div>
+
+                                {/* Continue with all remaining fields in similar compact format */}
+                                {/* Primary School */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">प्राथमिक शाळा</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="primarySchool"
+                                                value="yes"
+                                                checked={formData.primarySchool === "yes"}
+                                                onChange={() => handleChange("primarySchool", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="primarySchool"
+                                                value="no"
+                                                checked={formData.primarySchool === "no"}
+                                                onChange={() => handleChange("primarySchool", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Nasleli Aadivasi Kutumb Sankhya</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Nasleli"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                            value={formData.vidyutikaran.nasleli}
-                                            onChange={(e) => handleNestedChange('vidyutikaran', 'nasleli', e.target.value)}
-                                        />
+                                </div>
+
+                                {/* Middle School */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">माध्यमिक शाळा</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="middleSchool"
+                                                value="yes"
+                                                checked={formData.middleSchool === "yes"}
+                                                onChange={() => handleChange("middleSchool", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="middleSchool"
+                                                value="no"
+                                                checked={formData.middleSchool === "no"}
+                                                onChange={() => handleChange("middleSchool", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Health and Education Facilities */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Arogy Upchar Kendra/PHC</label>
-                                <input
-                                    type="text"
-                                    placeholder="Arogy Upchar Kendra"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.arogyUpcharKendra}
-                                    onChange={(e) => handleChange('arogyUpcharKendra', e.target.value)}
-                                />
-                            </div>
-
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">General Health Checkup</label>
-                                <input
-                                    type="text"
-                                    placeholder="General Health Checkup"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.generalHealthCheckup}
-                                    onChange={(e) => handleChange('generalHealthCheckup', e.target.value)}
-                                />
-                            </div>
-
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Screening for sickle cell and anemia</label>
-                                <input
-                                    type="text"
-                                    placeholder="Sickle cell screening"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.sickleCellAnemiaScreening}
-                                    onChange={(e) => handleChange('sickleCellAnemiaScreening', e.target.value)}
-                                />
-                            </div>
-
-                            {/* Primary School */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Primary School</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="primarySchool"
-                                            value="yes"
-                                            checked={formData.primarySchool === "yes"}
-                                            onChange={() => handleChange("primarySchool", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="primarySchool"
-                                            value="no"
-                                            checked={formData.primarySchool === "no"}
-                                            onChange={() => handleChange("primarySchool", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                {/* Kindergarten */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">किंडरगार्टन</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="kindergarten"
+                                                value="yes"
+                                                checked={formData.kindergarten === "yes"}
+                                                onChange={() => handleChange("kindergarten", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="kindergarten"
+                                                value="no"
+                                                checked={formData.kindergarten === "no"}
+                                                onChange={() => handleChange("kindergarten", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Middle School */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Middle School</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="middleSchool"
-                                            value="yes"
-                                            checked={formData.middleSchool === "yes"}
-                                            onChange={() => handleChange("middleSchool", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="middleSchool"
-                                            value="no"
-                                            checked={formData.middleSchool === "no"}
-                                            onChange={() => handleChange("middleSchool", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                {/* Mobile Network */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">मोबाईल नेटवर्क सुविधा</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="mobileNetwork"
+                                                value="yes"
+                                                checked={formData.mobileNetwork === "yes"}
+                                                onChange={() => handleChange("mobileNetwork", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="mobileNetwork"
+                                                value="no"
+                                                checked={formData.mobileNetwork === "no"}
+                                                onChange={() => handleChange("mobileNetwork", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Kindergarten */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Kindergarten</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="kindergarten"
-                                            value="yes"
-                                            checked={formData.kindergarten === "yes"}
-                                            onChange={() => handleChange("kindergarten", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="kindergarten"
-                                            value="no"
-                                            checked={formData.kindergarten === "no"}
-                                            onChange={() => handleChange("kindergarten", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                {/* Gram Panchayat Building */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">ग्रामपंचायत इमारत</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="gramPanchayatBuilding"
+                                                value="yes"
+                                                checked={formData.gramPanchayatBuilding === "yes"}
+                                                onChange={() => handleChange("gramPanchayatBuilding", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="gramPanchayatBuilding"
+                                                value="no"
+                                                checked={formData.gramPanchayatBuilding === "no"}
+                                                onChange={() => handleChange("gramPanchayatBuilding", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Mobile Network Facilities */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Network Facilities</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="mobileNetwork"
-                                            value="yes"
-                                            checked={formData.mobileNetwork === "yes"}
-                                            onChange={() => handleChange("mobileNetwork", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="mobileNetwork"
-                                            value="no"
-                                            checked={formData.mobileNetwork === "no"}
-                                            onChange={() => handleChange("mobileNetwork", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                {/* Gotul Society Building */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">गोटुल सोसायटी इमारत</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="gotulSocietyBuilding"
+                                                value="yes"
+                                                checked={formData.gotulSocietyBuilding === "yes"}
+                                                onChange={() => handleChange("gotulSocietyBuilding", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="gotulSocietyBuilding"
+                                                value="no"
+                                                checked={formData.gotulSocietyBuilding === "no"}
+                                                onChange={() => handleChange("gotulSocietyBuilding", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Gram Panchayat Building */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Gram Panchayat Building</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="gramPanchayatBuilding"
-                                            value="yes"
-                                            checked={formData.gramPanchayatBuilding === "yes"}
-                                            onChange={() => handleChange("gramPanchayatBuilding", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="gramPanchayatBuilding"
-                                            value="no"
-                                            checked={formData.gramPanchayatBuilding === "no"}
-                                            onChange={() => handleChange("gramPanchayatBuilding", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                {/* Nadi Talav */}
+                              
+
+                                {/* मोबाईल वैद्यकीय युनिट */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">मोबाईल वैद्यकीय युनिट</label>
+                                    <div className="flex gap-4 mt-2">
+                                        <label className="flex items-center gap-1 text-sm">
+                                            <input
+                                                type="radio"
+                                                name="mobileMedicalUnit"
+                                                value="yes"
+                                                checked={formData.mobileMedicalUnit === "yes"}
+                                                onChange={() => handleChange("mobileMedicalUnit", "yes")}
+                                            />
+                                            होय
+                                        </label>
+                                        <label className="flex items-center gap-1 text-sm">
+                                            <input
+                                                type="radio"
+                                                name="mobileMedicalUnit"
+                                                value="no"
+                                                checked={formData.mobileMedicalUnit === "no"}
+                                                onChange={() => handleChange("mobileMedicalUnit", "no")}
+                                            />
+                                            नाही
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Mobile Medical Unit */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Medical Unit</label>
-                                <input
-                                    type="text"
-                                    placeholder="Mobile Medical Unit"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.mobileMedicalUnit}
-                                    onChange={(e) => handleChange('mobileMedicalUnit', e.target.value)}
-                                />
-                            </div>
 
-                            {/* Gotul Society Building */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Gotul Society Building</label>
-                                <div className="flex items-center space-x-4">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="gotulSocietyBuilding"
-                                            value="yes"
-                                            checked={formData.gotulSocietyBuilding === "yes"}
-                                            onChange={() => handleChange("gotulSocietyBuilding", "yes")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">Yes</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="gotulSocietyBuilding"
-                                            value="no"
-                                            checked={formData.gotulSocietyBuilding === "no"}
-                                            onChange={() => handleChange("gotulSocietyBuilding", "no")}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <span className="ml-2 text-gray-700">No</span>
-                                    </label>
+                                {/* Sickle Cell Screening */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">सिकल सेल आणि अशक्तपणा तपासणी</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.sickleCellAnemiaScreening}
+                                        onChange={(e) => handleChange('sickleCellAnemiaScreening', e.target.value)}
+                                    />
                                 </div>
-                            </div>
 
-                            {/* Nadi Talav */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Nadi Talav</label>
-                                <input
-                                    type="text"
-                                    placeholder="Nadi Talav"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                    value={formData.nadiTalav}
-                                    onChange={(e) => handleChange('nadiTalav', e.target.value)}
-                                />
+                                  {/* नदी तलाव */}
+                                <div className="bg-white p-3 rounded-lg shadow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">नदी तलाव</label>
+                                    <div className="flex gap-4 mt-2">
+                                        <label className="flex items-center gap-1 text-sm">
+                                            <input
+                                                type="radio"
+                                                name="nadiTalav"
+                                                value="yes"
+                                                checked={formData.nadiTalav === "yes"}
+                                                onChange={() => handleChange("nadiTalav", "yes")}
+                                            />
+                                            होय
+                                        </label>
+                                        <label className="flex items-center gap-1 text-sm">
+                                            <input
+                                                type="radio"
+                                                name="nadiTalav"
+                                                value="no"
+                                                checked={formData.nadiTalav === "no"}
+                                                onChange={() => handleChange("nadiTalav", "no")}
+                                            />
+                                            नाही
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>}

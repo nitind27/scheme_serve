@@ -8,7 +8,7 @@ import Ifrholderwisevillages from "@/components/ecommerce/Ifrholderwisevillages"
 // import { DownloadButtons } from "@/components/ecommerce/DownloadButtons";
 
 export const metadata: Metadata = {
-    title: "Scheme Monitoring & Tracking System",
+    title: "Scheme Serve",
     description:
         "Scheme Monitoring & Tracking System",
 };

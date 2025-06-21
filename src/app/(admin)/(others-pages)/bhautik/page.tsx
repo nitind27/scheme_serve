@@ -10,7 +10,7 @@ import React, { Suspense } from 'react'
 
 const getUsers = async (): Promise<BhautikDataall[]> => {
   const res = await fetch(`https://schemeserve.weclocks.online/api/bhautikapi`, { cache: 'no-store' });
-  console.log("reess", res)
+  // console.log("reess", res)
   return res.json();
 };
 
@@ -25,7 +25,7 @@ const page = async () => {
     { label: 'Bhautik', href: '/bhautik' },
 
   ];
-  console.log("users", users)
+  // console.log("users", users)
   return (
     <div className="grid grid-cols-6 gap-4 md:gap-6">
       <div className="col-span-12 space-y-6 xl:col-span-7">

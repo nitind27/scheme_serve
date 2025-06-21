@@ -8,7 +8,7 @@ import Loader from "@/common/Loader";
 import DistrictMap from "@/components/ecommerce/DistrictMap";
 
 export const metadata: Metadata = {
-    title: "Scheme Monitoring & Tracking System",
+    title: "Scheme Serve",
     description:
         "Scheme Monitoring & Tracking System",
 };

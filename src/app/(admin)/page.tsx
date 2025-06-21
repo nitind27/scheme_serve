@@ -13,9 +13,9 @@ import Loader from "@/common/Loader";
 // import SchemesBarChart from "@/components/ecommerce/SchemesBarChart";
 
 export const metadata: Metadata = {
-  title: "Scheme Monitoring & Tracking System",
+  title: "Scheme Serve",
   description:
-    "Scheme Monitoring & Tracking System",
+    "Scheme Serve",
 };
 
 async function fetchMetrics() {
