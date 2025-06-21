@@ -6,12 +6,10 @@ import type { ResultSetHeader, RowDataPacket } from 'mysql2';
 export async function GET() {
   try {
     const [rows] = await pool.query<RowDataPacket[]>(`
-     SELECT 
+  SELECT 
         schemes.*, 
         scheme_year.year AS scheme_year
       FROM schemes
-      INNER JOIN scheme_category 
-        ON schemes.scheme_category_id = scheme_category.scheme_category_id
       LEFT JOIN scheme_year 
         ON schemes.scheme_year_id = scheme_year.scheme_year_id
       WHERE schemes.status = 'Active'
