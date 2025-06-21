@@ -30,28 +30,19 @@ export async function GET() {
 // Create new scheme
 export async function POST(request: Request) {
   const {
-    scheme_category_id,
-    scheme_sub_category_id,
+
     scheme_year_id,
     scheme_name,
-    beneficiery_name,
-    applyed_at,
-    link,
-    documents,
-    sr_no,
+
     scheme_name_marathi,
   } = await request.json();
 
   // Basic validation
   if (
-    scheme_category_id === undefined ||
-    scheme_sub_category_id === undefined ||
+
     scheme_year_id === undefined ||
-    !scheme_name ||
-    !beneficiery_name ||
-    !applyed_at ||
-    !link ||
-    !documents
+    !scheme_name
+
   ) {
     return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
   }
@@ -59,18 +50,13 @@ export async function POST(request: Request) {
   try {
     const [result] = await pool.query<ResultSetHeader>(
       `INSERT INTO schemes 
-      (scheme_category_id, scheme_sub_category_id, scheme_year_id, scheme_name, beneficiery_name, applyed_at, link, documents, sr_no, scheme_name_marathi)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ( scheme_year_id, scheme_name, scheme_name_marathi)
+      VALUES (?, ?, ?)`,
       [
-        scheme_category_id,
-        scheme_sub_category_id,
+
         scheme_year_id,
         scheme_name,
-        beneficiery_name,
-        applyed_at,
-        link,
-        documents,
-        sr_no, scheme_name_marathi
+        scheme_name_marathi
       ]
     );
     return NextResponse.json({ message: 'Scheme created', id: result.insertId });
@@ -84,28 +70,19 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   const {
     scheme_id,
-    scheme_category_id,
-    scheme_sub_category_id,
+
     scheme_year_id,
     scheme_name,
-    beneficiery_name,
-    applyed_at,
-    link,
-    documents,
-    sr_no,
+
     scheme_name_marathi
   } = await request.json();
 
   if (
     !scheme_id ||
-    scheme_category_id === undefined ||
-    scheme_sub_category_id === undefined ||
+
     scheme_year_id === undefined ||
-    !scheme_name ||
-    !beneficiery_name ||
-    !applyed_at ||
-    !link ||
-    !documents
+    !scheme_name
+
   ) {
     return NextResponse.json({ error: 'All fields including ID are required' }, { status: 400 });
   }
@@ -113,27 +90,15 @@ export async function PUT(request: Request) {
   try {
     await pool.query(
       `UPDATE schemes SET
-        scheme_category_id = ?,
-        scheme_sub_category_id = ?,
         scheme_year_id = ?,
         scheme_name = ?,
-        beneficiery_name = ?,
-        applyed_at = ?,
-        link = ?,
-        documents = ?,
-        sr_no = ?,
         scheme_name_marathi = ?
       WHERE scheme_id = ?`,
       [
-        scheme_category_id,
-        scheme_sub_category_id,
+
         scheme_year_id,
         scheme_name,
-        beneficiery_name,
-        applyed_at,
-        link,
-        documents,
-        sr_no,
+
         scheme_name_marathi,
         scheme_id
       ]

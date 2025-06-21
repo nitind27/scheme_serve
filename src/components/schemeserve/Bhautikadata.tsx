@@ -14,6 +14,7 @@ import DefaultModal from '../example/ModalExample/DefaultModal';
 // import { FaEdit } from 'react-icons/fa';
 // import { Schemesdatas } from '../schemesdata/schemes';
 import { BhautikTable } from '../tables/BhautikTable';
+import { FaEdit } from 'react-icons/fa';
 // import { Schemesubcategorytype } from '../Schemesubcategory/Schemesubcategory';
 
 // Define interfaces
@@ -145,9 +146,9 @@ const Bhautikadata: React.FC<Props> = ({
 
 }) => {
     // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
-    const { isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
+    const {isActive, setIsActive,setIsEditmode, isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
-
+console.log("data",data)
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
 
@@ -348,50 +349,52 @@ const Bhautikadata: React.FC<Props> = ({
         setEditId(null);
     };
 
-    // Handle edit functionality
-    // const handleEdit = (item:BhautikData) => {
-    //     setIsmodelopen(true);
-    //     setIsEditmode(true);
-    //     setIsActive(!isActive);
-    //     // setEditId(item.id.);
+   const handleEdit = (item: BhautikDataall) => {
+      setIsmodelopen(true);
+        setIsEditmode(true);
+        setIsActive(!isActive)
+        setEditId(item.id)
+  // Helper to split pipe string
+  const parsePopulation = (value: string): { female: string; male: string; total: string } => {
+    const [female = '', male = '', total = ''] = value?.split('|') || [];
+    return { female, male, total };
+  };
 
-    //     // Populate form with existing data
-    //     setFormData({
-    //         ekunSankhya: item.ekunSankhya || { female: '', male: '', total: '' },
-    //         tribalPopulation: item.tribalPopulation || { female: '', male: '', total: '' },
-    //         tribalPopulationTkWari: item.tribalPopulationTkWari || '',
-    //         totalFamilyNumbers: item.totalFamilyNumbers || '',
-    //         tribalsWholeFamilyNumbers: item.tribalsWholeFamilyNumbers || '',
-    //         vaitikAadivasi: item.vaitikAadivasi || '',
-    //         samuhikVanpatta: item.samuhikVanpatta || '',
-    //         cfrmAarakhda: item.cfrmAarakhda || '',
-    //         aadharcard: item.aadharcard || { asleli: '', nasleli: '' },
-    //         matdarOlahkhap: item.matdarOlahkhap || { asleli: '', nasleli: '' },
-    //         jaticheGmanap: item.jaticheGmanap || { asleli: '', nasleli: '' },
-    //         rashionCard: item.rashionCard || { asleli: '', nasleli: '' },
-    //         jobCard: item.jobCard || { asleli: '', nasleli: '' },
-    //         pmKisanCard: item.pmKisanCard || { asleli: '', nasleli: '' },
-    //         ayushmanCard: item.ayushmanCard || { asleli: '', nasleli: '' },
-    //         aadivasiHouse: item.aadivasiHouse || { pakkeGhar: '', kudaMatiGhar: '' },
-    //         pmAwasYojana: item.pmAwasYojana || '',
-    //         panyaPanyachiSuvidha: item.panyaPanyachiSuvidha || { asleli: '', nasleli: '' },
-    //         harGharNalYojana: item.harGharNalYojana || { asleli: '', nasleli: '' },
-    //         vidyutikaran: item.vidyutikaran || { asleli: '', nasleli: '' },
-    //         arogyUpcharKendra: item.arogyUpcharKendra || '',
-    //         generalHealthCheckup: item.generalHealthCheckup || '',
-    //         sickleCellAnemiaScreening: item.sickleCellAnemiaScreening || '',
-    //         primarySchool: item.primarySchool || '',
-    //         middleSchool: item.middleSchool || '',
-    //         kindergarten: item.kindergarten || '',
-    //         mobileNetwork: item.mobileNetwork || '',
-    //         gramPanchayatBuilding: item.gramPanchayatBuilding || '',
-    //         mobileMedicalUnit: item.mobileMedicalUnit || '',
-    //         gotulSocietyBuilding: item.gotulSocietyBuilding || '',
-    //         nadiTalav: item.nadiTalav || ''
-    //     });
-    // };
-
-    // Table columns
+  // Now set form data
+  setFormData({
+    ekunSankhya: parsePopulation(item.totalpopulation),
+    tribalPopulation: parsePopulation(item.tribalpopulation),
+    tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
+    totalFamilyNumbers: item.totalfamilynumbers || '',
+    tribalsWholeFamilyNumbers: item.tribalwholefamilynumbers || '',
+    vaitikAadivasi: '', // not available in BhautikDataall
+    samuhikVanpatta: '', // not available in BhautikDataall
+    cfrmAarakhda: '', // not available in BhautikDataall
+    aadharcard: { asleli: item.aadhaarcard || '', nasleli: '' },
+    matdarOlahkhap: { asleli: item.voteridcard || '', nasleli: '' },
+    jaticheGmanap: { asleli: '', nasleli: '' }, // not available
+    rashionCard: { asleli: item.rationcard || '', nasleli: '' },
+    jobCard: { asleli: item.jobcard || '', nasleli: '' },
+    pmKisanCard: { asleli: item.pmfarmercard || '', nasleli: '' },
+    ayushmanCard: { asleli: item.ayushmancard || '', nasleli: '' },
+    aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' }, // not available
+    pmAwasYojana: '', // not available
+    panyaPanyachiSuvidha: { asleli: '', nasleli: '' }, // not available
+    harGharNalYojana: { asleli: '', nasleli: '' }, // not available
+    vidyutikaran: { asleli: item.electrificationforfamilies || '', nasleli: '' },
+    arogyUpcharKendra: '', // not available
+    generalHealthCheckup: '', // not available
+    sickleCellAnemiaScreening: '', // not available
+    primarySchool: item.elementaryschool || '',
+    middleSchool: item.middleschool || '',
+    kindergarten: '', // not available
+    mobileNetwork: '', // not available
+    gramPanchayatBuilding: '', // not available
+    mobileMedicalUnit: '', // not available
+    gotulSocietyBuilding: '', // not available
+    nadiTalav: item.riverlake || ''
+  });
+};
 
     const columns: Column<BhautikDataall>[] = [
         {
@@ -494,12 +497,12 @@ const Bhautikadata: React.FC<Props> = ({
             label: "Actions",
             render: (data) => (
                 <div className="flex gap-2 whitespace-nowrap w-full">
-                    {/* <span
-                        // onClick={() => handleEdit(data)}
+                    <span
+                        onClick={() => handleEdit(data)}
                         className="cursor-pointer text-blue-600 hover:text-blue-800 transition-colors duration-200"
                     >
                         <FaEdit className="inline-block align-middle text-lg" />
-                    </span> */}
+                    </span>
                     <span>
                         <DefaultModal
                             id={data.id}
@@ -528,7 +531,7 @@ const Bhautikadata: React.FC<Props> = ({
                         <div className='flex mb-5 gap-4'>
 
 
-                            <div className="bg-white p-4 rounded-lg shadow col-span-1 md:col-span-3">
+                            <div className="p-2 col-span-1 md:col-span-3">
                                 <h3 className="text-lg font-semibold mb-2">Total Population</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
@@ -562,7 +565,7 @@ const Bhautikadata: React.FC<Props> = ({
                             </div>
 
                             {/* Tribal population */}
-                            <div className="bg-white p-4 rounded-lg shadow col-span-1 md:col-span-3">
+                            <div className=" p-2  col-span-1 md:col-span-3">
                                 <h3 className="text-lg font-semibold mb-2">Tribal population</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
@@ -601,7 +604,7 @@ const Bhautikadata: React.FC<Props> = ({
 
                             {/* Other fields in 3-column layout */}
                             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">आदिवासी टीके वारी</label>
                                     <input
                                         type="text"
@@ -611,7 +614,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंब संख्या</label>
                                     <input
                                         type="text"
@@ -621,7 +624,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">संपूर्ण आदिवासी कुटुंब संख्या</label>
                                     <input
                                         type="text"
@@ -631,7 +634,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">वैतिक आदिवासी</label>
                                     <input
                                         type="text"
@@ -641,7 +644,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">सामूहिक वनपट्ट</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -669,7 +672,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     </div>
                                 </div>
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">CFRM आराखडा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -701,7 +704,7 @@ const Bhautikadata: React.FC<Props> = ({
 
 
                                 {/* Aadhar Card */}
-                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3">
                                     <h3 className="text-sm font-semibold mb-2">आधारकार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -726,7 +729,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Matdar Olakhap */}
-                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3">
                                     <h3 className="text-sm font-semibold mb-2">मतदार ओळखप</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -749,7 +752,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </div>
                                     </div>
                                 </div>
-                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3">
                                     <h3 className="text-sm font-semibold mb-2">जातीचे गणणप</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -779,7 +782,7 @@ const Bhautikadata: React.FC<Props> = ({
                             {/* Job Card */}
                             <div className='flex gap-4 mb-5'>
 
-                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3">
                                     <h3 className="text-sm font-semibold mb-2">जॉब कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -804,7 +807,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* PM Kisan Card */}
-                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3">
                                     <h3 className="text-sm font-semibold mb-2">पीएम किसान कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -829,7 +832,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Ayushman Card */}
-                                <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3">
                                     <h3 className="text-sm font-semibold mb-2">आयुष्मान कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -855,7 +858,7 @@ const Bhautikadata: React.FC<Props> = ({
                             </div>
 
                             {/* Aadivasi House */}
-                            <div className="bg-white p-3 rounded-lg shadow col-span-1 md:col-span-3 mb-5">
+                            <div className=" p-2 col-span-1 md:col-span-3 mb-5">
                                 <h3 className="text-sm font-semibold mb-2">आदिवासी घर</h3>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
@@ -881,7 +884,7 @@ const Bhautikadata: React.FC<Props> = ({
                             {/* Jatiche Gmanap */}
                             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
                                 {/* Continue with other sections in similar compact format */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">पीएम आवास योजना</label>
                                     <input
                                         type="text"
@@ -891,7 +894,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                         आरोग्य उपचार केंद्र/PHC
                                     </label>
@@ -920,7 +923,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
 
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">सामान्य आरोग्य तपासणी</label>
                                     <input
                                         type="text"
@@ -932,7 +935,7 @@ const Bhautikadata: React.FC<Props> = ({
 
                                 {/* Continue with all remaining fields in similar compact format */}
                                 {/* Primary School */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">प्राथमिक शाळा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -961,7 +964,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Middle School */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">माध्यमिक शाळा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -990,7 +993,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Kindergarten */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">किंडरगार्टन</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1019,7 +1022,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Mobile Network */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">मोबाईल नेटवर्क सुविधा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1048,7 +1051,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Gram Panchayat Building */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">ग्रामपंचायत इमारत</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1077,7 +1080,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* Gotul Society Building */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">गोटुल सोसायटी इमारत</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1109,7 +1112,7 @@ const Bhautikadata: React.FC<Props> = ({
                               
 
                                 {/* मोबाईल वैद्यकीय युनिट */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">मोबाईल वैद्यकीय युनिट</label>
                                     <div className="flex gap-4 mt-2">
                                         <label className="flex items-center gap-1 text-sm">
@@ -1137,7 +1140,7 @@ const Bhautikadata: React.FC<Props> = ({
 
 
                                 {/* Sickle Cell Screening */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">सिकल सेल आणि अशक्तपणा तपासणी</label>
                                     <input
                                         type="text"
@@ -1148,7 +1151,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                   {/* नदी तलाव */}
-                                <div className="bg-white p-3 rounded-lg shadow">
+                                <div className=" p-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">नदी तलाव</label>
                                     <div className="flex gap-4 mt-2">
                                         <label className="flex items-center gap-1 text-sm">
