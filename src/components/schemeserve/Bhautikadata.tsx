@@ -524,7 +524,7 @@ const Bhautikadata: React.FC<Props> = ({
             {loading && <Loader />}
             <BhautikTable
                 data={data}
-                title='Bhautik Data'
+                title='धरती आबा ( भौतिक तक्ता)'
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
                     <div className="max-w-7xl mx-auto p-4">

@@ -22,7 +22,7 @@ const page = async () => {
   ]);
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Bhautik', href: '/bhautik' },
+    { label: 'धरती आबा ( भौतिक तक्ता)', href: '/bhautik' },
 
   ];
   // console.log("users", users)
