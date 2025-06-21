@@ -146,9 +146,9 @@ const Bhautikadata: React.FC<Props> = ({
 
 }) => {
     // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
-    const {isActive, setIsActive,setIsEditmode, isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
+    const { isActive, setIsActive, setIsEditmode, isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
-console.log("data",data)
+    console.log("data", data)
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
 
@@ -349,52 +349,52 @@ console.log("data",data)
         setEditId(null);
     };
 
-   const handleEdit = (item: BhautikDataall) => {
-      setIsmodelopen(true);
+    const handleEdit = (item: BhautikDataall) => {
+        setIsmodelopen(true);
         setIsEditmode(true);
         setIsActive(!isActive)
         setEditId(item.id)
-  // Helper to split pipe string
-  const parsePopulation = (value: string): { female: string; male: string; total: string } => {
-    const [female = '', male = '', total = ''] = value?.split('|') || [];
-    return { female, male, total };
-  };
+        // Helper to split pipe string
+        const parsePopulation = (value: string): { female: string; male: string; total: string } => {
+            const [female = '', male = '', total = ''] = value?.split('|') || [];
+            return { female, male, total };
+        };
 
-  // Now set form data
-  setFormData({
-    ekunSankhya: parsePopulation(item.totalpopulation),
-    tribalPopulation: parsePopulation(item.tribalpopulation),
-    tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
-    totalFamilyNumbers: item.totalfamilynumbers || '',
-    tribalsWholeFamilyNumbers: item.tribalwholefamilynumbers || '',
-    vaitikAadivasi: '', // not available in BhautikDataall
-    samuhikVanpatta: '', // not available in BhautikDataall
-    cfrmAarakhda: '', // not available in BhautikDataall
-    aadharcard: { asleli: item.aadhaarcard || '', nasleli: '' },
-    matdarOlahkhap: { asleli: item.voteridcard || '', nasleli: '' },
-    jaticheGmanap: { asleli: '', nasleli: '' }, // not available
-    rashionCard: { asleli: item.rationcard || '', nasleli: '' },
-    jobCard: { asleli: item.jobcard || '', nasleli: '' },
-    pmKisanCard: { asleli: item.pmfarmercard || '', nasleli: '' },
-    ayushmanCard: { asleli: item.ayushmancard || '', nasleli: '' },
-    aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' }, // not available
-    pmAwasYojana: '', // not available
-    panyaPanyachiSuvidha: { asleli: '', nasleli: '' }, // not available
-    harGharNalYojana: { asleli: '', nasleli: '' }, // not available
-    vidyutikaran: { asleli: item.electrificationforfamilies || '', nasleli: '' },
-    arogyUpcharKendra: '', // not available
-    generalHealthCheckup: '', // not available
-    sickleCellAnemiaScreening: '', // not available
-    primarySchool: item.elementaryschool || '',
-    middleSchool: item.middleschool || '',
-    kindergarten: '', // not available
-    mobileNetwork: '', // not available
-    gramPanchayatBuilding: '', // not available
-    mobileMedicalUnit: '', // not available
-    gotulSocietyBuilding: '', // not available
-    nadiTalav: item.riverlake || ''
-  });
-};
+        // Now set form data
+        setFormData({
+            ekunSankhya: parsePopulation(item.totalpopulation),
+            tribalPopulation: parsePopulation(item.tribalpopulation),
+            tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
+            totalFamilyNumbers: item.totalfamilynumbers || '',
+            tribalsWholeFamilyNumbers: item.tribalwholefamilynumbers || '',
+            vaitikAadivasi: '', // not available in BhautikDataall
+            samuhikVanpatta: '', // not available in BhautikDataall
+            cfrmAarakhda: '', // not available in BhautikDataall
+            aadharcard: { asleli: item.aadhaarcard || '', nasleli: '' },
+            matdarOlahkhap: { asleli: item.voteridcard || '', nasleli: '' },
+            jaticheGmanap: { asleli: '', nasleli: '' }, // not available
+            rashionCard: { asleli: item.rationcard || '', nasleli: '' },
+            jobCard: { asleli: item.jobcard || '', nasleli: '' },
+            pmKisanCard: { asleli: item.pmfarmercard || '', nasleli: '' },
+            ayushmanCard: { asleli: item.ayushmancard || '', nasleli: '' },
+            aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' }, // not available
+            pmAwasYojana: '', // not available
+            panyaPanyachiSuvidha: { asleli: '', nasleli: '' }, // not available
+            harGharNalYojana: { asleli: '', nasleli: '' }, // not available
+            vidyutikaran: { asleli: item.electrificationforfamilies || '', nasleli: '' },
+            arogyUpcharKendra: '', // not available
+            generalHealthCheckup: '', // not available
+            sickleCellAnemiaScreening: '', // not available
+            primarySchool: item.elementaryschool || '',
+            middleSchool: item.middleschool || '',
+            kindergarten: '', // not available
+            mobileNetwork: '', // not available
+            gramPanchayatBuilding: '', // not available
+            mobileMedicalUnit: '', // not available
+            gotulSocietyBuilding: '', // not available
+            nadiTalav: item.riverlake || ''
+        });
+    };
 
     const columns: Column<BhautikDataall>[] = [
         {
@@ -528,14 +528,14 @@ console.log("data",data)
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
                     <div className="max-w-7xl mx-auto p-4">
-                        <div className='flex mb-5 gap-4'>
+                        <div className='md:flex gap-4 '>
 
 
-                            <div className="p-2 col-span-1 md:col-span-3">
-                                <h3 className="text-lg font-semibold mb-2">Total Population</h3>
+                            <div className="bg-white p-6 rounded-lg shadow p-2 col-span-1 md:col-span-3">
+                                <h3 className="text-lg font-semibold mb-2">एकूण लोकसंख्या</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Female</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">स्री</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -544,7 +544,7 @@ console.log("data",data)
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Male</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">पुरुष</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -553,11 +553,12 @@ console.log("data",data)
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Total</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">एकुण</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                            value={formData.ekunSankhya.total}
+                                            value={Number(formData.ekunSankhya.female) + Number(formData.ekunSankhya.male)}
                                             onChange={(e) => handleNestedChange('ekunSankhya', 'total', e.target.value)}
                                         />
                                     </div>
@@ -565,11 +566,11 @@ console.log("data",data)
                             </div>
 
                             {/* Tribal population */}
-                            <div className=" p-2  col-span-1 md:col-span-3">
-                                <h3 className="text-lg font-semibold mb-2">Tribal population</h3>
+                            <div className="bg-white p-6 rounded-lg shadow col-span-1 md:col-span-3 mt-5 md:mt-0">
+                                <h3 className="text-lg font-semibold mb-2">आदिवासी लोकसंख्या</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Female</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">स्री</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -578,7 +579,7 @@ console.log("data",data)
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Male</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">पुरुष</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -587,11 +588,12 @@ console.log("data",data)
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Total</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">एकुण</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                            value={formData.tribalPopulation.total}
+                                            value={Number(formData.tribalPopulation.female) +Number(formData.tribalPopulation.male)}
                                             onChange={(e) => handleNestedChange('tribalPopulation', 'total', e.target.value)}
                                         />
                                     </div>
@@ -603,9 +605,9 @@ console.log("data",data)
 
 
                             {/* Other fields in 3-column layout */}
-                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">आदिवासी टीके वारी</label>
+                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-5'>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">आदिवासी टीके वारी</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -614,8 +616,8 @@ console.log("data",data)
                                     />
                                 </div>
 
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंब संख्या</label>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">कुटुंब संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -624,8 +626,8 @@ console.log("data",data)
                                     />
                                 </div>
 
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">संपूर्ण आदिवासी कुटुंब संख्या</label>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700">एकूण आदिवासी कुटुंब संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -634,8 +636,8 @@ console.log("data",data)
                                     />
                                 </div>
 
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">वैतिक आदिवासी</label>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">वैयक्तिक आदिवासी वनपट्टेधारक संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -644,8 +646,8 @@ console.log("data",data)
                                     />
                                 </div>
 
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">सामूहिक वनपट्ट</label>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">सामूहिक वनपट्टा वाटप आहे/नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -672,8 +674,8 @@ console.log("data",data)
                                     </div>
                                 </div>
 
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">CFRM आराखडा</label>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">CFRMC आराखडा सादर आहे/नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -700,11 +702,11 @@ console.log("data",data)
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex gap-4 mb-5'>
+                            <div className='md:flex gap-4 mt-5'>
 
 
                                 {/* Aadhar Card */}
-                                <div className=" p-2 col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white p-2 rounded-lg shadow">
                                     <h3 className="text-sm font-semibold mb-2">आधारकार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -729,8 +731,8 @@ console.log("data",data)
                                 </div>
 
                                 {/* Matdar Olakhap */}
-                                <div className=" p-2 col-span-1 md:col-span-3">
-                                    <h3 className="text-sm font-semibold mb-2">मतदार ओळखप</h3>
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
+                                    <h3 className="text-sm font-semibold mb-2">मतदार ओळखपत्र </h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
@@ -752,8 +754,8 @@ console.log("data",data)
                                         </div>
                                     </div>
                                 </div>
-                                <div className=" p-2 col-span-1 md:col-span-3">
-                                    <h3 className="text-sm font-semibold mb-2">जातीचे गणणप</h3>
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white  rounded-lg shadow mt-5 md:mt-0">
+                                    <h3 className="text-sm font-semibold mb">जातीचे प्रमाणपत्र</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
@@ -780,9 +782,32 @@ console.log("data",data)
 
                             {/* Job Card */}
                             {/* Job Card */}
-                            <div className='flex gap-4 mb-5'>
+                            <div className='md:flex gap-4 mt-5'>
 
-                                <div className=" p-2 col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3 mb-2 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
+                                    <h3 className="text-sm font-semibold mb-2">राशन कार्ड</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.rashionCard.asleli}
+                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'pakkeGhar', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.rashionCard.nasleli}
+                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'kudaMatiGhar', e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
                                     <h3 className="text-sm font-semibold mb-2">जॉब कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -807,8 +832,8 @@ console.log("data",data)
                                 </div>
 
                                 {/* PM Kisan Card */}
-                                <div className=" p-2 col-span-1 md:col-span-3">
-                                    <h3 className="text-sm font-semibold mb-2">पीएम किसान कार्ड</h3>
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
+                                    <h3 className="text-sm font-semibold mb-2">PM किसान कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
@@ -831,8 +856,40 @@ console.log("data",data)
                                     </div>
                                 </div>
 
+
+
+                            </div>
+                            <div className='md:flex mt-5 gap-4'>
+
+
+                                {/* Aadivasi House */}
+
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white  rounded-lg shadow">
+                                    <h3 className="text-sm font-semibold mb-2">एकूण आदिवासी कुटुंबाचे </h3>
+                                    <div className="grid grid-cols-2 gap-3">
+
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">पक्के घर </label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.aadivasiHouse.pakkeGhar}
+                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'pakkeGhar', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">कुडा/मातीचे घर</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                                value={formData.aadivasiHouse.kudaMatiGhar}
+                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'kudaMatiGhar', e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                                 {/* Ayushman Card */}
-                                <div className=" p-2 col-span-1 md:col-span-3">
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white  rounded-lg shadow mt-5 md:mt-0">
                                     <h3 className="text-sm font-semibold mb-2">आयुष्मान कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -855,87 +912,102 @@ console.log("data",data)
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Aadivasi House */}
-                            <div className=" p-2 col-span-1 md:col-span-3 mb-5">
-                                <h3 className="text-sm font-semibold mb-2">आदिवासी घर</h3>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">पक्के घर</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                            value={formData.aadivasiHouse.pakkeGhar}
-                                            onChange={(e) => handleNestedChange('aadivasiHouse', 'pakkeGhar', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">कुडा/माती घर</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                            value={formData.aadivasiHouse.kudaMatiGhar}
-                                            onChange={(e) => handleNestedChange('aadivasiHouse', 'kudaMatiGhar', e.target.value)}
-                                        />
+                                <div className=" p-2 bg-white  rounded-lg shadow mt-5 md:mt-0">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1 font-unwrap whitespace-nowrap">पीएम आवास योजना</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="pmAwasYojana"
+                                                value="yes"
+                                                checked={formData.pmAwasYojana === "yes"}
+                                                onChange={() => handleChange("pmAwasYojana", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="pmAwasYojana"
+                                                value="no"
+                                                checked={formData.pmAwasYojana === "no"}
+                                                onChange={() => handleChange("pmAwasYojana", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             {/* Jatiche Gmanap */}
-                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
+                            <div className='grid grid-cols-1 md:grid-cols-6 gap-4 mb-5 mt-5'>
                                 {/* Continue with other sections in similar compact format */}
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">पीएम आवास योजना</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                        value={formData.pmAwasYojana}
-                                        onChange={(e) => handleChange('pmAwasYojana', e.target.value)}
-                                    />
-                                </div>
-
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        आरोग्य उपचार केंद्र/PHC
-                                    </label>
-                                    <div className="flex gap-4 mt-2">
-                                        <label className="flex items-center gap-1 text-sm">
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">आरोग्य उपचार केंद्र/PHC</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
                                                 name="arogyUpcharKendra"
                                                 value="yes"
                                                 checked={formData.arogyUpcharKendra === "yes"}
                                                 onChange={() => handleChange("arogyUpcharKendra", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
                                             />
-                                            होय
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
                                         </label>
-                                        <label className="flex items-center gap-1 text-sm">
+                                        <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
                                                 name="arogyUpcharKendra"
                                                 value="no"
                                                 checked={formData.arogyUpcharKendra === "no"}
                                                 onChange={() => handleChange("arogyUpcharKendra", "no")}
+                                                className="h-3 w-3 text-indigo-600"
                                             />
-                                            नाही
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
                                         </label>
                                     </div>
                                 </div>
 
 
-                                <div className=" p-2">
+
+
+
+
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">सामान्य आरोग्य तपासणी</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                        value={formData.generalHealthCheckup}
-                                        onChange={(e) => handleChange('generalHealthCheckup', e.target.value)}
-                                    />
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="generalHealthCheckup"
+                                                value="yes"
+                                                checked={formData.generalHealthCheckup === "yes"}
+                                                onChange={() => handleChange("generalHealthCheckup", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="generalHealthCheckup"
+                                                value="no"
+                                                checked={formData.generalHealthCheckup === "no"}
+                                                onChange={() => handleChange("generalHealthCheckup", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
+                                    </div>
                                 </div>
+
 
                                 {/* Continue with all remaining fields in similar compact format */}
                                 {/* Primary School */}
-                                <div className=" p-2">
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">प्राथमिक शाळा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -964,7 +1036,7 @@ console.log("data",data)
                                 </div>
 
                                 {/* Middle School */}
-                                <div className=" p-2">
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">माध्यमिक शाळा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -993,7 +1065,7 @@ console.log("data",data)
                                 </div>
 
                                 {/* Kindergarten */}
-                                <div className=" p-2">
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">किंडरगार्टन</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1022,7 +1094,7 @@ console.log("data",data)
                                 </div>
 
                                 {/* Mobile Network */}
-                                <div className=" p-2">
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">मोबाईल नेटवर्क सुविधा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1051,7 +1123,7 @@ console.log("data",data)
                                 </div>
 
                                 {/* Gram Panchayat Building */}
-                                <div className=" p-2">
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">ग्रामपंचायत इमारत</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1080,7 +1152,7 @@ console.log("data",data)
                                 </div>
 
                                 {/* Gotul Society Building */}
-                                <div className=" p-2">
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">गोटुल सोसायटी इमारत</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1109,73 +1181,115 @@ console.log("data",data)
                                 </div>
 
                                 {/* Nadi Talav */}
-                              
 
-                                {/* मोबाईल वैद्यकीय युनिट */}
-                                <div className=" p-2">
+
+
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">मोबाईल वैद्यकीय युनिट</label>
-                                    <div className="flex gap-4 mt-2">
-                                        <label className="flex items-center gap-1 text-sm">
+
+
+
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
                                                 name="mobileMedicalUnit"
                                                 value="yes"
                                                 checked={formData.mobileMedicalUnit === "yes"}
                                                 onChange={() => handleChange("mobileMedicalUnit", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
                                             />
-                                            होय
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
                                         </label>
-                                        <label className="flex items-center gap-1 text-sm">
+
+
+                                        <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
                                                 name="mobileMedicalUnit"
                                                 value="no"
                                                 checked={formData.mobileMedicalUnit === "no"}
                                                 onChange={() => handleChange("mobileMedicalUnit", "no")}
+                                                className="h-3 w-3 text-indigo-600"
                                             />
-                                            नाही
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        </label>
+
+                                    </div>
+                                </div>
+
+
+
+
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">सिकल सेल आणि अशक्तपणा तपासणी</label>
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="sickleCellAnemiaScreening"
+                                                value="yes"
+                                                checked={formData.sickleCellAnemiaScreening === "yes"}
+                                                onChange={() => handleChange("sickleCellAnemiaScreening", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        </label>
+                                        <label className="inline-flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="sickleCellAnemiaScreening"
+                                                value="no"
+                                                checked={formData.sickleCellAnemiaScreening === "no"}
+                                                onChange={() => handleChange("sickleCellAnemiaScreening", "no")}
+                                                className="h-3 w-3 text-indigo-600"
+                                            />
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
                                         </label>
                                     </div>
                                 </div>
 
 
-                                {/* Sickle Cell Screening */}
-                                <div className=" p-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">सिकल सेल आणि अशक्तपणा तपासणी</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                        value={formData.sickleCellAnemiaScreening}
-                                        onChange={(e) => handleChange('sickleCellAnemiaScreening', e.target.value)}
-                                    />
-                                </div>
 
-                                  {/* नदी तलाव */}
-                                <div className=" p-2">
+                                {/* नदी तलाव */}
+
+
+
+
+
+
+
+                                <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">नदी तलाव</label>
-                                    <div className="flex gap-4 mt-2">
-                                        <label className="flex items-center gap-1 text-sm">
+                                    <div className="flex space-x-3 mt-1">
+                                        <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
                                                 name="nadiTalav"
                                                 value="yes"
                                                 checked={formData.nadiTalav === "yes"}
                                                 onChange={() => handleChange("nadiTalav", "yes")}
+                                                className="h-3 w-3 text-indigo-600"
                                             />
-                                            होय
+                                            <span className="ml-1 text-xs text-gray-700">होय</span>
                                         </label>
-                                        <label className="flex items-center gap-1 text-sm">
+                                        <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
                                                 name="nadiTalav"
                                                 value="no"
                                                 checked={formData.nadiTalav === "no"}
                                                 onChange={() => handleChange("nadiTalav", "no")}
+                                                className="h-3 w-3 text-indigo-600"
                                             />
-                                            नाही
+                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
                                         </label>
                                     </div>
                                 </div>
+
+
+
+
                             </div>
                         </div>
                     </div>}
