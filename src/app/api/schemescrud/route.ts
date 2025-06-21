@@ -8,14 +8,10 @@ export async function GET() {
     const [rows] = await pool.query<RowDataPacket[]>(`
      SELECT 
         schemes.*, 
-        scheme_category.name AS category_name,
-        scheme_sub_category.name AS sub_category_name,
         scheme_year.year AS scheme_year
       FROM schemes
       INNER JOIN scheme_category 
         ON schemes.scheme_category_id = scheme_category.scheme_category_id
-      LEFT JOIN scheme_sub_category 
-        ON schemes.scheme_sub_category_id = scheme_sub_category.scheme_sub_category_id
       LEFT JOIN scheme_year 
         ON schemes.scheme_year_id = scheme_year.scheme_year_id
       WHERE schemes.status = 'Active'
