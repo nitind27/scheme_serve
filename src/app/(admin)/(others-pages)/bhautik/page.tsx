@@ -9,7 +9,7 @@ import { BhautikDataall } from '@/components/schemeserve/Bhautikdatatype';
 import React, { Suspense } from 'react'
 
 const getUsers = async (): Promise<BhautikDataall[]> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bhautikapi`, { cache: 'no-store' });
+  const res = await fetch(`https://schemeserve.weclocks.online/api/bhautikapi`, { cache: 'no-store' });
   console.log("reess", res)
   return res.json();
 };
