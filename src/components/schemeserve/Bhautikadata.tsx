@@ -147,7 +147,7 @@ const Bhautikadata: React.FC<Props> = ({
     // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
     const { isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
-    console.log("fasffsaf", data)
+
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
 

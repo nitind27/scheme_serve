@@ -3,20 +3,27 @@
 
 import Breadcrumbs from '@/components/common/BreadcrumbItem'
 import Bhautikadata from '@/components/schemeserve/Bhautikadata';
+import { BhautikDataall } from '@/components/schemeserve/Bhautikdatatype';
 // import Documentsdata from '@/components/Documentsdata/Documentsdata'
 import React from 'react'
 
+const getUsers = async (): Promise<BhautikDataall[]> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bhautikapi`, { cache: 'no-store' });
+  return res.json();
+};
+
+
 const page = async () => {
+
+  const [users] = await Promise.all([
+    getUsers(),
+
+  ]);
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Bhautik', href: '/bhautik' },
 
   ];
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bhautikapi`, {
-    cache: 'no-store'
-  });
-
-  const data = await res.json();
 
   return (
     <div className="grid grid-cols-6 gap-4 md:gap-6">
@@ -26,7 +33,7 @@ const page = async () => {
           title="Bhautik"
           breadcrumbs={breadcrumbItems}
         />
-        <Bhautikadata initialdata={data} />
+        <Bhautikadata initialdata={users} />
 
       </div>
     </div>
