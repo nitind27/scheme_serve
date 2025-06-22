@@ -29,8 +29,8 @@ export async function POST(request: Request) {
         tribalbenefitnumber, stepfacilities, everygharnaalyojana,
         electrificationforfamilies, healthfacilityis, generalhealthcheckup,
         sickleanemia, elementaryschool, middleschool, kindergarten,
-        mobilefacilities, mobilemedicalunit, gotulsocietybuilding, riverlake
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        mobilefacilities, mobilemedicalunit, gotulsocietybuilding, riverlake, scheme_name
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 body.ekunSankhya,
                 body.tribalPopulation,
@@ -61,7 +61,8 @@ export async function POST(request: Request) {
                 body.mobileNetwork,
                 body.mobileMedicalUnit,
                 body.gotulSocietyBuilding,
-                body.nadiTalav
+                body.nadiTalav,
+                body.scheme_name,
             ]
         );
 

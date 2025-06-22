@@ -3,6 +3,7 @@
 
 import Loader from '@/common/Loader';
 import Breadcrumbs from '@/components/common/BreadcrumbItem'
+import { Schemesdatas } from '@/components/schemesdata/schemes';
 import Bhautikadata from '@/components/schemeserve/Bhautikadata';
 import { BhautikDataall } from '@/components/schemeserve/Bhautikdatatype';
 // import Documentsdata from '@/components/Documentsdata/Documentsdata'
@@ -10,14 +11,26 @@ import React, { Suspense } from 'react'
 
 const getUsers = async (): Promise<BhautikDataall[]> => {
   const res = await fetch(`https://schemeserve.weclocks.online/api/bhautikapi`, { cache: 'no-store' });
-  // console.log("reess", res)
+ 
   return res.json();
+
+};
+const getschemescrud = async (): Promise<Schemesdatas[]> => {
+
+  const schemescrud = await fetch(`https://schemeserve.weclocks.online/api/schemescrud`, { cache: 'no-store' });
+  // console.log("reess", res)
+  return schemescrud.json();
+
 };
 
 const page = async () => {
 
   const [users] = await Promise.all([
     getUsers(),
+
+  ]);
+  const [schemescrud] = await Promise.all([
+    getschemescrud(),
 
   ]);
   const breadcrumbItems = [
@@ -31,10 +44,10 @@ const page = async () => {
       <div className="col-span-12 space-y-6 xl:col-span-7">
         <Suspense fallback={<Loader />}>
           <Breadcrumbs
-            title="Bhautik"
+            title="धरती आबा ( भौतिक तक्ता)"
             breadcrumbs={breadcrumbItems}
           />
-          <Bhautikadata initialdata={users} />
+          <Bhautikadata initialdata={users} schemescrud={schemescrud} />
         </Suspense>
 
       </div>

@@ -1,4 +1,5 @@
 export interface BhautikDataall {
+  scheme_name: string;         // e.g., "50|30|80"
   totalpopulation: string;         // e.g., "50|30|80"
   tribalpopulation: string;        // e.g., "40|20|60"
   tribalpopulationtkkwari: string;
