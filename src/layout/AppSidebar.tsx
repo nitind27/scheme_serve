@@ -53,7 +53,7 @@ const allNavItems: NavItem[] = [
     name: "Schemes",
     path: "/schemespage",
   },
-  
+
   {
     icon: <CiCalendar />,
     name: "Year",
@@ -64,12 +64,18 @@ const allNavItems: NavItem[] = [
     name: "Users",
     path: "/users",
   },
-    {
+  {
     icon: <RxDashboard />,
-    name: "Bhautik",
+    name: "भौतिक तक्ता",
     path: "/bhautik",
   },
-  
+
+  {
+    icon: <RxDashboard />,
+    name: "वैयक्तिक",
+    path: "/selfform",
+  },
+
 ];
 const dashboardOnly: NavItem[] = [
   {
@@ -79,10 +85,16 @@ const dashboardOnly: NavItem[] = [
   },
   {
     icon: <RxDashboard />,
-    name: "Bhautik",
+    name: "भौतिक तक्ता",
     path: "/bhautik",
   },
-  
+
+  {
+    icon: <RxDashboard />,
+    name: "वैयक्तिक",
+    path: "/selfform",
+  },
+
 ];
 
 

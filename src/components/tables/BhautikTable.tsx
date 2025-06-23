@@ -95,7 +95,7 @@ export function BhautikTable<T extends object>({
         <input
           type="text"
           placeholder="Search..."
-          className="rounded border border-gray-200 bg-white px-3 py-2 dark:border-gray-800 dark:bg-white/[0.03] hover:shadow-sm transition-shadow md:w-auto flex-1"
+          className="rounded border border-gray-200 bg-white px-2 py-2 dark:border-gray-800 dark:bg-white/[0.03] hover:shadow-sm transition-shadow md:w-auto flex-1"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

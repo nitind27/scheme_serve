@@ -104,7 +104,7 @@ interface BhautikData {
     mobileMedicalUnit: string;
     gotulSocietyBuilding: string;
     nadiTalav: string;
-    // contact_no: string;
+    contact_no: string;
     rationcard_no: string;
     allroadvillages: string;
     village_distance: string;
@@ -149,7 +149,7 @@ type Double = {
     nasleli?: string;
 };
 
-const Bhautikadata: React.FC<Props> = ({
+const Vyaktigatdata: React.FC<Props> = ({
     initialdata,
     schemescrud
 
@@ -196,7 +196,7 @@ const Bhautikadata: React.FC<Props> = ({
         mobileMedicalUnit: '',
         gotulSocietyBuilding: '',
         nadiTalav: '',
-        // contact_no: '',
+        contact_no: '',
         rationcard_no: '',
         allroadvillages: '',
         village_distance: ''
@@ -396,7 +396,7 @@ const Bhautikadata: React.FC<Props> = ({
             mobileMedicalUnit: '',
             gotulSocietyBuilding: '',
             nadiTalav: '',
-            // contact_no: '',
+            contact_no: '',
             rationcard_no: '',
             allroadvillages: '',
             village_distance: '',
@@ -449,7 +449,7 @@ const Bhautikadata: React.FC<Props> = ({
             mobileMedicalUnit: '', // not available
             gotulSocietyBuilding: '', // not available
             nadiTalav: item.riverlake || '',
-            // contact_no: '',
+            contact_no: '',
             rationcard_no: '',
             allroadvillages: '',
             village_distance: '',
@@ -609,72 +609,19 @@ const Bhautikadata: React.FC<Props> = ({
                         </div>
                         <div className='md:flex gap-4 mt-5'>
 
-
-                            <div className="bg-gray-100 p-6 rounded-lg shadow p-2 col-span-1 md:col-span-3">
-                                <h3 className="text-lg font-semibold mb-2">एकूण लोकसंख्या</h3>
-                                <div className="grid grid-cols-3 gap-3">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">स्री</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white bg-white"
-                                            value={formData.ekunSankhya.female}
-                                            onChange={(e) => handleNestedChange('ekunSankhya', 'female', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">पुरुष</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white bg-white"
-                                            value={formData.ekunSankhya.male}
-                                            onChange={(e) => handleNestedChange('ekunSankhya', 'male', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण कुटुंब संख्या</label>
-                                        <input
-                                            type="text"
-                                            readOnly
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white bg-white"
-                                            value={formData.ekunSankhya.total}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Tribal population */}
                             <div className="bg-gray-100 p-6 rounded-lg shadow col-span-1 md:col-span-3 mt-5 md:mt-0">
-                                <h3 className="text-lg font-semibold mb-2">आदिवासी लोकसंख्या</h3>
-                                <div className="grid grid-cols-3 gap-3">
+                               
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">स्री</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण आदिवासी लोकसंख्या</label>
                                         <input
                                             type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                            value={formData.tribalPopulation.female}
-                                            onChange={(e) => handleNestedChange('tribalPopulation', 'female', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">पुरुष</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                            value={formData.tribalPopulation.male}
-                                            onChange={(e) => handleNestedChange('tribalPopulation', 'male', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">आदिवासी लोकसंख्या</label>
-                                        <input
-                                            type="text"
-                                            readOnly
+                                            
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             value={formData.tribalPopulation.total}
                                         />
                                     </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div className="">
@@ -684,73 +631,25 @@ const Bhautikadata: React.FC<Props> = ({
                             {/* Other fields in 3-column layout */}
                             <div className='grid grid-cols-1 md:grid-cols-5 gap-4 mt-5'>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">आदिवासी लोकसंख्या टक्केवारी</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">कुटुंब प्रमुखाचे नाव</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                         value={formData.tribalPopulationTkWari}
-                                        readOnly
+                                        // readOnly
                                     />
                                 </div>
 
-                         
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-5">कुटुंब संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-5">संपर्क क्रमांक</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        value={formData.totalFamilyNumbers}
-                                        onChange={(e) => handleChange('totalFamilyNumbers', e.target.value)}
+                                        value={formData.contact_no}
+                                        onChange={(e) => handleChange('contact_no', e.target.value)}
                                     />
                                 </div>
-
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5">एकूण आदिवासी कुटुंब संख्या</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        value={formData.tribalsWholeFamilyNumbers}
-                                        onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">वैयक्तिक आदिवासी वनपट्टेधारक संख्या</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        value={formData.vaitikAadivasi}
-                                        onChange={(e) => handleChange('vaitikAadivasi', e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">सामूहिक वनपट्टा वाटप आहे/नाही</label>
-                                    <div className="flex space-x-3 mt-1">
-                                        <label className="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="samuhikVanpatta"
-                                                value="yes"
-                                                checked={formData.samuhikVanpatta === "yes"}
-                                                onChange={() => handleChange("samuhikVanpatta", "yes")}
-                                                className="h-3 w-3 text-indigo-600"
-                                            />
-                                            <span className="ml-1 text-xs text-gray-700">होय</span>
-                                        </label>
-                                        <label className="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="samuhikVanpatta"
-                                                value="no"
-                                                checked={formData.samuhikVanpatta === "no"}
-                                                onChange={() => handleChange("samuhikVanpatta", "no")}
-                                                className="h-3 w-3 text-indigo-600"
-                                            />
-                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                        </label>
-                                    </div>
-                                </div>
+                      
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-5 ">CFRMC आराखडा सादर आहे/नाही</label>
@@ -1496,4 +1395,4 @@ const Bhautikadata: React.FC<Props> = ({
     );
 };
 
-export default Bhautikadata;
+export default Vyaktigatdata;
