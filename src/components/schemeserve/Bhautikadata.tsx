@@ -104,6 +104,11 @@ interface BhautikData {
     mobileMedicalUnit: string;
     gotulSocietyBuilding: string;
     nadiTalav: string;
+    contact_no: string;
+    rationcard_no: string;
+    allroadvillages: string;
+    village_distance: string;
+
 }
 
 interface BhautikDataall {
@@ -152,8 +157,8 @@ const Bhautikadata: React.FC<Props> = ({
     // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
     const { isActive, setIsActive, setIsEditmode, isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
-    const [schemedata ] = useState<Schemesdatas[]>(schemescrud || []);
-    console.log("data", data)
+    const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
+
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
 
@@ -190,7 +195,11 @@ const Bhautikadata: React.FC<Props> = ({
         gramPanchayatBuilding: '',
         mobileMedicalUnit: '',
         gotulSocietyBuilding: '',
-        nadiTalav: ''
+        nadiTalav: '',
+        contact_no: '',
+        rationcard_no: '',
+        allroadvillages: '',
+        village_distance: ''
     });
 
     // Handle nested state changes
@@ -201,14 +210,33 @@ const Bhautikadata: React.FC<Props> = ({
     ) => {
         setFormData(prev => {
             const parent = prev[parentField];
-            // Only spread if parent is an object
-            const parentObj = (typeof parent === 'object' && parent !== null) ? parent : {};
-            return {
-                ...prev,
-                [parentField]: {
+            let updated: Record<string, string>;
+            if (parentField === 'ekunSankhya' || parentField === 'tribalPopulation') {
+                // Only destructure for population fields
+                const { female = '', male = '', total = '', ...rest } = (typeof parent === 'object' && parent !== null) ? parent as { female?: string; male?: string; total?: string } : {};
+                updated = {
+                    ...rest,
+                    female,
+                    male,
+                    total,
+                    [childField]: value
+                };
+                if (childField === 'female' || childField === 'male') {
+                    const newFemale = childField === 'female' ? value : female;
+                    const newMale = childField === 'male' ? value : male;
+                    updated.total = String(Number(newFemale) + Number(newMale));
+                }
+            } else {
+                // Generic fallback for other fields
+                const parentObj = (typeof parent === 'object' && parent !== null) ? parent : {};
+                updated = {
                     ...parentObj,
                     [childField]: value
-                }
+                };
+            }
+            return {
+                ...prev,
+                [parentField]: updated
             };
         });
     };
@@ -227,9 +255,9 @@ const Bhautikadata: React.FC<Props> = ({
         const errors: Partial<Record<keyof BhautikData, string>> = {};
         setisvalidation(true);
 
-        // Validate required fields
-        if (!formData.ekunSankhya.female) errors.ekunSankhya = "Female population is required";
-        if (!formData.tribalPopulationTkWari) errors.tribalPopulationTkWari = "Tribal population TK Wari is required";
+        // // Validate required fields
+        // if (!formData.ekunSankhya.female) errors.ekunSankhya = "Female population is required";
+        // if (!formData.tribalPopulationTkWari) errors.tribalPopulationTkWari = "Tribal population TK Wari is required";
         // Add more validations as needed
 
         return Object.keys(errors).length === 0;
@@ -252,6 +280,22 @@ const Bhautikadata: React.FC<Props> = ({
     useEffect(() => {
         fetchData();
     }, [])
+
+    // Add this useEffect after formData is defined
+    useEffect(() => {
+        const total = Number(formData.ekunSankhya.female) + Number(formData.ekunSankhya.male);
+        const tribal = Number(formData.tribalPopulation.female) + Number(formData.tribalPopulation.male);
+        let percent = '';
+        if (total > 0) {
+            percent = ((tribal / total) * 100).toFixed(2);
+        }
+        setFormData(prev => ({
+            ...prev,
+            tribalPopulationTkWari: percent
+        }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData.ekunSankhya.female, formData.ekunSankhya.male, formData.tribalPopulation.female, formData.tribalPopulation.male]);
+
     const transformFormData = (data: BhautikData) => {
         const transformTriple = (obj: Triple) => {
             if (obj && typeof obj === 'object') {
@@ -351,7 +395,11 @@ const Bhautikadata: React.FC<Props> = ({
             gramPanchayatBuilding: '',
             mobileMedicalUnit: '',
             gotulSocietyBuilding: '',
-            nadiTalav: ''
+            nadiTalav: '',
+            contact_no: '',
+            rationcard_no: '',
+            allroadvillages: '',
+            village_distance: '',
         });
         setEditId(null);
     };
@@ -400,7 +448,11 @@ const Bhautikadata: React.FC<Props> = ({
             gramPanchayatBuilding: '', // not available
             mobileMedicalUnit: '', // not available
             gotulSocietyBuilding: '', // not available
-            nadiTalav: item.riverlake || ''
+            nadiTalav: item.riverlake || '',
+            contact_no: '',
+            rationcard_no: '',
+            allroadvillages: '',
+            village_distance: '',
         });
     };
 
@@ -417,7 +469,7 @@ const Bhautikadata: React.FC<Props> = ({
         },
         {
             key: "totalpopulation_total",
-            label:"एकूण कुटुंब संख्या",
+            label: "एकूण कुटुंब संख्या",
             render: (data) => <span>{data.totalpopulation?.split("|")[2] || "-"}</span>,
         },
         {
@@ -585,8 +637,7 @@ const Bhautikadata: React.FC<Props> = ({
                                             type="text"
                                             readOnly
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                            value={Number(formData.ekunSankhya.female) + Number(formData.ekunSankhya.male)}
-                                            onChange={(e) => handleNestedChange('ekunSankhya', 'total', e.target.value)}
+                                            value={formData.ekunSankhya.total}
                                         />
                                     </div>
                                 </div>
@@ -618,10 +669,9 @@ const Bhautikadata: React.FC<Props> = ({
                                         <label className="block text-sm font-medium text-gray-700 mb-1">आदिवासी लोकसंख्या</label>
                                         <input
                                             type="text"
-                                            disabled
+                                            readOnly
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
-                                            value={Number(formData.tribalPopulation.female) + Number(formData.tribalPopulation.male)}
-                                            onChange={(e) => handleNestedChange('tribalPopulation', 'total', e.target.value)}
+                                            value={formData.tribalPopulation.total}
                                         />
                                     </div>
                                 </div>
@@ -639,10 +689,19 @@ const Bhautikadata: React.FC<Props> = ({
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                         value={formData.tribalPopulationTkWari}
-                                        onChange={(e) => handleChange('tribalPopulationTkWari', e.target.value)}
+                                        readOnly
                                     />
                                 </div>
 
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">संपर्क क्रमांक</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.contact_no}
+                                        onChange={(e) => handleChange('contact_no', e.target.value)}
+                                    />
+                                </div>
                                 <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 ">कुटुंब संख्या</label>
                                     <input
@@ -807,11 +866,20 @@ const Bhautikadata: React.FC<Props> = ({
 
                             </div>
 
-                            {/* Job Card */}
-                            {/* Job Card */}
                             <div className='md:flex gap-4 mt-5'>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">राशन कार्ड क्रमांक</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.rationcard_no}
+                                        onChange={(e) => handleChange('rationcard_no', e.target.value)}
+                                    />
+                                </div>
 
                                 <div className=" p-2 col-span-1 md:col-span-3 mb-2 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
+
+
                                     <h3 className="text-sm font-semibold mb-2">राशन कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -820,7 +888,7 @@ const Bhautikadata: React.FC<Props> = ({
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                                 value={formData.rashionCard.asleli}
-                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'pakkeGhar', e.target.value)}
+                                                onChange={(e) => handleNestedChange('rashionCard', 'asleli', e.target.value)}
                                             />
                                         </div>
                                         <div>
@@ -829,7 +897,7 @@ const Bhautikadata: React.FC<Props> = ({
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
                                                 value={formData.rashionCard.nasleli}
-                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'kudaMatiGhar', e.target.value)}
+                                                onChange={(e) => handleNestedChange('rashionCard', 'nasleli', e.target.value)}
                                             />
                                         </div>
                                     </div>
@@ -963,10 +1031,10 @@ const Bhautikadata: React.FC<Props> = ({
                                         </div>
                                     </div>
                                 </div>
-                               
+
                             </div>
-                        <div className='md:flex mt-5 gap-4'>
-                                 <div className=" p-2 col-span-1 md:col-span-3 bg-white  rounded-lg shadow mt-5 md:mt-0">
+                            <div className='md:flex mt-5 gap-4'>
+                                <div className=" p-2 col-span-1 md:col-span-3 bg-white  rounded-lg shadow mt-5 md:mt-0">
                                     <h3 className="text-sm font-semibold mb-2">हर घर नळ योजना</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -1011,6 +1079,25 @@ const Bhautikadata: React.FC<Props> = ({
                                             />
                                         </div>
                                     </div>
+                                </div>
+
+                                <div className="bg-white rounded-lg shadow p-4">
+                                    <label className="block text-sm font-medium text-gray-700 ">सर्व रस्ते जोडलेल्या गावांची संख्या</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.allroadvillages}
+                                        onChange={(e) => handleChange('allroadvillages', e.target.value)}
+                                    />
+                                </div>
+                                <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 ">५ किमी अंतरापर्यंत बाजारपेठ नसलेल्या गावांची संख्या</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
+                                        value={formData.village_distance}
+                                        onChange={(e) => handleChange('village_distance', e.target.value)}
+                                    />
                                 </div>
                                 <div className=" p-2 bg-white  rounded-lg shadow mt-5 md:mt-0">
                                     <label className="block text-sm font-medium text-gray-700 mb-1 font-unwrap whitespace-nowrap">पीएम आवास योजना</label>
@@ -1077,8 +1164,8 @@ const Bhautikadata: React.FC<Props> = ({
 
 
                                 <div className="bg-white rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">सामान्य आरोग्य तपासणी 
- होय /नाही</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">सामान्य आरोग्य तपासणी
+                                        होय /नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1164,7 +1251,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </label>
                                     </div>
                                 </div>
-                         
+
 
                                 {/* Kindergarten */}
                                 <div className="bg-white rounded-lg shadow p-2 ">

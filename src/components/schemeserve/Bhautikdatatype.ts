@@ -17,4 +17,9 @@ export interface BhautikDataall {
   riverlake: string;
   id: number;
   status: string;
+
+  contact_no: string;
+  rationcard_no: string;
+  allroadvillages: string;
+  village_distance: string;
 }
