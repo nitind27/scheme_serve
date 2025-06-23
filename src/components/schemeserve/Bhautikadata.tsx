@@ -632,7 +632,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण कुटुंब संख्या</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण</label>
                                         <input
                                             type="text"
                                             readOnly
@@ -666,7 +666,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">आदिवासी लोकसंख्या</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण</label>
                                         <input
                                             type="text"
                                             readOnly
