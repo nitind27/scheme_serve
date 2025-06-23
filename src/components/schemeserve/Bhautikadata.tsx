@@ -682,7 +682,7 @@ const Bhautikadata: React.FC<Props> = ({
 
 
                             {/* Other fields in 3-column layout */}
-                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-5'>
+                            <div className='grid grid-cols-1 md:grid-cols-5 gap-4 mt-5'>
                                 <div className="bg-white rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 ">आदिवासी लोकसंख्या टक्केवारी</label>
                                     <input
@@ -694,7 +694,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 <div className="bg-white rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 ">संपर्क क्रमांक</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5">संपर्क क्रमांक</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -703,7 +703,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
                                 <div className="bg-white rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 ">कुटुंब संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5">कुटुंब संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -786,12 +786,9 @@ const Bhautikadata: React.FC<Props> = ({
                                             <span className="ml-1 text-xs text-gray-700">नाही</span>
                                         </label>
                                     </div>
+                                    
                                 </div>
-                            </div>
-                            <div className='md:flex gap-4 mt-5'>
-
-
-                                {/* Aadhar Card */}
+                                     {/* Aadhar Card */}
                                 <div className=" p-2 col-span-1 md:col-span-3 bg-white p-2 rounded-lg shadow">
                                     <h3 className="text-sm font-semibold mb-2">आधारकार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
@@ -815,6 +812,11 @@ const Bhautikadata: React.FC<Props> = ({
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className='md:flex gap-4 mt-5'>
+
+
+                           
 
                                 {/* Matdar Olakhap */}
                                 <div className=" p-2 col-span-1 md:col-span-3 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
@@ -863,12 +865,8 @@ const Bhautikadata: React.FC<Props> = ({
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div className='md:flex gap-4 mt-5'>
-                                <div className="bg-white rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 ">राशन कार्ड क्रमांक</label>
+                                  <div className="bg-white rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 mb-5">राशन कार्ड क्रमांक</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm"
@@ -876,6 +874,11 @@ const Bhautikadata: React.FC<Props> = ({
                                         onChange={(e) => handleChange('rationcard_no', e.target.value)}
                                     />
                                 </div>
+
+                            </div>
+
+                            <div className='md:flex gap-4 mt-5'>
+                              
 
                                 <div className=" p-2 col-span-1 md:col-span-3 mb-2 bg-white p-2 rounded-lg shadow mt-5 md:mt-0">
 
