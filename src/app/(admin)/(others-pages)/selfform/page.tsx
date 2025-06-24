@@ -11,7 +11,7 @@ import Vyaktigatdata from '@/components/schemeserve/Vyaktigatdata';
 import React, { Suspense } from 'react'
 
 const getUsers = async (): Promise<vyaktikDataall[]> => {
-  const res = await fetch(`http://localhost:3000/api/vyaktikapi`, { cache: 'no-store' });
+  const res = await fetch(`https://schemeserve.weclocks.online/api/vyaktikapi`, { cache: 'no-store' });
  
   return res.json();
 
