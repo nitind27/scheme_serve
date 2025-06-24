@@ -540,8 +540,8 @@ console.log("editId",editId)
             key: 'castcertificate',
             label: 'जातीचे दाखल',
             render: (item) => {
-                const [female, male, total] = item.castcertificate ? item.castcertificate.split('|') : ['', '', ''];
-                return `स्री: ${female || 'N/A'}, पुरुष: ${male || 'N/A'}, एकूण: ${total || 'N/A'}`;
+                const [female, male] = item.castcertificate ? item.castcertificate.split('|') : ['', ''];
+                return `असलेली संख्या: ${female || 'N/A'}, नसलेली संख्या: ${male || 'N/A'}`;
             }
         },
         {
@@ -598,7 +598,7 @@ console.log("editId",editId)
         },
         {
             key: 'headofmember',
-            label: 'कुटुंब प्रमुख',
+            label: 'कुटुंब प्रमुखाकडे अधिवास प्रमाणपत्र',
             render: (data) => <span>{data.headofmember}</span>,
         },
         {
@@ -623,7 +623,7 @@ console.log("editId",editId)
         },
         {
             key: 'electricity',
-            label: 'वीजीकरण',
+            label: 'विद्युतीकरण',
             render: (data) => <span>{data.electricity}</span>,
         },
         {
@@ -638,7 +638,7 @@ console.log("editId",editId)
         },
         {
             key: 'studybenefite',
-            label: 'अभ्यासाचा लाभ',
+            label: 'असल्यास, लाभ',
             render: (data) => <span>{data.studybenefite}</span>,
         },
         {
@@ -648,12 +648,12 @@ console.log("editId",editId)
         },
         {
             key: 'studyvanpatta',
-            label: 'वनपत्राधारक आहे काय?',
+            label: 'असल्यास, वन पट्टा धारक',
             render: (data) => <span>{data.studyvanpatta}</span>,
         },
         {
             key: 'sikklacelloffamily',
-            label: 'सायकलसेल सदस्य',
+            label: 'सिकलसेल सदस्य',
             render: (data) => <span>{data.sikklacelloffamily}</span>,
         },
         {
@@ -832,7 +832,7 @@ console.log("editId",editId)
                                 </div>
                             </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 mb-6 ">
-                                <h3 className="text-sm font-semibold mb-2">जातीचे दाखल</h3>
+                                <h3 className="text-sm font-semibold mb-2">जातीचे दाखले</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">असलेली संख्या</label>
@@ -863,7 +863,7 @@ console.log("editId",editId)
                                 <h3 className="text-sm font-semibold mb-2">आधारकार्ड</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">असलेली संख्या</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -872,7 +872,7 @@ console.log("editId",editId)
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली संख्या</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -890,7 +890,7 @@ console.log("editId",editId)
                                 <h3 className="text-sm font-semibold mb-2">मतदार ओळखपत्र</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">असलेली संख्या</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -899,7 +899,7 @@ console.log("editId",editId)
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली संख्या</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1076,7 +1076,7 @@ console.log("editId",editId)
                             </div>
                             {/* Head of Member */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंब प्रमुख</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंब प्रमुखाकडे अधिवास प्रमाणपत्र</label>
 
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
@@ -1412,7 +1412,7 @@ console.log("editId",editId)
 
                             {/* Cycle Scheme */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंबात सायकलसेल बांधत सदस्य आहे/नाही</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंबात सिकलसेल बाधित सदस्य आहे/नाही</label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input
@@ -1611,7 +1611,7 @@ console.log("editId",editId)
 
                             {/* Department Scheme */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">ट्राइबल कार्यालयाकडून कोणती योजना मिळाली</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">प्रकल्प कार्यालयाकडून कोणती योजना मिळाली</label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input

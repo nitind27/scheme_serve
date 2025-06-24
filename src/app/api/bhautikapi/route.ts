@@ -29,51 +29,50 @@ export async function POST(request: Request) {
         tribalbenefitnumber, stepfacilities, everygharnaalyojana,
         electrificationforfamilies, healthfacilityis, generalhealthcheckup,
         sickleanemia, elementaryschool, middleschool, kindergarten,
-        mobilefacilities, mobilemedicalunit, gotulsocietybuilding, riverlake, scheme_name, allroadvillages, village_distance
+        mobilefacilities, mobilemedicalunit, gotulsocietybuilding, riverlake, scheme_name,
+        allroadvillages, village_distance
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        body.ekunSankhya,
-        body.tribalPopulation,
-        body.tribalPopulationTkWari,
-        body.totalFamilyNumbers,
-        body.tribalsWholeFamilyNumbers,
-        body.vaitikAadivasi,
-        body.samuhikVanpatta,
-        body.cfrmAarakhda,
-        body.aadharcard,
-        body.matdarOlahkhap,
-        body.jaticheGmanap,
-        body.rashionCard,
-        body.jobCard,
-        body.pmKisanCard,
-        body.ayushmanCard,
-        body.aadivasiHouse,
-        body.pmAwasYojana,
-        body.panyaPanyachiSuvidha,
-        body.harGharNalYojana,
-        body.vidyutikaran,
-        body.arogyUpcharKendra,
-        body.generalHealthCheckup,
-        body.sickleCellAnemiaScreening,
-        body.primarySchool,
-        body.middleSchool,
+        body.totalpopulation,
+        body.tribalpopulation,
+        body.tribalpopulationtkkwari,
+        body.totalfamilynumbers,
+        body.tribalwholefamilynumbers,
+        body.forestshareholderno,
+        body.collectiveforestry,
+        body.cfrmplan,
+        body.aadhaarcard,
+        body.voteridcard,
+        body.breedstandards,
+        body.rationcard,
+        body.jobcard,
+        body.pmfarmercard,
+        body.ayushmancard,
+        body.adivasis,
+        body.tribalbenefitnumber,
+        body.stepfacilities,
+        body.everygharnaalyojana,
+        body.electrificationforfamilies,
+        body.healthfacilityis,
+        body.generalhealthcheckup,
+        body.sickleanemia,
+        body.elementaryschool,
+        body.middleschool,
         body.kindergarten,
-        body.mobileNetwork,
-        body.mobileMedicalUnit,
-        body.gotulSocietyBuilding,
-        body.nadiTalav,
+        body.mobilefacilities,
+        body.mobilemedicalunit,
+        body.gotulsocietybuilding,
+        body.riverlake,
         body.scheme_name,
-     
-        // body.rationcard_no,
         body.allroadvillages,
-        body.village_distance,
+        body.village_distance
       ]
     );
 
-    return NextResponse.json({ message: 'Document category created', id: result.insertId });
+    return NextResponse.json({ message: 'Document inserted successfully', id: result.insertId });
   } catch (error) {
     console.error('Creation error:', error);
-    return NextResponse.json({ error: 'Failed to create category' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to create record' }, { status: 500 });
   }
 }
 
