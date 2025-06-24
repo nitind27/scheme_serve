@@ -96,3 +96,74 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: 'Failed to update status' }, { status: 500 });
   }
 }
+
+// PUT handler - update data
+export async function PUT(request: Request) {
+  const body = await request.json();
+  const { id } = body;
+
+  if (!id) {
+    return NextResponse.json({ error: 'ID is required for update' }, { status: 400 });
+  }
+
+  try {
+    const [result] = await pool.query<ResultSetHeader>(
+      `UPDATE bhautikdb SET
+        totalpopulation = ?, tribalpopulation = ?, tribalpopulationtkkwari = ?,
+        totalfamilynumbers = ?, tribalwholefamilynumbers = ?, forestshareholderno = ?,
+        collectiveforestry = ?, cfrmplan = ?, aadhaarcard = ?, voteridcard = ?, breedstandards = ?,
+        rationcard = ?, jobcard = ?, pmfarmercard = ?, ayushmancard = ?, adivasis = ?,
+        tribalbenefitnumber = ?, stepfacilities = ?, everygharnaalyojana = ?,
+        electrificationforfamilies = ?, healthfacilityis = ?, generalhealthcheckup = ?,
+        sickleanemia = ?, elementaryschool = ?, middleschool = ?, kindergarten = ?,
+        mobilefacilities = ?, mobilemedicalunit = ?, gotulsocietybuilding = ?, riverlake = ?, scheme_name = ?,
+        allroadvillages = ?, village_distance = ?
+      WHERE id = ?`,
+      [
+        body.totalpopulation,
+        body.tribalpopulation,
+        body.tribalpopulationtkkwari,
+        body.totalfamilynumbers,
+        body.tribalwholefamilynumbers,
+        body.forestshareholderno,
+        body.collectiveforestry,
+        body.cfrmplan,
+        body.aadhaarcard,
+        body.voteridcard,
+        body.breedstandards,
+        body.rationcard,
+        body.jobcard,
+        body.pmfarmercard,
+        body.ayushmancard,
+        body.adivasis,
+        body.tribalbenefitnumber,
+        body.stepfacilities,
+        body.everygharnaalyojana,
+        body.electrificationforfamilies,
+        body.healthfacilityis,
+        body.generalhealthcheckup,
+        body.sickleanemia,
+        body.elementaryschool,
+        body.middleschool,
+        body.kindergarten,
+        body.mobilefacilities,
+        body.mobilemedicalunit,
+        body.gotulsocietybuilding,
+        body.riverlake,
+        body.scheme_name,
+        body.allroadvillages,
+        body.village_distance,
+        id
+      ]
+    );
+
+    if (result.affectedRows === 0) {
+      return NextResponse.json({ error: 'No record found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: 'Updated successfully' });
+  } catch (error) {
+    console.error('Update error:', error);
+    return NextResponse.json({ error: 'Failed to update entry' }, { status: 500 });
+  }
+}

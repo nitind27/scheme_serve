@@ -39,6 +39,7 @@ export interface BhautikDataall {
 }
 export interface vyaktikDataall {
      id: number,
+    scheme_name: string,
     totaltribalecount: string,
     totalmembersname: string,
     familymembercount: string,

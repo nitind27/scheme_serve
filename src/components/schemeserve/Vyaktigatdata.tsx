@@ -20,6 +20,7 @@ import { Schemesdatas } from '../schemesdata/schemes';
 
 // Define interfaces
 interface BhautikData {
+    id: number;
     scheme_name: string;
 
     totaltribalecount: string;
@@ -32,9 +33,8 @@ interface BhautikData {
     };
 
     castcertificate: {
-        female: string;
-        male: string;
-        total: string;
+        asleli: string;
+        nasleli: string;
     };
 
     aadharcard: {
@@ -94,6 +94,7 @@ interface BhautikData {
 
 interface BhautikDataall {
     id: number,
+    scheme_name: string,
     totaltribalecount: string,
     totalmembersname: string,
     familymembercount: string,
@@ -148,22 +149,23 @@ const Vyaktigatdata: React.FC<Props> = ({
     schemescrud
 
 }) => {
-    // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
-    const {  isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
+    const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
+    // const {  isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
     const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
 
     const [loading, setLoading] = useState(false);
-    const [editId] = useState<number | null>(null);
-
+    const [editId, setEditId] = useState<number | null>(null);
+console.log("editId",editId)
     // Initialize form state
     const [formData, setFormData] = useState<BhautikData>({
+        id: 0,
         scheme_name: "",
 
         totaltribalecount: '',
         totalmembersname: '',
         familymembercount: { female: '', male: '', total: '' },
-        castcertificate: { female: '', male: '', total: '' },
+        castcertificate: { asleli: '', nasleli: '' },
         aadharcard: { asleli: '', nasleli: '' },
         voteridcard: { asleli: '', nasleli: '' },
         rationcard_no: '',
@@ -327,25 +329,24 @@ const Vyaktigatdata: React.FC<Props> = ({
     // };
 
 
-    // Handle form submission
     const handleSave = async () => {
         if (!validateInputs()) return;
         setLoading(true);
 
-        const apiUrl = isEditMode ? `/api/vyaktikapi/${editId}` : '/api/vyaktikapi';
+        const apiUrl = '/api/vyaktikapi';
         const method = isEditMode ? 'PUT' : 'POST';
 
         try {
-            // Transform the form data into the expected format
-            const transformedData = {
+            const transformedData: Record<string, string | number> = {
+                ...(isEditMode && { id: formData.id }), // ✅ Include ID for PUT
                 scheme_name: formData.scheme_name,
                 totaltribalecount: formData.totaltribalecount,
                 totalmembersname: formData.totalmembersname,
                 familymembercount: `${formData.familymembercount.female}|${formData.familymembercount.male}|${formData.familymembercount.total}`,
-                castcertificate: `${formData.castcertificate.female}|${formData.castcertificate.male}|${formData.castcertificate.total}`,
+                castcertificate: `${formData.castcertificate.asleli}|${formData.castcertificate.nasleli}`,
                 aadharcard: `${formData.aadharcard.asleli}|${formData.aadharcard.nasleli}`,
                 voteridcard: `${formData.voteridcard.asleli}|${formData.voteridcard.nasleli}`,
-                rationcard: `${formData.rationcard}`,
+                rationcard: formData.rationcard,
                 jobcard: formData.jobcard,
                 pmfarmercard: formData.pmfarmercard,
                 farmercreditcard: formData.farmercreditcard,
@@ -353,7 +354,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                 headofmember: formData.headofmember,
                 pmKisanCard: `${formData.pmKisanCard.asleli}|${formData.pmKisanCard.nasleli}`,
                 ayushmanCard: `${formData.ayushmanCard.asleli}|${formData.ayushmanCard.nasleli}`,
-                housetype: `${formData.housetype}`,
+                housetype: formData.housetype,
                 benefiteofpmhouse: formData.benefiteofpmhouse,
                 waterdrink: formData.waterdrink,
                 hargharnal: formData.hargharnal,
@@ -375,13 +376,14 @@ const Vyaktigatdata: React.FC<Props> = ({
                 niymitaarogya: formData.niymitaarogya,
                 rationcard_no: formData.rationcard_no,
                 rationcardtype: formData.rationcardtype,
-                contact_no: formData.contact_no
+                contact_no: formData.contact_no,
+                status: 'Active' // ✅ Optional, add if backend requires it
             };
 
             console.log("Sending data:", transformedData);
 
             const response = await fetch(apiUrl, {
-                method: method,
+                method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(transformedData)
             });
@@ -399,12 +401,13 @@ const Vyaktigatdata: React.FC<Props> = ({
 
         } catch (error) {
             console.error('Error saving data:', error);
-            toast.error((isEditMode ? 'Failed to update data' : 'Failed to save data'));
+            toast.error(isEditMode ? 'Failed to update data' : 'Failed to save data');
         } finally {
             setLoading(false);
             setIsmodelopen(false);
         }
     };
+
 
     // Reset form to initial state
     // const resetForm = () => {
@@ -449,64 +452,67 @@ const Vyaktigatdata: React.FC<Props> = ({
     //     setEditId(null);
     // };
 
-    // const handleEdit = (item: BhautikDataall) => {
-    //     setIsmodelopen(true);
-    //     setIsEditmode(true);
-    //     setIsActive(!isActive)
-    //     setEditId(item.id)
-    //     // Helper to split pipe string
-    //     const parsePopulation = (value: string): { female: string; male: string; total: string } => {
-    //         const [female = '', male = '', total = ''] = value?.split('|') || [];
-    //         return { female, male, total };
-    //     };
+    const handleEdit = (item: BhautikDataall) => {
 
-    //     // Now set form data
-    //     setFormData({
-    //         scheme_name: item.scheme_name,
-    //         ekunSankhya: parsePopulation(item.totalpopulation),
-    //         tribalPopulation: parsePopulation(item.tribalpopulation),
-    //         tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
-    //         totalFamilyNumbers: item.totalfamilynumbers || '',
-    //         tribalsWholeFamilyNumbers: item.tribalwholefamilynumbers || '',
-    //         vaitikAadivasi: '', // not available in BhautikDataall
-    //         samuhikVanpatta: '', // not available in BhautikDataall
-    //         cfrmAarakhda: '', // not available in BhautikDataall
-    //         aadharcard: { asleli: item.aadhaarcard || '', nasleli: '' },
-    //         matdarOlahkhap: { asleli: item.voteridcard || '', nasleli: '' },
-    //         jaticheGmanap: { asleli: '', nasleli: '' }, // not available
-    //         rashionCard: { asleli: item.rationcard || '', nasleli: '' },
-    //         jobCard: { asleli: item.jobcard || '', nasleli: '' },
-    //         pmKisanCard: { asleli: item.pmfarmercard || '', nasleli: '' },
-    //         ayushmanCard: { asleli: item.ayushmancard || '', nasleli: '' },
-    //         aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' }, // not available
-    //         pmAwasYojana: '', // not available
-    //         panyaPanyachiSuvidha: { asleli: '', nasleli: '' }, // not available
-    //         harGharNalYojana: { asleli: '', nasleli: '' }, // not available
-    //         vidyutikaran: { asleli: item.electrificationforfamilies || '', nasleli: '' },
-    //         arogyUpcharKendra: '', // not available
-    //         generalHealthCheckup: '', // not available
-    //         sickleCellAnemiaScreening: '', // not available
-    //         primarySchool: item.elementaryschool || '',
-    //         middleSchool: item.middleschool || '',
-    //         kindergarten: '', // not available
-    //         mobileNetwork: '', // not available
-    //         gramPanchayatBuilding: '', // not available
-    //         mobileMedicalUnit: '', // not available
-    //         gotulSocietyBuilding: '', // not available
-    //         nadiTalav: item.riverlake || '',
-    //         contact_no: '',
-    //         rationcard_no: '',
-    //         allroadvillages: '',
-    //         village_distance: '',
-    //     });
-    // };
 
+        setIsmodelopen(true);
+        setIsEditmode(true);
+        setIsActive(!isActive)
+        setEditId(item.id)
+
+        const parseTriple = (value: string): { female: string; male: string; total: string } => {
+            const [female = '', male = '', total = ''] = value?.split('|') || [];
+            return { female, male, total };
+        };
+        const parseDouble = (value: string): { asleli: string; nasleli: string } => {
+            const [asleli = '', nasleli = ''] = value?.split('|') || [];
+            return { asleli, nasleli };
+        };
+
+        setFormData({
+            id: item.id,
+            scheme_name: item.scheme_name || "",
+            totaltribalecount: item.totaltribalecount || "",
+            totalmembersname: item.totalmembersname || "",
+            familymembercount: parseTriple(item.familymembercount),
+            castcertificate: parseDouble(item.castcertificate),
+            aadharcard: parseDouble(item.aadharcard),
+            voteridcard: parseDouble(item.voteridcard),
+            rationcard_no: item.rationcard_no || "",
+            rationcard: item.rationcard || "",
+            rationcardtype: item.rationcardtype || "",
+            jobcard: item.jobcard || "",
+            pmfarmercard: item.pmfarmercard || "",
+            farmercreditcard: item.farmercreditcard || "",
+            aayushmancard: item.aayushmancard || "",
+            headofmember: item.headofmember || "",
+            pmKisanCard: parseDouble(item.pmKisanCard),
+            ayushmanCard: parseDouble(item.ayushmanCard),
+            housetype: item.housetype || "",
+            benefiteofpmhouse: item.benefiteofpmhouse || "",
+            waterdrink: item.waterdrink || "",
+            hargharnal: item.hargharnal || "",
+            electricity: item.electricity || "",
+            hospitalphc: item.hospitalphc || "",
+            sanjaygandhi: item.sanjaygandhi || "",
+            studybenefite: item.studybenefite || "",
+            farmeavilebleornot: item.farmeavilebleornot || "",
+            studyvanpatta: item.studyvanpatta || "",
+            sikklacelloffamily: item.sikklacelloffamily || "",
+            whichschoolchlid: item.whichschoolchlid || "",
+            anyhaveaashramschool: item.anyhaveaashramschool || "",
+            lpggas: item.lpggas || "",
+            bankaccount: item.bankaccount || "",
+            studtatcoop: item.studtatcoop || "",
+            contact_no: item.contact_no || "",
+            pmvimayojna: item.pmvimayojna || "",
+            praklpkaryalaly: item.praklpkaryalaly || "",
+            itarvibhagudan: item.itarvibhagudan || "",
+            niymitaarogya: item.niymitaarogya || "",
+        });
+    };
     const columns: Column<BhautikDataall>[] = [
-         {
-            key: "totalpopulation_female",
-            label: "id",
-            render: (data) => <span>{data.id}</span>,
-        },
+
         {
             key: 'totaltribalecount',
             label: 'एकूण आदिवासी लोकसंख्या',
@@ -515,7 +521,7 @@ const Vyaktigatdata: React.FC<Props> = ({
         {
             key: 'totalmembersname',
             label: 'कुटुंब प्रमुखाचे नाव',
-             render: (data) => <span>{data.totalmembersname}</span>,
+            render: (data) => <span>{data.totalmembersname}</span>,
         },
         {
             key: 'contact_no',
@@ -567,43 +573,43 @@ const Vyaktigatdata: React.FC<Props> = ({
         {
             key: 'rationcardtype',
             label: 'रेशन कार्डचा प्रकार',
-             render: (data) => <span>{data.rationcardtype}</span>,
+            render: (data) => <span>{data.rationcardtype}</span>,
         },
         {
             key: 'jobcard',
             label: 'जॉब कार्ड',
-              render: (data) => <span>{data.jobcard}</span>,
+            render: (data) => <span>{data.jobcard}</span>,
         },
         {
             key: 'pmfarmercard',
             label: 'PM किसान कार्ड',
-              render: (data) => <span>{data.pmfarmercard}</span>,
+            render: (data) => <span>{data.pmfarmercard}</span>,
         },
         {
             key: 'farmercreditcard',
             label: 'किसान क्रेडिट कार्ड',
-               render: (data) => <span>{data.farmercreditcard}</span>,
+            render: (data) => <span>{data.farmercreditcard}</span>,
         },
 
         {
             key: 'aayushmancard',
             label: 'आयुष्मान कार्ड',
-             render: (data) => <span>{data.aayushmancard}</span>,
+            render: (data) => <span>{data.aayushmancard}</span>,
         },
         {
             key: 'headofmember',
             label: 'कुटुंब प्रमुख',
-               render: (data) => <span>{data.headofmember}</span>,
+            render: (data) => <span>{data.headofmember}</span>,
         },
         {
             key: 'housetype',
             label: 'राहते घराचा प्रकार',
-              render: (data) => <span>{data.housetype}</span>,
+            render: (data) => <span>{data.housetype}</span>,
         },
         {
             key: 'benefiteofpmhouse',
             label: 'PM आवास योजनेचा लाभ',
-                   render: (data) => <span>{data.benefiteofpmhouse}</span>,
+            render: (data) => <span>{data.benefiteofpmhouse}</span>,
         },
         {
             key: 'waterdrink',
@@ -613,96 +619,96 @@ const Vyaktigatdata: React.FC<Props> = ({
         {
             key: 'hargharnal',
             label: 'हर घर नळ योजना',
-              render: (data) => <span>{data.hargharnal}</span>,
+            render: (data) => <span>{data.hargharnal}</span>,
         },
         {
             key: 'electricity',
             label: 'वीजीकरण',
-                render: (data) => <span>{data.electricity}</span>,
+            render: (data) => <span>{data.electricity}</span>,
         },
         {
             key: 'hospitalphc',
             label: 'आरोग्य उपकेंद्र / PHC',
-               render: (data) => <span>{data.hospitalphc}</span>,
+            render: (data) => <span>{data.hospitalphc}</span>,
         },
         {
             key: 'sanjaygandhi',
             label: 'संजय गांधी निराधार योजनेचे लाभार्थी आहे/नाही',
-                     render: (data) => <span>{data.sanjaygandhi}</span>,
+            render: (data) => <span>{data.sanjaygandhi}</span>,
         },
         {
             key: 'studybenefite',
             label: 'अभ्यासाचा लाभ',
-                  render: (data) => <span>{data.studybenefite}</span>,
+            render: (data) => <span>{data.studybenefite}</span>,
         },
         {
             key: 'farmeavilebleornot',
             label: 'शेती आहे काय?',
-             render: (data) => <span>{data.farmeavilebleornot}</span>,
+            render: (data) => <span>{data.farmeavilebleornot}</span>,
         },
         {
             key: 'studyvanpatta',
             label: 'वनपत्राधारक आहे काय?',
-             render: (data) => <span>{data.studyvanpatta}</span>,
+            render: (data) => <span>{data.studyvanpatta}</span>,
         },
         {
             key: 'sikklacelloffamily',
             label: 'सायकलसेल सदस्य',
-               render: (data) => <span>{data.sikklacelloffamily}</span>,
+            render: (data) => <span>{data.sikklacelloffamily}</span>,
         },
         {
             key: 'whichschoolchlid',
             label: 'मुले कोणत्या शाळेत शिकत आहे',
-               render: (data) => <span>{data.whichschoolchlid}</span>,
+            render: (data) => <span>{data.whichschoolchlid}</span>,
         },
         {
             key: 'anyhaveaashramschool',
             label: 'मुले आश्रमशाळेत शिकत आहेत काय?',
-               render: (data) => <span>{data.anyhaveaashramschool}</span>,
+            render: (data) => <span>{data.anyhaveaashramschool}</span>,
         },
         {
             key: 'lpggas',
             label: 'LPG सिलिंडर',
-              render: (data) => <span>{data.lpggas}</span>,
+            render: (data) => <span>{data.lpggas}</span>,
         },
         {
             key: 'bankaccount',
             label: 'बँक खाते',
-                render: (data) => <span>{data.bankaccount}</span>,
+            render: (data) => <span>{data.bankaccount}</span>,
         },
         {
             key: 'studtatcoop',
             label: 'बँक प्रकार',
-             render: (data) => <span>{data.studtatcoop}</span>,
+            render: (data) => <span>{data.studtatcoop}</span>,
         },
         {
             key: 'pmvimayojna',
             label: 'PM विमा योजना',
-                render: (data) => <span>{data.pmvimayojna}</span>,
+            render: (data) => <span>{data.pmvimayojna}</span>,
         },
         {
             key: 'praklpkaryalaly',
             label: 'ट्राइबल कार्यालयाकडून योजना',
-                    render: (data) => <span>{data.praklpkaryalaly}</span>,
+            render: (data) => <span>{data.praklpkaryalaly}</span>,
         },
         {
             key: 'itarvibhagudan',
             label: 'इतर विभागाकडून योजना',
-                   render: (data) => <span>{data.itarvibhagudan}</span>,
+            render: (data) => <span>{data.itarvibhagudan}</span>,
         },
         {
             key: 'niymitaarogya',
             label: 'नियमित आरोग्य तपासणी',
-                 render: (data) => <span>{data.niymitaarogya}</span>,
+            render: (data) => <span>{data.niymitaarogya}</span>,
         },
-      
+
         {
             key: "actions",
             label: "Actions",
             render: (data) => (
                 <div className="flex gap-2 whitespace-nowrap w-full">
                     <span
-                        //   onClick={() => handleEdit(data)}
+                        onClick={() => handleEdit(data)}
                         className="cursor-pointer text-blue-600 hover:text-blue-800 transition-colors duration-200"
                     >
                         <FaEdit className="inline-block align-middle text-lg" />
@@ -829,33 +835,25 @@ const Vyaktigatdata: React.FC<Props> = ({
                                 <h3 className="text-sm font-semibold mb-2">जातीचे दाखल</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">स्री</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">असलेली संख्या</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                            value={formData.castcertificate.female}
-                                            onChange={e => handleNestedChange('castcertificate', 'female', e.target.value)}
+                                            value={formData.castcertificate.asleli}
+                                            onChange={e => handleNestedChange('castcertificate', 'asleli', e.target.value)}
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">पुरुष</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">नसलेली संख्या</label>
                                         <input
                                             type="text"
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                            value={formData.castcertificate.male}
-                                            onChange={e => handleNestedChange('castcertificate', 'male', e.target.value)}
+                                            value={formData.castcertificate.nasleli}
+                                            onChange={e => handleNestedChange('castcertificate', 'nasleli', e.target.value)}
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">एकूण</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                            value={formData.castcertificate.total}
-                                            onChange={e => handleNestedChange('castcertificate', 'total', e.target.value)}
-                                        />
-                                    </div>
+                                  
                                 </div>
                             </div>
 

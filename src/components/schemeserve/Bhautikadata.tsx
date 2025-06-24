@@ -296,70 +296,97 @@ const Bhautikadata: React.FC<Props> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData.ekunSankhya.female, formData.ekunSankhya.male, formData.tribalPopulation.female, formData.tribalPopulation.male]);
 
-    const transformFormData = (data: BhautikData) => {
-        const transformTriple = (obj: Triple) => {
-            if (obj && typeof obj === 'object') {
-                return [obj.female ?? '', obj.male ?? '', obj.total ?? ''].join('|');
-            }
-            return '';
-        };
+const transformFormData = (data: BhautikData) => {
+  const transformTriple = (obj: Triple) =>
+    obj && typeof obj === 'object'
+      ? [obj.female ?? '', obj.male ?? '', obj.total ?? ''].join('|')
+      : '';
 
-        const transformDouble = (obj: Double) => {
-            if (obj && typeof obj === 'object') {
-                return [obj.asleli ?? '', obj.nasleli ?? ''].join('|');
-            }
-            return '';
-        };
+  const transformDouble = (obj: Double) =>
+    obj && typeof obj === 'object'
+      ? [obj.asleli ?? '', obj.nasleli ?? ''].join('|')
+      : '';
 
-        return {
-            ...data,
-            ekunSankhya: transformTriple(data.ekunSankhya),
-            tribalPopulation: transformTriple(data.tribalPopulation),
-            aadharcard: transformDouble(data.aadharcard),
-            matdarOlahkhap: transformDouble(data.matdarOlahkhap),
-            jaticheGmanap: transformDouble(data.jaticheGmanap),
-            rashionCard: transformDouble(data.rashionCard),
-            jobCard: transformDouble(data.jobCard),
-            pmKisanCard: transformDouble(data.pmKisanCard),
-            ayushmanCard: transformDouble(data.ayushmanCard),
-            aadivasiHouse: `${data.aadivasiHouse.pakkeGhar}|${data.aadivasiHouse.kudaMatiGhar}`,
-            panyaPanyachiSuvidha: transformDouble(data.panyaPanyachiSuvidha),
-            harGharNalYojana: transformDouble(data.harGharNalYojana),
-            vidyutikaran: transformDouble(data.vidyutikaran)
-        };
-    };
+  return {
+    scheme_name: data.scheme_name,
+    totalpopulation: transformTriple(data.ekunSankhya),
+    tribalpopulation: transformTriple(data.tribalPopulation),
+    tribalpopulationtkkwari: data.tribalPopulationTkWari,
+    totalfamilynumbers: data.totalFamilyNumbers,
+    tribalwholefamilynumbers: data.tribalsWholeFamilyNumbers,
+    forestshareholderno: data.vaitikAadivasi,
+    collectiveforestry: data.samuhikVanpatta,
+    cfrmplan: data.cfrmAarakhda,
+    aadhaarcard: transformDouble(data.aadharcard),
+    voteridcard: transformDouble(data.matdarOlahkhap),
+    breedstandards: transformDouble(data.jaticheGmanap),
+    rationcard: transformDouble(data.rashionCard),
+    jobcard: transformDouble(data.jobCard),
+    pmfarmercard: transformDouble(data.pmKisanCard),
+    ayushmancard: transformDouble(data.ayushmanCard),
+    adivasis: `${data.aadivasiHouse.pakkeGhar}|${data.aadivasiHouse.kudaMatiGhar}`,
+    tribalbenefitnumber: data.pmAwasYojana,
+    stepfacilities: transformDouble(data.panyaPanyachiSuvidha),
+    everygharnaalyojana: transformDouble(data.harGharNalYojana),
+    electrificationforfamilies: transformDouble(data.vidyutikaran),
+    healthfacilityis: data.arogyUpcharKendra,
+    generalhealthcheckup: data.generalHealthCheckup,
+    sickleanemia: data.sickleCellAnemiaScreening,
+    elementaryschool: data.primarySchool,
+    middleschool: data.middleSchool,
+    kindergarten: data.kindergarten,
+    mobilefacilities: data.mobileNetwork,
+    mobilemedicalunit: data.mobileMedicalUnit,
+    gotulsocietybuilding: data.gotulSocietyBuilding,
+    riverlake: data.nadiTalav,
+    allroadvillages: data.allroadvillages,
+    village_distance: data.village_distance
+  };
+};
 
 
     // Handle form submission
-    const handleSave = async () => {
-        if (!validateInputs()) return;
-        setLoading(true);
+const handleSave = async () => {
+  if (!validateInputs()) return;
+  setLoading(true);
 
-        const apiUrl = isEditMode ? `/api/bhautikapi/${editId}` : '/api/bhautikapi';
-        const method = isEditMode ? 'PUT' : 'POST';
+  const apiUrl = '/api/bhautikapi';
+  const method = isEditMode ? 'PUT' : 'POST';
 
-        try {
-            const transformedData = transformFormData(formData);
-            console.log("transformedData", transformedData)
-            const response = await fetch(apiUrl, {
-                method: method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(transformedData)
-            });
-
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-            toast.success(isEditMode ? 'Data updated successfully!' : 'Data saved successfully!');
-            fetchData();
-            resetForm();
-        } catch (error) {
-            console.error('Error saving data:', error);
-            toast.error(isEditMode ? 'Failed to update data' : 'Failed to save data');
-        } finally {
-            setLoading(false);
-            setIsmodelopen(false);
-        }
+  try {
+    const transformedData = {
+      ...(isEditMode && { id: editId }), // include id only on PUT
+      ...transformFormData(formData)
     };
+
+    console.log("transformedData", transformedData);
+
+    const response = await fetch(apiUrl, {
+      method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(transformedData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+
+    toast.success(isEditMode ? 'Data updated successfully!' : 'Data saved successfully!');
+    fetchData();
+    resetForm();
+  } catch (error) {
+    console.error('Error saving data:', error);
+    toast.error(isEditMode ? 'Failed to update data' : 'Failed to save data');
+  } finally {
+    setLoading(false);
+    setIsmodelopen(false);
+  }
+};
+
+
 
     // Reset form to initial state
     const resetForm = () => {
@@ -414,10 +441,16 @@ const Bhautikadata: React.FC<Props> = ({
             const [female = '', male = '', total = ''] = value?.split('|') || [];
             return { female, male, total };
         };
-
-        // Now set form data
+        const parseDouble = (value: string): { asleli: string; nasleli: string } => {
+            const [asleli = '', nasleli = ''] = value?.split('|') || [];
+            return { asleli, nasleli };
+        };
+        const parseAadivasiHouse = (value: string): { pakkeGhar: string; kudaMatiGhar: string } => {
+            const [pakkeGhar = '', kudaMatiGhar = ''] = value?.split('|') || [];
+            return { pakkeGhar, kudaMatiGhar };
+        };
         setFormData({
-            scheme_name: item.scheme_name,
+            scheme_name: item.scheme_name || '',
             ekunSankhya: parsePopulation(item.totalpopulation),
             tribalPopulation: parsePopulation(item.tribalpopulation),
             tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
@@ -426,18 +459,18 @@ const Bhautikadata: React.FC<Props> = ({
             vaitikAadivasi: '', // not available in BhautikDataall
             samuhikVanpatta: '', // not available in BhautikDataall
             cfrmAarakhda: '', // not available in BhautikDataall
-            aadharcard: { asleli: item.aadhaarcard || '', nasleli: '' },
-            matdarOlahkhap: { asleli: item.voteridcard || '', nasleli: '' },
+            aadharcard: parseDouble(item.aadhaarcard),
+            matdarOlahkhap: parseDouble(item.voteridcard),
             jaticheGmanap: { asleli: '', nasleli: '' }, // not available
-            rashionCard: { asleli: item.rationcard || '', nasleli: '' },
-            jobCard: { asleli: item.jobcard || '', nasleli: '' },
-            pmKisanCard: { asleli: item.pmfarmercard || '', nasleli: '' },
-            ayushmanCard: { asleli: item.ayushmancard || '', nasleli: '' },
-            aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' }, // not available
+            rashionCard: parseDouble(item.rationcard),
+            jobCard: parseDouble(item.jobcard),
+            pmKisanCard: parseDouble(item.pmfarmercard),
+            ayushmanCard: parseDouble(item.ayushmancard),
+            aadivasiHouse: parseAadivasiHouse(''), // not available
             pmAwasYojana: '', // not available
             panyaPanyachiSuvidha: { asleli: '', nasleli: '' }, // not available
             harGharNalYojana: { asleli: '', nasleli: '' }, // not available
-            vidyutikaran: { asleli: item.electrificationforfamilies || '', nasleli: '' },
+            vidyutikaran: parseDouble(item.electrificationforfamilies),
             arogyUpcharKendra: '', // not available
             generalHealthCheckup: '', // not available
             sickleCellAnemiaScreening: '', // not available
@@ -449,8 +482,6 @@ const Bhautikadata: React.FC<Props> = ({
             mobileMedicalUnit: '', // not available
             gotulSocietyBuilding: '', // not available
             nadiTalav: item.riverlake || '',
-            // contact_no: '',
-            // rationcard_no: '',
             allroadvillages: '',
             village_distance: '',
         });
