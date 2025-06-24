@@ -5,13 +5,13 @@ import Loader from '@/common/Loader';
 import Breadcrumbs from '@/components/common/BreadcrumbItem'
 import { Schemesdatas } from '@/components/schemesdata/schemes';
 
-import { BhautikDataall } from '@/components/schemeserve/Bhautikdatatype';
+import {  vyaktikDataall } from '@/components/schemeserve/Bhautikdatatype';
 import Vyaktigatdata from '@/components/schemeserve/Vyaktigatdata';
 // import Documentsdata from '@/components/Documentsdata/Documentsdata'
 import React, { Suspense } from 'react'
 
-const getUsers = async (): Promise<BhautikDataall[]> => {
-  const res = await fetch(`https://schemeserve.weclocks.online/api/bhautikapi`, { cache: 'no-store' });
+const getUsers = async (): Promise<vyaktikDataall[]> => {
+  const res = await fetch(`http://localhost:3000/api/vyaktikapi`, { cache: 'no-store' });
  
   return res.json();
 
@@ -36,7 +36,7 @@ const page = async () => {
   ]);
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'धरती आबा ( भौतिक तक्ता)', href: '/bhautik' },
+    { label: 'वैयक्तिक', href: '/bhautik' },
 
   ];
   // console.log("users", users)
@@ -45,7 +45,7 @@ const page = async () => {
       <div className="col-span-12 space-y-6 xl:col-span-7">
         <Suspense fallback={<Loader />}>
           <Breadcrumbs
-            title="धरती आबा ( भौतिक तक्ता)"
+            title="वैयक्तिक"
             breadcrumbs={breadcrumbItems}
           />
           <Vyaktigatdata initialdata={users} schemescrud={schemescrud} />
