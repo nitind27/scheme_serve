@@ -105,7 +105,7 @@ interface BhautikData {
     gotulSocietyBuilding: string;
     nadiTalav: string;
     // contact_no: string;
-    rationcard_no: string;
+    // rationcard_no: string;
     allroadvillages: string;
     village_distance: string;
 
@@ -197,7 +197,7 @@ const Bhautikadata: React.FC<Props> = ({
         gotulSocietyBuilding: '',
         nadiTalav: '',
         // contact_no: '',
-        rationcard_no: '',
+        // rationcard_no: '',
         allroadvillages: '',
         village_distance: ''
     });
@@ -397,7 +397,7 @@ const Bhautikadata: React.FC<Props> = ({
             gotulSocietyBuilding: '',
             nadiTalav: '',
             // contact_no: '',
-            rationcard_no: '',
+            // rationcard_no: '',
             allroadvillages: '',
             village_distance: '',
         });
@@ -450,7 +450,7 @@ const Bhautikadata: React.FC<Props> = ({
             gotulSocietyBuilding: '', // not available
             nadiTalav: item.riverlake || '',
             // contact_no: '',
-            rationcard_no: '',
+            // rationcard_no: '',
             allroadvillages: '',
             village_distance: '',
         });
@@ -857,7 +857,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </div>
                                     </div>
                                 </div>
-                                  <div className="bg-gray-100 rounded-lg shadow p-2 ">
+                                  {/* <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-5 mb-5">राशन कार्ड क्रमांक</label>
                                     <input
                                         type="text"
@@ -865,7 +865,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         value={formData.rationcard_no}
                                         onChange={(e) => handleChange('rationcard_no', e.target.value)}
                                     />
-                                </div>
+                                </div> */}
 
                             </div>
 
@@ -1052,7 +1052,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </div>
                                     </div>
                                 </div>
-                                <div className=" p-2 col-span-1 md:col-span-3  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
+                                <div className=" p-2 col-span-1 md:col-span-3  bg-gray-100  rounded-lg shadow mt-5 md:mt-0 mb-5 md:mb-0">
                                     <h3 className="text-sm font-semibold mb-2">विद्युतीकरण</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
@@ -1076,7 +1076,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     </div>
                                 </div>
 
-                                <div className="bg-white rounded-lg shadow p-4">
+                                <div className="bg-gray-100 rounded-lg shadow p-4 mb-5 md:mb-0">
                                     <label className="block text-sm font-medium text-gray-700 mb-5 ">सर्व रस्ते जोडलेल्या गावांची संख्या</label>
                                     <input
                                         type="text"

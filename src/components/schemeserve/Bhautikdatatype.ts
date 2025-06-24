@@ -33,7 +33,43 @@ export interface BhautikDataall {
     mobilefacilities: string;
     mobilemedicalunit: string;
     gotulsocietybuilding: string;
-    rationcard_no: string;
+    // rationcard_no: string;
     allroadvillages: string;
     village_distance: string;
+}
+export interface vyaktikDataall {
+    totaltribalecount:string,
+totalmembersname:string,
+familymembercount:string,
+castcertificate:string,
+aadharcard:string,
+voteridcard:string,
+rationcard:string,
+jobcard:string,
+pmfarmercard:string,
+farmercreditcard:string,
+aayushmancard:string,
+headofmember:string,
+pmKisanCard:string,
+ayushmanCard:string,
+housetype:string,
+benefiteofpmhouse:string,
+waterdrink:string,
+hargharnal:string,
+electricity:string,
+hospitalphc:string,
+sanjaygandhi:string,
+studybenefite:string,
+farmeavilebleornot:string,
+studyvanpatta:string,
+sikklacelloffamily:string,
+whichschoolchlid:string,
+anyhaveaashramschool:string,
+lpggas:string,
+bankaccount:string,
+studtatcoop:string,
+pmvimayojna:string,
+praklpkaryalaly:string,
+itarvibhagudan:string,
+niymitaarogya:string,
 }
