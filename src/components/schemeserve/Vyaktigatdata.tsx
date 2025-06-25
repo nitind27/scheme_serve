@@ -392,6 +392,9 @@ const Vyaktigatdata: React.FC<Props> = ({
                 rationcard_no: formData.rationcard_no,
                 rationcardtype: formData.rationcardtype,
                 contact_no: formData.contact_no,
+                taluka_id: formData.taluka_id,
+                village_id: formData.village_id,
+                gp_id: formData.gp_id,
                 status: 'Active' // ✅ Optional, add if backend requires it
             };
 

@@ -374,7 +374,10 @@ const Bhautikadata: React.FC<Props> = ({
             gotulsocietybuilding: data.gotulSocietyBuilding,
             riverlake: data.nadiTalav,
             allroadvillages: data.allroadvillages,
-            village_distance: data.village_distance
+            village_distance: data.village_distance,
+            taluka_id: data.taluka_id,
+            village_id: data.village_id,
+            gp_id: data.gp_id
         };
     };
 
