@@ -829,7 +829,7 @@ const Bhautikadata: React.FC<Props> = ({
 
 
                             {/* Other fields in 3-column layout */}
-                            <div className='grid grid-cols-1 md:grid-cols-5 gap-4 mt-5'>
+                            <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mt-5'>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-6 h-5">आदिवासी लोकसंख्या टक्केवारी</label>
                                     <input
@@ -860,15 +860,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
                                     />
                                 </div>
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">एकूण आदिवासी कुटुंब संख्या</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        value={formData.tribalsWholeFamilyNumbers}
-                                        onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
-                                    />
-                                </div>
+                           
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-6 h-5">वैयक्तिक आदिवासी वनपट्टेधारक संख्या</label>
