@@ -16,6 +16,9 @@ import DefaultModal from '../example/ModalExample/DefaultModal';
 import { BhautikTable } from '../tables/BhautikTable';
 import { FaEdit } from 'react-icons/fa';
 import { Schemesdatas } from '../schemesdata/schemes';
+import { Taluka } from '../Taluka/Taluka';
+import { Village } from '../Village/village';
+import { Grampanchayattype } from '../grampanchayat/gptype';
 // import { Schemesubcategorytype } from '../Schemesubcategory/Schemesubcategory';
 
 // Define interfaces
@@ -89,6 +92,9 @@ interface BhautikData {
     praklpkaryalaly: string;
     itarvibhagudan: string;
     niymitaarogya: string;
+    taluka_id: string;
+    village_id: string;
+    gp_id: string;
 }
 
 
@@ -133,20 +139,26 @@ interface BhautikDataall {
     itarvibhagudan: string,
     niymitaarogya: string,
     status: string,
+    taluka_id: string;
+    village_id: string;
+    gp_id: string;
 }
 
 interface Props {
     initialdata: BhautikDataall[];
     schemescrud: Schemesdatas[];
-
-    // filtersubcategory: any[];
-    // filteryear: any[];
+    talukadata: Taluka[];
+    villagedata: Village[];
+    getgrampanchayatdata: Grampanchayattype[];
 }
 
 
 const Vyaktigatdata: React.FC<Props> = ({
     initialdata,
-    schemescrud
+    schemescrud,
+    talukadata,
+    villagedata,
+    getgrampanchayatdata
 
 }) => {
     const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
@@ -198,7 +210,10 @@ const Vyaktigatdata: React.FC<Props> = ({
         pmvimayojna: '',
         praklpkaryalaly: '',
         itarvibhagudan: '',
-        niymitaarogya: ''
+        niymitaarogya: '',
+        taluka_id: '',
+        village_id: '',
+        gp_id: ''
     });
 
     // Handle nested state changes
@@ -509,6 +524,9 @@ const Vyaktigatdata: React.FC<Props> = ({
             praklpkaryalaly: item.praklpkaryalaly || "",
             itarvibhagudan: item.itarvibhagudan || "",
             niymitaarogya: item.niymitaarogya || "",
+            taluka_id: item.taluka_id || "",
+            village_id: item.village_id || "",
+            gp_id: item.gp_id || "",
         });
     };
     const columns: Column<BhautikDataall>[] = [
@@ -736,31 +754,31 @@ const Vyaktigatdata: React.FC<Props> = ({
                 title='वैयक्तिक'
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
-                    <div className="max-w-7xl mx-auto p-4">
-                             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-5 ">
+                    <div className="max-w-7xl mx-auto p-1">
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-5 ">
                             {/* CFRMC आराखडा */}
 
 
-                            <div className="md:col-span-4 rounded-lg shadow p-4 mt-4">
+                            <div className="md:col-span-4 mt-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-1 h-5">तालुका </label>
                                 <select
                                     name=""
                                     id=""
                                     className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
                                         }`}
-                                    value={formData.scheme_name}
-                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                    value={formData.taluka_id}
+                                    onChange={(e) => handleChange('taluka_id', e.target.value)}
                                 >
                                     <option value="">तालुका निवडा</option>
-                                    {schemedata.map((category) => (
-                                        <option key={category.scheme_id} value={category.scheme_id}>
-                                            {category.scheme_name}
+                                    {talukadata.map((category) => (
+                                        <option key={category.taluka_id} value={category.taluka_id}>
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
 
                             </div>
-                            <div className="md:col-span-4  rounded-lg shadow p-4 mt-4">
+                            <div className="md:col-span-4 mt-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
                                     गाव
                                 </label>
@@ -769,13 +787,13 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     id=""
                                     className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
                                         }`}
-                                    value={formData.scheme_name}
-                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                    value={formData.village_id}
+                                    onChange={(e) => handleChange('village_id', e.target.value)}
                                 >
-                                    <option value="">गाव  निवडा</option>
-                                    {schemedata.map((category) => (
-                                        <option key={category.scheme_id} value={category.scheme_id}>
-                                            {category.scheme_name}
+                                    <option value="">गाव निवडा</option>
+                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id).map((category) => (
+                                        <option key={category.village_id} value={category.village_id}>
+                                            {category.marathi_name}
                                         </option>
                                     ))}
                                 </select>
@@ -783,20 +801,20 @@ const Vyaktigatdata: React.FC<Props> = ({
                             </div>
 
                             {/* आधारकार्ड */}
-                            <div className="md:col-span-4 rounded-lg shadow p-4 mt-4">
-                              <label className="block text-sm font-medium text-gray-700 mb-1 h-5">ग्रामपंचायत  </label>
+                            <div className="md:col-span-4 mt-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">ग्रामपंचायत  </label>
                                 <select
                                     name=""
                                     id=""
                                     className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
                                         }`}
-                                    value={formData.scheme_name}
-                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                    value={formData.gp_id}
+                                    onChange={(e) => handleChange('gp_id', e.target.value)}
                                 >
                                     <option value="">ग्रामपंचायत  निवडा</option>
-                                    {schemedata.map((category) => (
-                                        <option key={category.scheme_id} value={category.scheme_id}>
-                                            {category.scheme_name}
+                                    {getgrampanchayatdata.filter((data) => data.taluka_id == formData.taluka_id && data.village_id == Number(formData.village_id)).map((category) => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.marathi_name}
                                         </option>
                                     ))}
                                 </select>
@@ -866,7 +884,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                         </div>
                         {/* Caste Certificate */}
 
-                        <div className="flex flex-col md:flex-row gap-4 ">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
 
                             <div className="bg-gray-100 rounded-lg shadow p-4 mb-6">
                                 <h3 className="text-sm font-semibold mb-2">कुटुंबातील सदस्य संख्या</h3>
@@ -903,7 +921,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                             </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 mb-6 ">
                                 <h3 className="text-sm font-semibold mb-2">जातीचे दाखले</h3>
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">असलेली संख्या</label>
                                         <input
@@ -1490,7 +1508,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                         name="sikklacelloffamily"
                                         value={formData.sikklacelloffamily}
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                              
+
                                         onChange={e => handleChange('sikklacelloffamily', e.target.value)}
                                     />
 
@@ -1532,21 +1550,6 @@ const Vyaktigatdata: React.FC<Props> = ({
                                         />
                                         <span className="ml-1 text-xs text-gray-700">इतर</span>
                                     </label>
-                                </div>
-                            </div>
-                            <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">सिकलसेल बाधित संख्या</label>
-                                <div className="flex space-x-3 mt-1">
-
-                                    <input
-                                        type="text"
-                                        name="anyhaveaashramschool"
-                                        value={formData.anyhaveaashramschool}
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        onChange={e => handleChange('anyhaveaashramschool', e.target.value)}
-                                    />
-
-
                                 </div>
                             </div>
 

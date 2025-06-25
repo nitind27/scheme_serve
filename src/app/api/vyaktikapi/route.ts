@@ -27,8 +27,8 @@ export async function POST(request: Request) {
         sanjaygandhi, studybenefite, farmeavilebleornot, studyvanpatta,
         sikklacelloffamily, whichschoolchlid, anyhaveaashramschool, lpggas,
         bankaccount, studtatcoop, pmvimayojna, praklpkaryalaly, itarvibhagudan,
-        niymitaarogya, rationcard_no, rationcardtype, contact_no
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        niymitaarogya, rationcard_no, rationcardtype, contact_no, taluka_id, village_id, gp_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         body.totaltribalecount,
         body.totalmembersname,
@@ -66,6 +66,9 @@ export async function POST(request: Request) {
         body.rationcard_no,
         body.rationcardtype,
         body.contact_no,
+        body.taluka_id,
+        body.village_id,
+        body.gp_id,
       ]
     );
 
@@ -137,6 +140,9 @@ export async function PUT(request: Request) {
     rationcard_no,
     rationcardtype,
     contact_no,
+    taluka_id,
+    village_id,
+    gp_id,
     status
   } = body;
 console.log("idid",id)
@@ -192,7 +198,7 @@ console.log("idid",id)
         electricity = ?, hospitalphc = ?, sanjaygandhi = ?, studybenefite = ?, farmeavilebleornot = ?, studyvanpatta = ?,
         sikklacelloffamily = ?, whichschoolchlid = ?, anyhaveaashramschool = ?, lpggas = ?, bankaccount = ?,
         studtatcoop = ?, pmvimayojna = ?, praklpkaryalaly = ?, itarvibhagudan = ?, niymitaarogya = ?,
-        rationcard_no = ?, rationcardtype = ?, contact_no = ?, status = ?
+        rationcard_no = ?, rationcardtype = ?, contact_no = ?, status = ?, taluka_id = ?, village_id = ?, gp_id = ?
       WHERE id = ?`,
       [
         totaltribalecount,
@@ -230,6 +236,9 @@ console.log("idid",id)
         rationcard_no,
         rationcardtype,
         contact_no,
+        taluka_id,
+        village_id,
+        gp_id,
         status,
         id
       ]

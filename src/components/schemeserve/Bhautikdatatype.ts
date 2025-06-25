@@ -1,5 +1,5 @@
 export interface BhautikDataall {
- scheme_name: string;
+    scheme_name: string;
     totalpopulation: string;
     tribalpopulation: string;
     tribalpopulationtkkwari: string;
@@ -36,9 +36,12 @@ export interface BhautikDataall {
     // rationcard_no: string;
     allroadvillages: string;
     village_distance: string;
+    taluka_id: string;
+    village_id: string;
+    gp_id: string;
 }
 export interface vyaktikDataall {
-     id: number,
+    id: number,
     scheme_name: string,
     totaltribalecount: string,
     totalmembersname: string,
@@ -78,4 +81,8 @@ export interface vyaktikDataall {
     itarvibhagudan: string,
     niymitaarogya: string,
     status: string,
+    taluka_id: string;
+    village_id: string;
+    gp_id: string;
 }
+

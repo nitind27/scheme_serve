@@ -3,10 +3,13 @@
 
 import Loader from '@/common/Loader';
 import Breadcrumbs from '@/components/common/BreadcrumbItem'
+import { Grampanchayattype } from '@/components/grampanchayat/gptype';
 import { Schemesdatas } from '@/components/schemesdata/schemes';
 
 import {  vyaktikDataall } from '@/components/schemeserve/Bhautikdatatype';
 import Vyaktigatdata from '@/components/schemeserve/Vyaktigatdata';
+import { Taluka } from '@/components/Taluka/Taluka';
+import { Village } from '@/components/Village/village';
 // import Documentsdata from '@/components/Documentsdata/Documentsdata'
 import React, { Suspense } from 'react'
 
@@ -24,6 +27,29 @@ const getschemescrud = async (): Promise<Schemesdatas[]> => {
 
 };
 
+const gettalukadata = async (): Promise<Taluka[]> => {
+
+  const schemescrud = await fetch(`http://localhost:3000/api/taluka`, { cache: 'no-store' });
+  // console.log("reess", res)
+  return schemescrud.json();
+
+};
+const gettalukvillage = async (): Promise<Village[]> => {
+
+  const schemescrud = await fetch(`http://localhost:3000/api/villages`, { cache: 'no-store' });
+  // console.log("reess", res)
+  return schemescrud.json();
+
+};
+const getgrampanchayat = async (): Promise<Grampanchayattype[]> => {
+
+  const schemescrud = await fetch(`http://localhost:3000/api/grampanchayt`, { cache: 'no-store' });
+  // console.log("reess", res)
+  return schemescrud.json();
+
+};
+
+
 const page = async () => {
 
   const [users] = await Promise.all([
@@ -32,6 +58,19 @@ const page = async () => {
   ]);
   const [schemescrud] = await Promise.all([
     getschemescrud(),
+
+  ]);
+
+   const [talukadata] = await Promise.all([
+    gettalukadata(),
+
+  ]);
+  const [villagedata] = await Promise.all([
+    gettalukvillage(),
+
+  ]);
+  const [getgrampanchayatdata] = await Promise.all([
+    getgrampanchayat(),
 
   ]);
   const breadcrumbItems = [
@@ -48,7 +87,7 @@ const page = async () => {
             title="वैयक्तिक"
             breadcrumbs={breadcrumbItems}
           />
-          <Vyaktigatdata initialdata={users} schemescrud={schemescrud} />
+          <Vyaktigatdata initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/>
         </Suspense>
 
       </div>
