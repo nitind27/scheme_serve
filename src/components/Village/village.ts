@@ -4,6 +4,7 @@ export interface Village {
     name: string;
     marathi_name: string;
     status: string;
+    gp_id: string;
  
   }
   

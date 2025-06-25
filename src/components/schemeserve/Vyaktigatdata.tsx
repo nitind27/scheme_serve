@@ -758,7 +758,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
                     <div className="max-w-7xl mx-auto p-1">
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-5 ">
+                           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-5 ">
                             {/* CFRMC आराखडा */}
 
 
@@ -781,27 +781,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                 </select>
 
                             </div>
-                            <div className="md:col-span-4 mt-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
-                                    गाव
-                                </label>
-                                <select
-                                    name=""
-                                    id=""
-                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
-                                        }`}
-                                    value={formData.village_id}
-                                    onChange={(e) => handleChange('village_id', e.target.value)}
-                                >
-                                    <option value="">गाव निवडा</option>
-                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id).map((category) => (
-                                        <option key={category.village_id} value={category.village_id}>
-                                            {category.marathi_name}
-                                        </option>
-                                    ))}
-                                </select>
 
-                            </div>
 
                             {/* आधारकार्ड */}
                             <div className="md:col-span-4 mt-2">
@@ -815,7 +795,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     onChange={(e) => handleChange('gp_id', e.target.value)}
                                 >
                                     <option value="">ग्रामपंचायत  निवडा</option>
-                                    {getgrampanchayatdata.filter((data) => data.taluka_id == formData.taluka_id && data.village_id == Number(formData.village_id)).map((category) => (
+                                    {getgrampanchayatdata.filter((data) => data.taluka_id == formData.taluka_id).map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.marathi_name}
                                         </option>
@@ -824,7 +804,27 @@ const Vyaktigatdata: React.FC<Props> = ({
 
                             </div>
 
+                            <div className="md:col-span-4 mt-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
+                                    गाव
+                                </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.village_id}
+                                    onChange={(e) => handleChange('village_id', e.target.value)}
+                                >
+                                    <option value="">गाव निवडा</option>
+                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id &&  data.gp_id == formData.gp_id).map((category) => (
+                                        <option key={category.village_id} value={category.village_id}>
+                                            {category.marathi_name}
+                                        </option>
+                                    ))}
+                                </select>
 
+                            </div>
                         </div>
                         {/* Scheme Selection - Full Width */}
                         <div className="mb-6">
