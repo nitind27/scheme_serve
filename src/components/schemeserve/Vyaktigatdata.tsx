@@ -156,7 +156,7 @@ const Vyaktigatdata: React.FC<Props> = ({
 
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
-console.log("editId",editId)
+    console.log("editId", editId)
     // Initialize form state
     const [formData, setFormData] = useState<BhautikData>({
         id: 0,
@@ -761,7 +761,7 @@ console.log("editId",editId)
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
                             {/* Tribal Population Section */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 md:mb-6 mb-0">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">एकूण आदिवासी लोकसंख्या</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">एकूण आदिेवासी कुटुंब संख्या</label>
                                 <input
                                     type="text"
                                     className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -853,7 +853,7 @@ console.log("editId",editId)
                                             onChange={e => handleNestedChange('castcertificate', 'nasleli', e.target.value)}
                                         />
                                     </div>
-                                  
+
                                 </div>
                             </div>
 
@@ -1556,21 +1556,31 @@ console.log("editId",editId)
                                         <input
                                             type="radio"
                                             name="studtatcoop"
-                                            value="yes"
-                                            checked={formData.studtatcoop === 'yes'}
+                                            value="राष्ट्रीयकृत"
+                                            checked={formData.studtatcoop === 'राष्ट्रीयकृत'}
                                             onChange={e => handleChange('studtatcoop', e.target.value)}
                                         />
-                                        <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        <span className="ml-1 text-xs text-gray-700">राष्ट्रीयकृत</span>
                                     </label>
                                     <label className="inline-flex items-center">
                                         <input
                                             type="radio"
                                             name="studtatcoop"
-                                            value="no"
-                                            checked={formData.studtatcoop === 'no'}
+                                            value="को-ऑप"
+                                            checked={formData.studtatcoop === 'को-ऑप'}
                                             onChange={e => handleChange('studtatcoop', e.target.value)}
                                         />
-                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        <span className="ml-1 text-xs text-gray-700">को-ऑप</span>
+                                    </label>
+                                    <label className="inline-flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="studtatcoop"
+                                            value="सोसायटी"
+                                            checked={formData.studtatcoop === 'सोसायटी'}
+                                            onChange={e => handleChange('studtatcoop', e.target.value)}
+                                        />
+                                        <span className="ml-1 text-xs text-gray-700">सोसायटी</span>
                                     </label>
                                 </div>
                             </div>
@@ -1613,52 +1623,31 @@ console.log("editId",editId)
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">प्रकल्प कार्यालयाकडून कोणती योजना मिळाली</label>
                                 <div className="flex space-x-3 mt-1">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="praklpkaryalaly"
-                                            value="yes"
-                                            checked={formData.praklpkaryalaly === 'yes'}
-                                            onChange={e => handleChange('praklpkaryalaly', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">होय</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="praklpkaryalaly"
-                                            value="no"
-                                            checked={formData.praklpkaryalaly === 'no'}
-                                            onChange={e => handleChange('praklpkaryalaly', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="praklpkaryalaly"
+                                        value={formData.praklpkaryalaly}
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                        onChange={e => handleChange('praklpkaryalaly', e.target.value)}
+                                    />
+
                                 </div>
                             </div>
                             {/* Other Department Scheme */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">इतर विभागाकडून कोणती योजना मिळाली</label>
                                 <div className="flex space-x-3 mt-1">
-                                    <label className="inline-flex items-center">
+                                 
                                         <input
-                                            type="radio"
+                                            type="text"
                                             name="itarvibhagudan"
-                                            value="yes"
-                                            checked={formData.itarvibhagudan === 'yes'}
+                                            value={formData.itarvibhagudan}
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             onChange={e => handleChange('itarvibhagudan', e.target.value)}
                                         />
-                                        <span className="ml-1 text-xs text-gray-700">होय</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="itarvibhagudan"
-                                            value="no"
-                                            checked={formData.itarvibhagudan === 'no'}
-                                            onChange={e => handleChange('itarvibhagudan', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                    </label>
+                                      
+                                  
                                 </div>
                             </div>
 

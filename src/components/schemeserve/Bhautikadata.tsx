@@ -130,6 +130,23 @@ interface BhautikDataall {
     riverlake: string;
     id: number;
     status: string;
+    forestshareholderno: string;
+    collectiveforestry: string;
+    cfrmplan: string;
+    breedstandards: string;
+    adivasis: string;
+    tribalbenefitnumber: string;
+    stepfacilities: string;
+    everygharnaalyojana: string;
+    healthfacilityis: string;
+    generalhealthcheckup: string;
+    sickleanemia: string;
+    kindergarten: string;
+    mobilefacilities: string;
+    mobilemedicalunit: string;
+    gotulsocietybuilding: string;
+    allroadvillages: string;
+    village_distance: string;
 }
 
 interface Props {
@@ -296,95 +313,95 @@ const Bhautikadata: React.FC<Props> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData.ekunSankhya.female, formData.ekunSankhya.male, formData.tribalPopulation.female, formData.tribalPopulation.male]);
 
-const transformFormData = (data: BhautikData) => {
-  const transformTriple = (obj: Triple) =>
-    obj && typeof obj === 'object'
-      ? [obj.female ?? '', obj.male ?? '', obj.total ?? ''].join('|')
-      : '';
+    const transformFormData = (data: BhautikData) => {
+        const transformTriple = (obj: Triple) =>
+            obj && typeof obj === 'object'
+                ? [obj.female ?? '', obj.male ?? '', obj.total ?? ''].join('|')
+                : '';
 
-  const transformDouble = (obj: Double) =>
-    obj && typeof obj === 'object'
-      ? [obj.asleli ?? '', obj.nasleli ?? ''].join('|')
-      : '';
+        const transformDouble = (obj: Double) =>
+            obj && typeof obj === 'object'
+                ? [obj.asleli ?? '', obj.nasleli ?? ''].join('|')
+                : '';
 
-  return {
-    scheme_name: data.scheme_name,
-    totalpopulation: transformTriple(data.ekunSankhya),
-    tribalpopulation: transformTriple(data.tribalPopulation),
-    tribalpopulationtkkwari: data.tribalPopulationTkWari,
-    totalfamilynumbers: data.totalFamilyNumbers,
-    tribalwholefamilynumbers: data.tribalsWholeFamilyNumbers,
-    forestshareholderno: data.vaitikAadivasi,
-    collectiveforestry: data.samuhikVanpatta,
-    cfrmplan: data.cfrmAarakhda,
-    aadhaarcard: transformDouble(data.aadharcard),
-    voteridcard: transformDouble(data.matdarOlahkhap),
-    breedstandards: transformDouble(data.jaticheGmanap),
-    rationcard: transformDouble(data.rashionCard),
-    jobcard: transformDouble(data.jobCard),
-    pmfarmercard: transformDouble(data.pmKisanCard),
-    ayushmancard: transformDouble(data.ayushmanCard),
-    adivasis: `${data.aadivasiHouse.pakkeGhar}|${data.aadivasiHouse.kudaMatiGhar}`,
-    tribalbenefitnumber: data.pmAwasYojana,
-    stepfacilities: transformDouble(data.panyaPanyachiSuvidha),
-    everygharnaalyojana: transformDouble(data.harGharNalYojana),
-    electrificationforfamilies: transformDouble(data.vidyutikaran),
-    healthfacilityis: data.arogyUpcharKendra,
-    generalhealthcheckup: data.generalHealthCheckup,
-    sickleanemia: data.sickleCellAnemiaScreening,
-    elementaryschool: data.primarySchool,
-    middleschool: data.middleSchool,
-    kindergarten: data.kindergarten,
-    mobilefacilities: data.mobileNetwork,
-    mobilemedicalunit: data.mobileMedicalUnit,
-    gotulsocietybuilding: data.gotulSocietyBuilding,
-    riverlake: data.nadiTalav,
-    allroadvillages: data.allroadvillages,
-    village_distance: data.village_distance
-  };
-};
+        return {
+            scheme_name: data.scheme_name,
+            totalpopulation: transformTriple(data.ekunSankhya),
+            tribalpopulation: transformTriple(data.tribalPopulation),
+            tribalpopulationtkkwari: data.tribalPopulationTkWari,
+            totalfamilynumbers: data.totalFamilyNumbers,
+            tribalwholefamilynumbers: data.tribalsWholeFamilyNumbers,
+            forestshareholderno: data.vaitikAadivasi,
+            collectiveforestry: data.samuhikVanpatta,
+            cfrmplan: data.cfrmAarakhda,
+            aadhaarcard: transformDouble(data.aadharcard),
+            voteridcard: transformDouble(data.matdarOlahkhap),
+            breedstandards: transformDouble(data.jaticheGmanap),
+            rationcard: transformDouble(data.rashionCard),
+            jobcard: transformDouble(data.jobCard),
+            pmfarmercard: transformDouble(data.pmKisanCard),
+            ayushmancard: transformDouble(data.ayushmanCard),
+            adivasis: `${data.aadivasiHouse.pakkeGhar}|${data.aadivasiHouse.kudaMatiGhar}`,
+            tribalbenefitnumber: data.pmAwasYojana,
+            stepfacilities: transformDouble(data.panyaPanyachiSuvidha),
+            everygharnaalyojana: transformDouble(data.harGharNalYojana),
+            electrificationforfamilies: transformDouble(data.vidyutikaran),
+            healthfacilityis: data.arogyUpcharKendra,
+            generalhealthcheckup: data.generalHealthCheckup,
+            sickleanemia: data.sickleCellAnemiaScreening,
+            elementaryschool: data.primarySchool,
+            middleschool: data.middleSchool,
+            kindergarten: data.kindergarten,
+            mobilefacilities: data.mobileNetwork,
+            mobilemedicalunit: data.mobileMedicalUnit,
+            gotulsocietybuilding: data.gotulSocietyBuilding,
+            riverlake: data.nadiTalav,
+            allroadvillages: data.allroadvillages,
+            village_distance: data.village_distance
+        };
+    };
 
 
     // Handle form submission
-const handleSave = async () => {
-  if (!validateInputs()) return;
-  setLoading(true);
+    const handleSave = async () => {
+        if (!validateInputs()) return;
+        setLoading(true);
 
-  const apiUrl = '/api/bhautikapi';
-  const method = isEditMode ? 'PUT' : 'POST';
+        const apiUrl = '/api/bhautikapi';
+        const method = isEditMode ? 'PUT' : 'POST';
 
-  try {
-    const transformedData = {
-      ...(isEditMode && { id: editId }), // include id only on PUT
-      ...transformFormData(formData)
+        try {
+            const transformedData = {
+                ...(isEditMode && { id: editId }), // include id only on PUT
+                ...transformFormData(formData)
+            };
+
+            console.log("transformedData", transformedData);
+
+            const response = await fetch(apiUrl, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(transformedData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+            }
+
+            toast.success(isEditMode ? 'Data updated successfully!' : 'Data saved successfully!');
+            fetchData();
+            resetForm();
+        } catch (error) {
+            console.error('Error saving data:', error);
+            toast.error(isEditMode ? 'Failed to update data' : 'Failed to save data');
+        } finally {
+            setLoading(false);
+            setIsmodelopen(false);
+        }
     };
-
-    console.log("transformedData", transformedData);
-
-    const response = await fetch(apiUrl, {
-      method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(transformedData)
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-    }
-
-    toast.success(isEditMode ? 'Data updated successfully!' : 'Data saved successfully!');
-    fetchData();
-    resetForm();
-  } catch (error) {
-    console.error('Error saving data:', error);
-    toast.error(isEditMode ? 'Failed to update data' : 'Failed to save data');
-  } finally {
-    setLoading(false);
-    setIsmodelopen(false);
-  }
-};
 
 
 
@@ -434,58 +451,63 @@ const handleSave = async () => {
     const handleEdit = (item: BhautikDataall) => {
         setIsmodelopen(true);
         setIsEditmode(true);
-        setIsActive(!isActive)
-        setEditId(item.id)
-        // Helper to split pipe string
-        const parsePopulation = (value: string): { female: string; male: string; total: string } => {
+        setIsActive(!isActive);
+        setEditId(item.id);
+
+        // Helper functions to parse pipe-separated values
+        const parseTriple = (value: string): { female: string; male: string; total: string } => {
             const [female = '', male = '', total = ''] = value?.split('|') || [];
             return { female, male, total };
         };
+
         const parseDouble = (value: string): { asleli: string; nasleli: string } => {
             const [asleli = '', nasleli = ''] = value?.split('|') || [];
             return { asleli, nasleli };
         };
+
         const parseAadivasiHouse = (value: string): { pakkeGhar: string; kudaMatiGhar: string } => {
             const [pakkeGhar = '', kudaMatiGhar = ''] = value?.split('|') || [];
             return { pakkeGhar, kudaMatiGhar };
         };
+
+        // Set the form data with all transformed values
         setFormData({
             scheme_name: item.scheme_name || '',
-            ekunSankhya: parsePopulation(item.totalpopulation),
-            tribalPopulation: parsePopulation(item.tribalpopulation),
+            ekunSankhya: parseTriple(item.totalpopulation),
+            tribalPopulation: parseTriple(item.tribalpopulation),
             tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
             totalFamilyNumbers: item.totalfamilynumbers || '',
             tribalsWholeFamilyNumbers: item.tribalwholefamilynumbers || '',
-            vaitikAadivasi: '', // not available in BhautikDataall
-            samuhikVanpatta: '', // not available in BhautikDataall
-            cfrmAarakhda: '', // not available in BhautikDataall
+            vaitikAadivasi: item.forestshareholderno || '', // Added mapping
+            samuhikVanpatta: item.collectiveforestry || '', // Added mapping
+            cfrmAarakhda: item.cfrmplan || '', // Added mapping
             aadharcard: parseDouble(item.aadhaarcard),
             matdarOlahkhap: parseDouble(item.voteridcard),
-            jaticheGmanap: { asleli: '', nasleli: '' }, // not available
+            jaticheGmanap: parseDouble(item.breedstandards), // Added mapping
             rashionCard: parseDouble(item.rationcard),
             jobCard: parseDouble(item.jobcard),
             pmKisanCard: parseDouble(item.pmfarmercard),
             ayushmanCard: parseDouble(item.ayushmancard),
-            aadivasiHouse: parseAadivasiHouse(''), // not available
-            pmAwasYojana: '', // not available
-            panyaPanyachiSuvidha: { asleli: '', nasleli: '' }, // not available
-            harGharNalYojana: { asleli: '', nasleli: '' }, // not available
+            aadivasiHouse: parseAadivasiHouse(item.adivasis || ''), // Added mapping
+            pmAwasYojana: item.tribalbenefitnumber || '', // Added mapping
+            panyaPanyachiSuvidha: parseDouble(item.stepfacilities || ''), // Added mapping
+            harGharNalYojana: parseDouble(item.everygharnaalyojana || ''), // Added mapping
             vidyutikaran: parseDouble(item.electrificationforfamilies),
-            arogyUpcharKendra: '', // not available
-            generalHealthCheckup: '', // not available
-            sickleCellAnemiaScreening: '', // not available
+            arogyUpcharKendra: item.healthfacilityis || '', // Added mapping
+            generalHealthCheckup: item.generalhealthcheckup || '', // Added mapping
+            sickleCellAnemiaScreening: item.sickleanemia || '', // Added mapping
             primarySchool: item.elementaryschool || '',
             middleSchool: item.middleschool || '',
-            kindergarten: '', // not available
-            mobileNetwork: '', // not available
-            gramPanchayatBuilding: '', // not available
-            mobileMedicalUnit: '', // not available
-            gotulSocietyBuilding: '', // not available
+            kindergarten: item.kindergarten || '', // Added mapping
+            mobileNetwork: item.mobilefacilities || '', // Added mapping
+            gramPanchayatBuilding: '', // Not available in BhautikDataall
+            mobileMedicalUnit: item.mobilemedicalunit || '', // Added mapping
+            gotulSocietyBuilding: item.gotulsocietybuilding || '', // Added mapping
             nadiTalav: item.riverlake || '',
-            allroadvillages: '',
-            village_distance: '',
+            allroadvillages: item.allroadvillages || '',
+            village_distance: item.village_distance || ''
         });
-    };
+    };;
 
     const columns: Column<BhautikDataall>[] = [
         {
@@ -641,7 +663,7 @@ const handleSave = async () => {
                         <div className='md:flex gap-4 mt-5'>
 
 
-                            <div className="bg-gray-100 p-6 rounded-lg shadow p-2 col-span-1 md:col-span-3">
+                            <div className="bg-gray-100  rounded-lg shadow p-4  col-span-1 md:col-span-3">
                                 <h3 className="text-lg font-semibold mb-2">एकूण लोकसंख्या</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
@@ -675,7 +697,7 @@ const handleSave = async () => {
                             </div>
 
                             {/* Tribal population */}
-                            <div className="bg-gray-100 p-6 rounded-lg shadow col-span-1 md:col-span-3 mt-5 md:mt-0">
+                            <div className="bg-gray-100 rounded-lg shadow p-4  col-span-1 md:col-span-3 mt-5 md:mt-0">
                                 <h3 className="text-lg font-semibold mb-2">आदिवासी लोकसंख्या</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
@@ -715,7 +737,7 @@ const handleSave = async () => {
                             {/* Other fields in 3-column layout */}
                             <div className='grid grid-cols-1 md:grid-cols-5 gap-4 mt-5'>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">आदिवासी लोकसंख्या टक्केवारी</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">आदिवासी लोकसंख्या टक्केवारी</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -724,9 +746,9 @@ const handleSave = async () => {
                                     />
                                 </div>
 
-                         
+
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-5">कुटुंब संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700  mb-6">कुटुंब संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -736,7 +758,7 @@ const handleSave = async () => {
                                 </div>
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5">एकूण आदिवासी कुटुंब संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">एकूण आदिवासी कुटुंब संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -746,7 +768,7 @@ const handleSave = async () => {
                                 </div>
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">वैयक्तिक आदिवासी वनपट्टेधारक संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">वैयक्तिक आदिवासी वनपट्टेधारक संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -756,7 +778,7 @@ const handleSave = async () => {
                                 </div>
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">सामूहिक वनपट्टा वाटप आहे/नाही</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">सामूहिक वनपट्टा वाटप आहे/नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -782,10 +804,14 @@ const handleSave = async () => {
                                         </label>
                                     </div>
                                 </div>
-
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">CFRMC आराखडा सादर आहे/नाही</label>
-                                    <div className="flex space-x-3 mt-1">
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 ">
+                                {/* CFRMC आराखडा */}
+                                <div className="md:col-span-4 bg-gray-100 rounded-lg shadow p-4 mt-4">
+                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">
+                                        CFRMC आराखडा सादर आहे/नाही
+                                    </label>
+                                    <div className="flex space-x-6 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
                                                 type="radio"
@@ -793,9 +819,9 @@ const handleSave = async () => {
                                                 value="yes"
                                                 checked={formData.cfrmAarakhda === "yes"}
                                                 onChange={() => handleChange("cfrmAarakhda", "yes")}
-                                                className="h-3 w-3 text-indigo-600"
+                                                className="h-4 w-4 text-indigo-600"
                                             />
-                                            <span className="ml-1 text-xs text-gray-700">होय</span>
+                                            <span className="ml-2 text-sm text-gray-700">होय</span>
                                         </label>
                                         <label className="inline-flex items-center">
                                             <input
@@ -804,19 +830,21 @@ const handleSave = async () => {
                                                 value="no"
                                                 checked={formData.cfrmAarakhda === "no"}
                                                 onChange={() => handleChange("cfrmAarakhda", "no")}
-                                                className="h-3 w-3 text-indigo-600"
+                                                className="h-4 w-4 text-indigo-600"
                                             />
-                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                            <span className="ml-2 text-sm text-gray-700">नाही</span>
                                         </label>
                                     </div>
-                                    
                                 </div>
-                                     {/* Aadhar Card */}
-                                <div className=" p-2 col-span-1 md:col-span-3 bg-gray-100 p-2 rounded-lg shadow">
-                                    <h3 className="text-sm font-semibold mb-2">आधारकार्ड</h3>
-                                    <div className="grid grid-cols-2 gap-3">
+
+                                {/* आधारकार्ड */}
+                                <div className="md:col-span-4 bg-gray-100 rounded-lg shadow p-4 mt-4">
+                                    <h3 className="text-sm font-semibold h-5">आधारकार्ड</h3>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                                                असलेली आदिवासी संख्या
+                                            </label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -825,7 +853,9 @@ const handleSave = async () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                                                नसलेली आदिवासी संख्या
+                                            </label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -835,18 +865,15 @@ const handleSave = async () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='md:flex gap-4 mt-5'>
 
-
-                           
-
-                                {/* Matdar Olakhap */}
-                                <div className=" p-2 col-span-1 md:col-span-3 bg-gray-100 p-2 rounded-lg shadow mt-5 md:mt-0">
-                                    <h3 className="text-sm font-semibold mb-2">मतदार ओळखपत्र </h3>
-                                    <div className="grid grid-cols-2 gap-3">
+                                {/* मतदार ओळखपत्र */}
+                                <div className="md:col-span-4 bg-gray-100 rounded-lg shadow p-4 mt-4">
+                                    <h3 className="text-sm font-semibold  आधारकार्ड">मतदार ओळखपत्र</h3>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी संख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                                                असलेली आदिवासी संख्या
+                                            </label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -855,7 +882,9 @@ const handleSave = async () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                                                नसलेली आदिवासी संख्या
+                                            </label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -865,6 +894,31 @@ const handleSave = async () => {
                                         </div>
                                     </div>
                                 </div>
+
+                            </div>
+
+                            <div className='md:flex gap-4 mt-5'>
+
+
+
+
+                                {/* Matdar Olakhap */}
+
+
+                                {/* <div className="bg-gray-100 rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-5">राशन कार्ड क्रमांक</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                        value={formData.rationcard_no}
+                                        onChange={(e) => handleChange('rationcard_no', e.target.value)}
+                                    />
+                                </div> */}
+
+                            </div>
+
+                            <div className='md:flex gap-4 '>
+
                                 <div className=" p-2 col-span-1 md:col-span-3  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
                                     <h3 className="text-sm font-semibold mb">जातीचे प्रमाणपत्र</h3>
                                     <div className="grid grid-cols-2 gap-3">
@@ -888,21 +942,6 @@ const handleSave = async () => {
                                         </div>
                                     </div>
                                 </div>
-                                  {/* <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-5">राशन कार्ड क्रमांक</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        value={formData.rationcard_no}
-                                        onChange={(e) => handleChange('rationcard_no', e.target.value)}
-                                    />
-                                </div> */}
-
-                            </div>
-
-                            <div className='md:flex gap-4 mt-5'>
-                              
-
                                 <div className=" p-2 col-span-1 md:col-span-3 mb-2 bg-gray-100 p-2 rounded-lg shadow mt-5 md:mt-0">
 
 
@@ -990,7 +1029,7 @@ const handleSave = async () => {
                                     <div className="grid grid-cols-2 gap-3">
 
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">पक्के घर </label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8">पक्के घर </label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -999,7 +1038,7 @@ const handleSave = async () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">कुडा/मातीचे घर</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8">कुडा/मातीचे घर</label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1014,7 +1053,7 @@ const handleSave = async () => {
                                     <h3 className="text-sm font-semibold mb-2">आयुष्मान कार्ड</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी कुटुंब संख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8">असलेली आदिवासी कुटुंब संख्या</label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1023,7 +1062,7 @@ const handleSave = async () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8"> नसलेली आदिवासी कुटुंबसंख्या</label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1038,7 +1077,7 @@ const handleSave = async () => {
                                     <h3 className="text-sm font-semibold mb-2">पिण्याच्या पाण्याची सुविधा </h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी कुटुंब संख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8">असलेली आदिवासी कुटुंब संख्या</label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1047,7 +1086,7 @@ const handleSave = async () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8"> नसलेली आदिवासी कुटुंबसंख्या</label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1057,14 +1096,11 @@ const handleSave = async () => {
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div className='md:flex mt-5 gap-4'>
                                 <div className=" p-2 col-span-1 md:col-span-3  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
                                     <h3 className="text-sm font-semibold mb-2">हर घर नळ योजना</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी कुटुंबसंख्या </label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8">असलेली आदिवासी कुटुंबसंख्या </label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1073,7 +1109,7 @@ const handleSave = async () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 h-8"> नसलेली आदिवासी कुटुंबसंख्या</label>
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1083,8 +1119,11 @@ const handleSave = async () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className='md:flex mt-5 gap-4'>
+
                                 <div className=" p-2 col-span-1 md:col-span-3  bg-gray-100  rounded-lg shadow mt-5 md:mt-0 mb-5 md:mb-0">
-                                    <h3 className="text-sm font-semibold mb-2">विद्युतीकरण</h3>
+                                    <h3 className="text-sm font-semibold mb-2 h-8">विद्युतीकरण</h3>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1">असलेली आदिवासी कुटुंबसंख्या </label>
@@ -1108,7 +1147,7 @@ const handleSave = async () => {
                                 </div>
 
                                 <div className="bg-gray-100 rounded-lg shadow p-4 mb-5 md:mb-0">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">सर्व रस्ते जोडलेल्या गावांची संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 h-8">सर्व रस्ते जोडलेल्या गावांची संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1117,7 +1156,7 @@ const handleSave = async () => {
                                     />
                                 </div>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 ">५ किमी अंतरापर्यंत बाजारपेठ नसलेल्या गावांची संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-7 h-8">५ किमी अंतरापर्यंत बाजारपेठ नसलेल्या गावांची संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -1126,7 +1165,7 @@ const handleSave = async () => {
                                     />
                                 </div>
                                 <div className=" p-2  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 font-unwrap whitespace-nowrap">पीएम आवास योजना</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 font-unwrap whitespace-nowrap h-8">पीएम आवास योजना</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1157,7 +1196,7 @@ const handleSave = async () => {
                             <div className='grid grid-cols-1 md:grid-cols-6 gap-4 mb-5 mt-5'>
                                 {/* Continue with other sections in similar compact format */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5">आरोग्य उपकेंद्र/PHC</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 h-6">आरोग्य उपकेंद्र/PHC</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center mb-4">
                                             <input
@@ -1190,7 +1229,7 @@ const handleSave = async () => {
 
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">सामान्य आरोग्य तपासणी
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">सामान्य आरोग्य तपासणी
                                         होय /नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1222,7 +1261,7 @@ const handleSave = async () => {
                                 {/* Continue with all remaining fields in similar compact format */}
                                 {/* Primary School */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">प्राथमिक शाळा</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">प्राथमिक शाळा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1251,7 +1290,7 @@ const handleSave = async () => {
 
                                 {/* Middle School */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">माध्यमिक शाळा</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">माध्यमिक शाळा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1281,7 +1320,7 @@ const handleSave = async () => {
 
                                 {/* Kindergarten */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">अंगणवाडी आहे/ नाही</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">अंगणवाडी आहे/ नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1310,7 +1349,7 @@ const handleSave = async () => {
 
                                 {/* Mobile Network */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">मोबाईल नेटवर्क सुविधा</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">मोबाईल नेटवर्क सुविधा</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1339,7 +1378,7 @@ const handleSave = async () => {
 
                                 {/* Gram Panchayat Building */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">ग्रामपंचायत इमारत</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">ग्रामपंचायत इमारत</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
                                             <input
@@ -1368,7 +1407,7 @@ const handleSave = async () => {
 
                                 {/* Gotul Society Building */}
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">गोटूल/ समाज भवन
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">गोटूल/ समाज भवन
                                         आहे/ नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1401,7 +1440,7 @@ const handleSave = async () => {
 
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">मोबाईल वैद्यकीय युनिट</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-6">मोबाईल वैद्यकीय युनिट</label>
 
 
 
@@ -1438,7 +1477,7 @@ const handleSave = async () => {
 
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">सिकलसेल आणि ॲनिमियासाठी तपासणी
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 h-10">सिकलसेल आणि ॲनिमियासाठी तपासणी
                                         होय /नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1465,16 +1504,6 @@ const handleSave = async () => {
                                         </label>
                                     </div>
                                 </div>
-
-
-
-                                {/* नदी तलाव */}
-
-
-
-
-
-
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">नदी तलाव</label>
@@ -1503,10 +1532,6 @@ const handleSave = async () => {
                                         </label>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>}
