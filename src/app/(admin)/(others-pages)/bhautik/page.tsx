@@ -28,21 +28,21 @@ const getschemescrud = async (): Promise<Schemesdatas[]> => {
 
 const gettalukadata = async (): Promise<Taluka[]> => {
 
-  const schemescrud = await fetch(`http://localhost:3000/api/taluka`, { cache: 'no-store' });
+  const schemescrud = await fetch(`https://schemeserve.weclocks.online/api/taluka`, { cache: 'no-store' });
   // console.log("reess", res)
   return schemescrud.json();
 
 };
 const gettalukvillage = async (): Promise<Village[]> => {
 
-  const schemescrud = await fetch(`http://localhost:3000/api/villages`, { cache: 'no-store' });
+  const schemescrud = await fetch(`https://schemeserve.weclocks.online/api/villages`, { cache: 'no-store' });
   // console.log("reess", res)
   return schemescrud.json();
 
 };
 const getgrampanchayat = async (): Promise<Grampanchayattype[]> => {
 
-  const schemescrud = await fetch(`http://localhost:3000/api/grampanchayt`, { cache: 'no-store' });
+  const schemescrud = await fetch(`https://schemeserve.weclocks.online/api/grampanchayt`, { cache: 'no-store' });
   // console.log("reess", res)
   return schemescrud.json();
 
