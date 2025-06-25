@@ -663,7 +663,7 @@ const Vyaktigatdata: React.FC<Props> = ({
         },
         {
             key: 'anyhaveaashramschool',
-            label: 'मुले आश्रमशाळेत शिकत आहेत काय?',
+            label: 'सिकलसेल बाधित संख्या',
             render: (data) => <span>{data.anyhaveaashramschool}</span>,
         },
         {
@@ -737,16 +737,86 @@ const Vyaktigatdata: React.FC<Props> = ({
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
                     <div className="max-w-7xl mx-auto p-4">
+                             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-5 ">
+                            {/* CFRMC आराखडा */}
+
+
+                            <div className="md:col-span-4 rounded-lg shadow p-4 mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">तालुका </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.scheme_name}
+                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                >
+                                    <option value="">तालुका निवडा</option>
+                                    {schemedata.map((category) => (
+                                        <option key={category.scheme_id} value={category.scheme_id}>
+                                            {category.scheme_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
+                            <div className="md:col-span-4  rounded-lg shadow p-4 mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
+                                    गाव
+                                </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.scheme_name}
+                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                >
+                                    <option value="">गाव  निवडा</option>
+                                    {schemedata.map((category) => (
+                                        <option key={category.scheme_id} value={category.scheme_id}>
+                                            {category.scheme_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
+
+                            {/* आधारकार्ड */}
+                            <div className="md:col-span-4 rounded-lg shadow p-4 mt-4">
+                              <label className="block text-sm font-medium text-gray-700 mb-1 h-5">ग्रामपंचायत  </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.scheme_name}
+                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                >
+                                    <option value="">ग्रामपंचायत  निवडा</option>
+                                    {schemedata.map((category) => (
+                                        <option key={category.scheme_id} value={category.scheme_id}>
+                                            {category.scheme_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
+
+
+                        </div>
                         {/* Scheme Selection - Full Width */}
                         <div className="mb-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">योजना</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">योजना निवडा</label>
                             <select
                                 name="scheme_name"
-                                className="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
+                                className="text-gray-900 h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
                                 value={formData.scheme_name}
                                 onChange={e => handleChange('scheme_name', e.target.value)}
                             >
-                                <option value="">योजना</option>
+                                <option value="" disabled selected style={{ color: '#a0aec0' }}>योजना निवडा</option>
+
+
                                 {schemedata.map((category) => (
                                     <option key={category.scheme_id} value={category.scheme_id}>
                                         {category.scheme_name}
@@ -887,7 +957,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                         <div className="flex flex-col md:flex-row gap-4 mb-6">
                             {/* Voter ID Card */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <h3 className="text-sm font-semibold mb-2">मतदार ओळखपत्र</h3>
+                                <h3 className="text-sm font-semibold mb-2">मतदार ओळखपत्र (18 वर्षावरील )</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-medium text-gray-700 mb-1">असलेली संख्या</label>
@@ -1243,7 +1313,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                             </div>
                             {/* Electricity */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">वीजीकरण आहे/नाही</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">विद्युतीकरण आहे/नाही</label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input
@@ -1274,7 +1344,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                         <div className="flex flex-col md:flex-row gap-4 mb-6">
 
 
-                            <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
+                            {/* <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">आरोग्य उपकेंद्र / PHC आहे/नाही</label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
@@ -1298,7 +1368,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                         <span className="ml-1 text-xs text-gray-700">नाही</span>
                                     </label>
                                 </div>
-                            </div>
+                            </div> */}
                             {/* Sanjay Gandhi */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">संजय गांधी निराधार योजनेचे लाभार्थी आहे/नाही</label>
@@ -1385,7 +1455,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                         <div className="flex flex-col md:flex-row gap-4 mb-6">
                             {/* Forest Rights */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">असल्यास, वनपत्राधारक आहे काय?</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">असल्यास, वनपट्टेधारक आहे काय?</label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input
@@ -1412,80 +1482,71 @@ const Vyaktigatdata: React.FC<Props> = ({
 
                             {/* Cycle Scheme */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंबात सिकलसेल बाधित सदस्य आहे/नाही</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">कुटुंबात सिकलसेल बाधित सदस्य संख्या</label>
                                 <div className="flex space-x-3 mt-1">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="sikklacelloffamily"
-                                            value="yes"
-                                            checked={formData.sikklacelloffamily === 'yes'}
-                                            onChange={e => handleChange('sikklacelloffamily', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">होय</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="sikklacelloffamily"
-                                            value="no"
-                                            checked={formData.sikklacelloffamily === 'no'}
-                                            onChange={e => handleChange('sikklacelloffamily', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="sikklacelloffamily"
+                                        value={formData.sikklacelloffamily}
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                              
+                                        onChange={e => handleChange('sikklacelloffamily', e.target.value)}
+                                    />
+
                                 </div>
                             </div>
 
                             {/* Children School */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">मुले कोणत्या शाळेत/महाविद्यालयात शिकत आहे</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">मुले कोणत्या शाळेत शिकत आहे </label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
+
                                         <input
                                             type="radio"
                                             name="whichschoolchlid"
-                                            value="yes"
-                                            checked={formData.whichschoolchlid === 'yes'}
+                                            value="आश्रमशाळा"
+                                            checked={formData.whichschoolchlid === 'आश्रमशाळा'}
                                             onChange={e => handleChange('whichschoolchlid', e.target.value)}
                                         />
-                                        <span className="ml-1 text-xs text-gray-700">होय</span>
+                                        <span className="ml-1 text-xs text-gray-700">आश्रम शाळा</span>
                                     </label>
                                     <label className="inline-flex items-center">
                                         <input
                                             type="radio"
                                             name="whichschoolchlid"
-                                            value="no"
-                                            checked={formData.whichschoolchlid === 'no'}
+                                            value="जिल्हापरिषद"
+                                            checked={formData.whichschoolchlid === 'जिल्हापरिषद'}
                                             onChange={e => handleChange('whichschoolchlid', e.target.value)}
                                         />
-                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                        <span className="ml-1 text-xs text-gray-700">जिल्हा परिषद</span>
+                                    </label>
+                                    <label className="inline-flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="whichschoolchlid"
+                                            value="इतर"
+                                            checked={formData.whichschoolchlid === 'इतर'}
+                                            onChange={e => handleChange('whichschoolchlid', e.target.value)}
+                                        />
+                                        <span className="ml-1 text-xs text-gray-700">इतर</span>
                                     </label>
                                 </div>
                             </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">मुले आश्रमशाळेत शिकत आहेत काय?</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">सिकलसेल बाधित संख्या</label>
                                 <div className="flex space-x-3 mt-1">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="anyhaveaashramschool"
-                                            value="yes"
-                                            checked={formData.anyhaveaashramschool === 'yes'}
-                                            onChange={e => handleChange('anyhaveaashramschool', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">होय</span>
-                                    </label>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="anyhaveaashramschool"
-                                            value="no"
-                                            checked={formData.anyhaveaashramschool === 'no'}
-                                            onChange={e => handleChange('anyhaveaashramschool', e.target.value)}
-                                        />
-                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="anyhaveaashramschool"
+                                        value={formData.anyhaveaashramschool}
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                        onChange={e => handleChange('anyhaveaashramschool', e.target.value)}
+                                    />
+
+
                                 </div>
                             </div>
 
@@ -1638,16 +1699,16 @@ const Vyaktigatdata: React.FC<Props> = ({
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">इतर विभागाकडून कोणती योजना मिळाली</label>
                                 <div className="flex space-x-3 mt-1">
-                                 
-                                        <input
-                                            type="text"
-                                            name="itarvibhagudan"
-                                            value={formData.itarvibhagudan}
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                            onChange={e => handleChange('itarvibhagudan', e.target.value)}
-                                        />
-                                      
-                                  
+
+                                    <input
+                                        type="text"
+                                        name="itarvibhagudan"
+                                        value={formData.itarvibhagudan}
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                        onChange={e => handleChange('itarvibhagudan', e.target.value)}
+                                    />
+
+
                                 </div>
                             </div>
 

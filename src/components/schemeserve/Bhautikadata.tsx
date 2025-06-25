@@ -641,8 +641,76 @@ const Bhautikadata: React.FC<Props> = ({
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
                     <div className="max-w-7xl mx-auto p-4">
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-5 ">
+                            {/* CFRMC आराखडा */}
+
+
+                            <div className="md:col-span-4 rounded-lg shadow p-4 mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">तालुका </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.scheme_name}
+                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                >
+                                    <option value="">तालुका निवडा</option>
+                                    {schemedata.map((category) => (
+                                        <option key={category.scheme_id} value={category.scheme_id}>
+                                            {category.scheme_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
+                            <div className="md:col-span-4  rounded-lg shadow p-4 mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
+                                    गाव
+                                </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.scheme_name}
+                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                >
+                                    <option value="">गाव  निवडा</option>
+                                    {schemedata.map((category) => (
+                                        <option key={category.scheme_id} value={category.scheme_id}>
+                                            {category.scheme_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
+
+                            {/* आधारकार्ड */}
+                            <div className="md:col-span-4 rounded-lg shadow p-4 mt-4">
+                              <label className="block text-sm font-medium text-gray-700 mb-1 h-5">ग्रामपंचायत  </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 "
+                                        }`}
+                                    value={formData.scheme_name}
+                                    onChange={(e) => handleChange('scheme_name', e.target.value)}
+                                >
+                                    <option value="">ग्रामपंचायत  निवडा</option>
+                                    {schemedata.map((category) => (
+                                        <option key={category.scheme_id} value={category.scheme_id}>
+                                            {category.scheme_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
+
+
+                        </div>
                         <div>
-                            योजना
+                            योजना 
                             <select
                                 name=""
                                 id=""
@@ -651,7 +719,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 value={formData.scheme_name}
                                 onChange={(e) => handleChange('scheme_name', e.target.value)}
                             >
-                                <option value="">योजना</option>
+                                <option value="">योजना निवडा</option>
                                 {schemedata.map((category) => (
                                     <option key={category.scheme_id} value={category.scheme_id}>
                                         {category.scheme_name}
@@ -748,7 +816,7 @@ const Bhautikadata: React.FC<Props> = ({
 
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700  mb-6">कुटुंब संख्या</label>
+                                    <label className="block text-sm font-medium text-gray-700  mb-6">एकूण कुटुंब संख्या</label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
@@ -757,6 +825,15 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
+                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
+                                    <label className="block text-sm font-medium text-gray-700 mb-6 h-5">एकूण कुटुंब संख्या पैकी आदिवासी कुटुंब संख्या</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                        value={formData.tribalsWholeFamilyNumbers}
+                                        onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
+                                    />
+                                </div>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-6 h-5">एकूण आदिवासी कुटुंब संख्या</label>
                                     <input
@@ -777,7 +854,12 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
 
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 ">
+                                {/* CFRMC आराखडा */}
+
+
+                                <div className="md:col-span-3 bg-gray-100 rounded-lg shadow p-4 mt-4">
                                     <label className="block text-sm font-medium text-gray-700 mb-6 h-5">सामूहिक वनपट्टा वाटप आहे/नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -804,10 +886,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 ">
-                                {/* CFRMC आराखडा */}
-                                <div className="md:col-span-4 bg-gray-100 rounded-lg shadow p-4 mt-4">
+                                <div className="md:col-span-3 bg-gray-100 rounded-lg shadow p-4 mt-4">
                                     <label className="block text-sm font-medium text-gray-700 mb-6 h-5">
                                         CFRMC आराखडा सादर आहे/नाही
                                     </label>
@@ -838,7 +917,7 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* आधारकार्ड */}
-                                <div className="md:col-span-4 bg-gray-100 rounded-lg shadow p-4 mt-4">
+                                <div className="md:col-span-3 bg-gray-100 rounded-lg shadow p-4 mt-4">
                                     <h3 className="text-sm font-semibold h-5">आधारकार्ड</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
@@ -867,8 +946,8 @@ const Bhautikadata: React.FC<Props> = ({
                                 </div>
 
                                 {/* मतदार ओळखपत्र */}
-                                <div className="md:col-span-4 bg-gray-100 rounded-lg shadow p-4 mt-4">
-                                    <h3 className="text-sm font-semibold  आधारकार्ड">मतदार ओळखपत्र</h3>
+                                <div className="md:col-span-3 bg-gray-100 rounded-lg shadow p-4 mt-4">
+                                    <h3 className="text-sm font-semibold  आधारकार्ड">मतदार ओळखपत्र (18 वर्षावरील )</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1">
@@ -1165,30 +1244,19 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
                                 <div className=" p-2  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 font-unwrap whitespace-nowrap h-8">पीएम आवास योजना</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1 font-unwrap whitespace-nowrap h-8">पीएम आवास घरकुल लाभ संख्या</label>
                                     <div className="flex space-x-3 mt-1">
-                                        <label className="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="pmAwasYojana"
-                                                value="yes"
-                                                checked={formData.pmAwasYojana === "yes"}
-                                                onChange={() => handleChange("pmAwasYojana", "yes")}
-                                                className="h-3 w-3 text-indigo-600"
-                                            />
-                                            <span className="ml-1 text-xs text-gray-700">होय</span>
-                                        </label>
-                                        <label className="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="pmAwasYojana"
-                                                value="no"
-                                                checked={formData.pmAwasYojana === "no"}
-                                                onChange={() => handleChange("pmAwasYojana", "no")}
-                                                className="h-3 w-3 text-indigo-600"
-                                            />
-                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                        </label>
+
+                                        <input
+                                            type="text"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                            name="pmAwasYojana"
+                                            value={formData.pmAwasYojana}
+
+                                            onChange={() => handleChange("pmAwasYojana", "yes")}
+
+                                        />
+
                                     </div>
                                 </div>
                             </div>
