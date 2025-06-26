@@ -258,8 +258,11 @@ const Vyaktigatdata: React.FC<Props> = ({
                     }
                 }
             }
-            
-            setFamilyErrors(prev => { const { familymembercount: removed, ...rest } = prev; return rest; });
+            setFamilyErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.familymembercount;
+                return newErrors;
+            });
         }
 
         setFormData(prev => {
@@ -297,8 +300,9 @@ const Vyaktigatdata: React.FC<Props> = ({
                 return;
             } else {
                 setFamilyErrors(prev => {
-                    const { sikklacelloffamily: removed, ...rest } = prev;
-                    return rest;
+                    const newErrors = { ...prev };
+                    delete newErrors.sikklacelloffamily;
+                    return newErrors;
                 });
             }
         }
