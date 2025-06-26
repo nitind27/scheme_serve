@@ -19,6 +19,7 @@ const getUsers = async (): Promise<vyaktikDataall[]> => {
   return res.json();
 
 };
+
 const getschemescrud = async (): Promise<Schemesdatas[]> => {
 
   const schemescrud = await fetch(`https://schemeserve.weclocks.online/api/schemescrud`, { cache: 'no-store' });
