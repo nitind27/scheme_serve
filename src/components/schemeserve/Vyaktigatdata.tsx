@@ -152,6 +152,10 @@ interface Props {
     getgrampanchayatdata: Grampanchayattype[];
 }
 
+// Add this helper at the top (after imports):
+function hasAsleli(obj: unknown): obj is { asleli: string } {
+  return !!obj && typeof obj === 'object' && 'asleli' in obj;
+}
 
 const Vyaktigatdata: React.FC<Props> = ({
     initialdata,
@@ -168,6 +172,8 @@ const Vyaktigatdata: React.FC<Props> = ({
 
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
+    const [familyErrors, setFamilyErrors] = useState<{ [key: string]: string }>({});
+    console.log("editId", familyErrors)
     console.log("editId", editId)
     // Initialize form state
     const [formData, setFormData] = useState<BhautikData>({
@@ -222,42 +228,85 @@ const Vyaktigatdata: React.FC<Props> = ({
         childField: string,
         value: string
     ) => {
-        setFormData(prev => {
-            const parent = prev[parentField];
-            let updated: Record<string, string>;
-            if (true) {
-                // Only destructure for population fields
-                const { female = '', male = '', total = '', ...rest } = (typeof parent === 'object' && parent !== null) ? parent as { female?: string; male?: string; total?: string } : {};
-                updated = {
-                    ...rest,
-                    female,
-                    male,
-                    total,
-                    [childField]: value
-                };
-                if (childField === 'female' || childField === 'male') {
-                    const newFemale = childField === 'female' ? value : female;
-                    const newMale = childField === 'male' ? value : male;
-                    updated.total = String(Number(newFemale) + Number(newMale));
-                }
+        const familyTotal = Number(formData.familymembercount.total) || 0;
+        const asleliFields = ['castcertificate', 'aadharcard', 'voteridcard', 'pmKisanCard', 'ayushmanCard'];
+
+        if (asleliFields.includes(parentField) && childField === 'asleli') {
+            if (Number(value) > familyTotal) {
+                setFamilyErrors(prev => ({ ...prev, [`${parentField}_asleli`]: `असलेली संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.` }));
+                toast.error(`असलेली संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
             } else {
-                // Generic fallback for other fields
-                const parentObj = (typeof parent === 'object' && parent !== null) ? parent : {};
-                updated = {
-                    ...parentObj,
-                    [childField]: value
-                };
+                setFamilyErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors[`${parentField}_asleli`];
+                    return newErrors;
+                });
             }
-            return {
-                ...prev,
-                [parentField]: updated
-            };
+        }
+
+        if (parentField === 'familymembercount' && (childField === 'female' || childField === 'male')) {
+            const newTotal = (childField === 'female' ? Number(value) : Number(formData.familymembercount.female)) + (childField === 'male' ? Number(value) : Number(formData.familymembercount.male));
+            for (const field of asleliFields) {
+                const valueObj = formData[field as keyof BhautikData];
+                if (hasAsleli(valueObj)) {
+                    const asleliValue = Number(valueObj.asleli) || 0;
+                    if (newTotal < asleliValue) {
+                        setFamilyErrors(prev => ({ ...prev, familymembercount: `कुटुंबातील सदस्य संख्या (${newTotal}) असलेली संख्या (${asleliValue}) पेक्षा कमी असू शकत नाही.` }));
+                        toast.error(`कुटुंबातील सदस्य संख्या (${newTotal}) असलेली संख्या (${asleliValue}) पेक्षा कमी असू शकत नाही.`);
+                        return;
+                    }
+                }
+            }
+            setFamilyErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.familymembercount;
+                return newErrors;
+            });
+        }
+
+        setFormData(prev => {
+            const newFormData = { ...prev };
+            if (parentField === 'familymembercount') {
+                const parent = newFormData.familymembercount;
+                const updated = { ...parent, [childField]: value };
+                if (childField === 'female' || childField === 'male') {
+                    updated.total = String((childField === 'female' ? Number(value) : Number(parent.female)) + (childField === 'male' ? Number(value) : Number(parent.male)));
+                }
+                newFormData.familymembercount = updated;
+            } else if (asleliFields.includes(parentField)) {
+                const parent = newFormData[parentField] as { asleli: string; nasleli: string };
+                const updated = { ...parent, [childField]: value };
+                if (childField === 'asleli') {
+                    updated.nasleli = String((Number(newFormData.familymembercount.total) || 0) - Number(value));
+                }
+                newFormData[parentField as 'castcertificate' | 'aadharcard' | 'voteridcard' | 'pmKisanCard' | 'ayushmanCard'] = updated;
+            }
+            return newFormData;
         });
     };
 
-
     // Handle simple field changes
     const handleChange = (field: keyof BhautikData, value: string) => {
+        const familyTotal = Number(formData.familymembercount.total) || 0;
+
+        if (field === 'sikklacelloffamily') {
+            if (Number(value) > familyTotal) {
+                setFamilyErrors(prev => ({
+                    ...prev,
+                    sikklacelloffamily: `कुटुंबात सिकलसेल बाधित सदस्य संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`
+                }));
+                toast.error(`कुटुंबात सिकलसेल बाधित सदस्य संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setFamilyErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.sikklacelloffamily;
+                    return newErrors;
+                });
+            }
+        }
+
         setFormData(prev => ({
             ...prev,
             [field]: value
@@ -797,7 +846,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     <option value="">ग्रामपंचायत  निवडा</option>
                                     {getgrampanchayatdata.filter((data) => data.taluka_id == formData.taluka_id).map((category) => (
                                         <option key={category.id} value={category.id}>
-                                            {category.marathi_name}
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
@@ -819,7 +868,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     <option value="">गाव निवडा</option>
                                     {villagedata.filter((data) => data.taluka_id == formData.taluka_id &&  data.gp_id == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
-                                            {category.marathi_name}
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
@@ -1012,6 +1061,16 @@ const Vyaktigatdata: React.FC<Props> = ({
 
                             </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-6">राशन कार्ड</label>
+                                <input
+                                    type="text"
+                                    className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                      value={formData.rationcardtype}
+                                            onChange={e => handleChange('rationcardtype', e.target.value)}
+                                />
+
+                            </div>
+                            {/* <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <h3 className="text-sm font-semibold mb-2">राशन कार्ड </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="flex space-x-3 mt-1">
@@ -1046,7 +1105,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
 

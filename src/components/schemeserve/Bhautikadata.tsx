@@ -236,12 +236,113 @@ const Bhautikadata: React.FC<Props> = ({
         gp_id: '',
     });
 
+    const [populationErrors, setPopulationErrors] = useState<{ [key: string]: string }>({});
+
     // Handle nested state changes
     const handleNestedChange = (
         parentField: keyof BhautikData,
         childField: string,
         value: string
     ) => {
+        // Validation for tribalPopulation fields
+        if (parentField === 'tribalPopulation') {
+            // let totalField = childField;
+            // let totalValue = value;
+            const ekunValue = formData.ekunSankhya[childField as keyof typeof formData.ekunSankhya] || '';
+            if (childField === 'female' || childField === 'male') {
+                // Check if tribal value > total value
+                if (Number(value) > Number(ekunValue)) {
+                    setPopulationErrors(prev => ({
+                        ...prev,
+                        [`tribalPopulation_${childField}`]: `आदिवासी ${childField === 'female' ? 'स्री' : 'पुरुष'} (${value}) एकूण लोकसंख्या (${ekunValue}) पेक्षा जास्त असू शकत नाही.`,
+                    }));
+                    toast.error(`आदिवासी ${childField === 'female' ? 'स्री' : 'पुरुष'} (${value}) एकूण लोकसंख्या (${ekunValue}) पेक्षा जास्त असू शकत नाही.`);
+                    return;
+                } else {
+                    setPopulationErrors(prev => {
+                        const newErrors = { ...prev };
+                        delete newErrors[`tribalPopulation_${childField}`];
+                        return newErrors;
+                    });
+                }
+            }
+        }
+        // Validation for ekunSankhya: if total is less than tribal, reset tribal
+        if (parentField === 'ekunSankhya' && (childField === 'female' || childField === 'male')) {
+            // If new total is less than tribal, show error and do not update
+            const tribalValue = formData.tribalPopulation[childField as keyof typeof formData.tribalPopulation] || '';
+            if (Number(tribalValue) > Number(value)) {
+                setPopulationErrors(prev => ({
+                    ...prev,
+                    [`ekunSankhya_${childField}`]: `एकूण लोकसंख्या (${value}) आदिवासी ${childField === 'female' ? 'स्री' : 'पुरुष'} (${tribalValue}) पेक्षा कमी असू शकत नाही.`,
+                }));
+                toast.error(`एकूण लोकसंख्या (${value}) आदिवासी ${childField === 'female' ? 'स्री' : 'पुरुष'} (${tribalValue}) पेक्षा कमी असू शकत नाही.`);
+                return;
+            } else {
+                setPopulationErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors[`ekunSankhya_${childField}`];
+                    return newErrors;
+                });
+            }
+        }
+        // 4. For all 'asleli' fields (auto-calc nasleli, validate against tribalPopulation.total)
+        const asleliFields = [
+            'aadharcard',
+            'matdarOlahkhap',
+            'jaticheGmanap',
+            'rashionCard',
+            'jobCard',
+            'pmKisanCard',
+            'ayushmanCard',
+            'panyaPanyachiSuvidha',
+            'harGharNalYojana',
+            'vidyutikaran',
+        ];
+        if (asleliFields.includes(parentField) && childField === 'asleli') {
+            const tribalTotal = Number(formData.tribalPopulation.total) || 0;
+            if (Number(value) > tribalTotal) {
+                setPopulationErrors(prev => ({
+                    ...prev,
+                    [`${parentField}_asleli`]: `असलेली आदिवासी संख्या (${value}) आदिवासी लोकसंख्या (${tribalTotal}) पेक्षा जास्त असू शकत नाही.`,
+                }));
+                toast.error(`असलेली आदिवासी संख्या (${value}) आदिवासी लोकसंख्या (${tribalTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setPopulationErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors[`${parentField}_asleli`];
+                    return newErrors;
+                });
+            }
+            setFormData(prev => {
+                const parent = prev[parentField];
+                const nasleli = String(tribalTotal - Number(value));
+                return {
+                    ...prev,
+                    [parentField]: {
+                        ...((typeof parent === 'object' && parent !== null) ? parent as Record<string, unknown> : {}),
+                        asleli: value,
+                        nasleli: nasleli
+                    }
+                };
+            });
+            return;
+        }
+        // For all 'asleli' fields, if user tries to edit 'nasleli' directly, just update as normal
+        if (asleliFields.includes(parentField) && childField === 'nasleli') {
+            setFormData(prev => {
+                const parent = prev[parentField];
+                return {
+                    ...prev,
+                    [parentField]: {
+                        ...((typeof parent === 'object' && parent !== null) ? parent as Record<string, unknown> : {}),
+                        nasleli: value
+                    }
+                };
+            });
+            return;
+        }
         setFormData(prev => {
             const parent = prev[parentField];
             let updated: Record<string, string>;
@@ -278,6 +379,60 @@ const Bhautikadata: React.FC<Props> = ({
 
     // Handle simple field changes
     const handleChange = (field: keyof BhautikData, value: string) => {
+        // 1. एकूण कुटुंब संख्या <= एकूण लोकसंख्या (totalFamilyNumbers <= ekunSankhya.total)
+        if (field === 'totalFamilyNumbers') {
+            const totalPop = Number(formData.ekunSankhya.total) || 0;
+            if (Number(value) > totalPop) {
+                setPopulationErrors(prev => ({
+                    ...prev,
+                    totalFamilyNumbers: `एकूण कुटुंब संख्या (${value}) एकूण लोकसंख्या (${totalPop}) पेक्षा जास्त असू शकत नाही.`,
+                }));
+                toast.error(`एकूण कुटुंब संख्या (${value}) एकूण लोकसंख्या (${totalPop}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setPopulationErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.totalFamilyNumbers;
+                    return newErrors;
+                });
+            }
+        }
+        // 2. एकूण कुटुंब संख्या पैकी आदिवासी कुटुंब संख्या <= आदिवासी लोकसंख्या (tribalsWholeFamilyNumbers <= tribalPopulation.total)
+        if (field === 'tribalsWholeFamilyNumbers') {
+            const tribalTotal = Number(formData.tribalPopulation.total) || 0;
+            if (Number(value) > tribalTotal) {
+                setPopulationErrors(prev => ({
+                    ...prev,
+                    tribalsWholeFamilyNumbers: `एकूण कुटुंब संख्या पैकी आदिवासी कुटुंब संख्या (${value}) आदिवासी लोकसंख्या (${tribalTotal}) पेक्षा जास्त असू शकत नाही.`,
+                }));
+                toast.error(`एकूण कुटुंब संख्या पैकी आदिवासी कुटुंब संख्या (${value}) आदिवासी लोकसंख्या (${tribalTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setPopulationErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.tribalsWholeFamilyNumbers;
+                    return newErrors;
+                });
+            }
+        }
+        // 3. वैयक्तिक आदिवासी वनपट्टेधारक संख्या <= आदिवासी लोकसंख्या (vaitikAadivasi <= tribalPopulation.total)
+        if (field === 'vaitikAadivasi') {
+            const tribalTotal = Number(formData.tribalPopulation.total) || 0;
+            if (Number(value) > tribalTotal) {
+                setPopulationErrors(prev => ({
+                    ...prev,
+                    vaitikAadivasi: `वैयक्तिक आदिवासी वनपट्टेधारक संख्या (${value}) आदिवासी लोकसंख्या (${tribalTotal}) पेक्षा जास्त असू शकत नाही.`,
+                }));
+                toast.error(`वैयक्तिक आदिवासी वनपट्टेधारक संख्या (${value}) आदिवासी लोकसंख्या (${tribalTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setPopulationErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.vaitikAadivasi;
+                    return newErrors;
+                });
+            }
+        }
         setFormData(prev => ({
             ...prev,
             [field]: value
@@ -327,7 +482,6 @@ const Bhautikadata: React.FC<Props> = ({
             ...prev,
             tribalPopulationTkWari: percent
         }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData.ekunSankhya.female, formData.ekunSankhya.male, formData.tribalPopulation.female, formData.tribalPopulation.male]);
 
     const transformFormData = (data: BhautikData) => {
@@ -706,7 +860,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     <option value="">ग्रामपंचायत  निवडा</option>
                                     {getgrampanchayatdata.filter((data) => data.taluka_id == formData.taluka_id).map((category) => (
                                         <option key={category.id} value={category.id}>
-                                            {category.marathi_name}
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
@@ -715,7 +869,7 @@ const Bhautikadata: React.FC<Props> = ({
 
                             <div className="md:col-span-4 mt-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
-                                    गाव
+                                    गाव {formData.gp_id}
                                 </label>
                                 <select
                                     name=""
@@ -728,7 +882,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     <option value="">गाव निवडा</option>
                                     {villagedata.filter((data) => data.taluka_id == formData.taluka_id &&  data.gp_id == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
-                                            {category.marathi_name}
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
@@ -768,6 +922,9 @@ const Bhautikadata: React.FC<Props> = ({
                                             value={formData.ekunSankhya.female}
                                             onChange={(e) => handleNestedChange('ekunSankhya', 'female', e.target.value)}
                                         />
+                                        {populationErrors.ekunSankhya_female && (
+                                            <div className="text-red-600 text-xs mt-1">{populationErrors.ekunSankhya_female}</div>
+                                        )}
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">पुरुष</label>
@@ -777,6 +934,9 @@ const Bhautikadata: React.FC<Props> = ({
                                             value={formData.ekunSankhya.male}
                                             onChange={(e) => handleNestedChange('ekunSankhya', 'male', e.target.value)}
                                         />
+                                        {populationErrors.ekunSankhya_male && (
+                                            <div className="text-red-600 text-xs mt-1">{populationErrors.ekunSankhya_male}</div>
+                                        )}
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण</label>
@@ -802,6 +962,9 @@ const Bhautikadata: React.FC<Props> = ({
                                             value={formData.tribalPopulation.female}
                                             onChange={(e) => handleNestedChange('tribalPopulation', 'female', e.target.value)}
                                         />
+                                        {populationErrors.tribalPopulation_female && (
+                                            <div className="text-red-600 text-xs mt-1">{populationErrors.tribalPopulation_female}</div>
+                                        )}
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">पुरुष</label>
@@ -811,6 +974,9 @@ const Bhautikadata: React.FC<Props> = ({
                                             value={formData.tribalPopulation.male}
                                             onChange={(e) => handleNestedChange('tribalPopulation', 'male', e.target.value)}
                                         />
+                                        {populationErrors.tribalPopulation_male && (
+                                            <div className="text-red-600 text-xs mt-1">{populationErrors.tribalPopulation_male}</div>
+                                        )}
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">एकूण</label>
