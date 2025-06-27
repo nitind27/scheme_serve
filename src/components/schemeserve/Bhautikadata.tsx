@@ -690,35 +690,42 @@ const Bhautikadata: React.FC<Props> = ({
     };;
 
     const columns: Column<BhautikDataall>[] = [
+        // Existing and population fields
         {
-            key: "totalpopulation_male",
-            label: "स्री",
-            render: (data) => <span>{data.totalpopulation?.split("|")[0] || "-"}</span>,
+            key: "taluka_id",
+            label: "तालुका",
+            render: (data) => <span>{data.taluka_id || "-"}</span>,
         },
         {
-            key: "totalpopulation_female",
-            label: "पुरुष",
-            render: (data) => <span>{data.totalpopulation?.split("|")[1] || "-"}</span>,
+            key: "village_id",
+            label: "गाव",
+            render: (data) => <span>{data.village_id || "-"}</span>,
         },
         {
-            key: "totalpopulation_total",
-            label: "एकूण कुटुंब संख्या",
-            render: (data) => <span>{data.totalpopulation?.split("|")[2] || "-"}</span>,
+            key: "gp_id",
+            label: "ग्रामपंचायत",
+            render: (data) => <span>{data.gp_id || "-"}</span>,
         },
         {
-            key: "tribalpopulation_male",
-            label: "स्री",
-            render: (data) => <span>{data.tribalpopulation?.split("|")[0] || "-"}</span>,
+            key: 'scheme_name',
+            label: 'योजनाचे नाव',
+            render: (data) => <span>{data.scheme_name || "-"}</span>,
         },
         {
-            key: "tribalpopulation_female",
-            label: "पुरुष",
-            render: (data) => <span>{data.tribalpopulation?.split("|")[1] || "-"}</span>,
+            key: 'totalpopulation_total',
+            label: 'एकूण कुटुंब संख्या',
+            render: (data) => {
+                const [female, male, total] = data.totalpopulation ? data.totalpopulation.split('|') : ['', '', ''];
+                return `स्री: ${female || 'N/A'}, पुरुष: ${male || 'N/A'}, एकूण: ${total || 'N/A'}`;
+            }
         },
         {
-            key: "tribalpopulation_total",
-            label: "आदिवासी लोकसंख्या",
-            render: (data) => <span>{data.tribalpopulation?.split("|")[2] || "-"}</span>,
+            key: 'tribalpopulation_total',
+            label: 'आदिवासी लोकसंख्या',
+            render: (data) => {
+                const [female, male, total] = data.tribalpopulation ? data.tribalpopulation.split('|') : ['', '', ''];
+                return `स्री: ${female || 'N/A'}, पुरुष: ${male || 'N/A'}, एकूण: ${total || 'N/A'}`;
+            }
         },
         {
             key: "tribalpopulationtkkwari",
@@ -735,40 +742,90 @@ const Bhautikadata: React.FC<Props> = ({
             label: "एकूण आदिवासी कुटुंब संख्या",
             render: (data) => <span>{data.tribalwholefamilynumbers || "-"}</span>,
         },
+
+        // Document fields
         {
-            key: "aadhaarcard",
-            label: "आधारकार्ड",
-            render: (data) => <span>{data.aadhaarcard || "-"}</span>,
+            key: 'aadharcard',
+            label: 'आधारकार्ड',
+            render: (data) => {
+                const [asleli, nasleli] = data.aadhaarcard ? data.aadhaarcard.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
+        },
+
+        {
+            key: 'voteridcard',
+            label: "मतदार ओळखपत्र",
+            render: (data) => {
+                const [asleli, nasleli] = data.voteridcard ? data.voteridcard.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
-            key: "voteridcard",
-            label: "मतदार ओळखपत्र",
-            render: (data) => <span>{data.voteridcard || "-"}</span>,
+            key: 'castcert',
+            label: "जातीचे प्रमाणपत्र",
+            render: (data) => {
+                const [asleli, nasleli] = data.breedstandards ? data.breedstandards.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
             key: "rationcard",
             label: "राशन कार्ड",
-            render: (data) => <span>{data.rationcard || "-"}</span>,
+            render: (data) => {
+                const [asleli, nasleli] = data.rationcard ? data.rationcard.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
             key: "jobcard",
             label: "जॉब कार्ड",
-            render: (data) => <span>{data.jobcard || "-"}</span>,
+            render: (data) => {
+                const [asleli, nasleli] = data.jobcard ? data.jobcard.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
             key: "pmfarmercard",
             label: "PM किसान कार्ड",
-            render: (data) => <span>{data.pmfarmercard || "-"}</span>,
+            render: (data) => {
+                const [asleli, nasleli] = data.pmfarmercard ? data.pmfarmercard.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
             key: "ayushmancard",
             label: "आयुष्मान कार्ड",
-            render: (data) => <span>{data.ayushmancard || "-"}</span>,
+               render: (data) => {
+                const [asleli, nasleli] = data.ayushmancard ? data.ayushmancard.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
+        },
+        {
+            key: "waterdeink",
+            label: "पिण्याच्या पाण्याची सुविधा",
+               render: (data) => {
+                const [asleli, nasleli] = data.adivasis ? data.adivasis.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
+        },
+
+        // Facility and infrastructure fields
+        {
+            key: "hargharnal",
+            label: "हर घर नळ योजना",
+               render: (data) => {
+                const [asleli, nasleli] = data.everygharnaalyojana ? data.everygharnaalyojana.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
             key: "electrificationforfamilies",
-            label: "विद्युतीकरण",
-            render: (data) => <span>{data.electrificationforfamilies || "-"}</span>,
+            label: "हर घर नळ योजना",
+               render: (data) => {
+                const [asleli, nasleli] = data.electrificationforfamilies ? data.electrificationforfamilies.split('|') : ['', ''];
+                return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
+            }
         },
         {
             key: "elementaryschool",
@@ -785,6 +842,83 @@ const Bhautikadata: React.FC<Props> = ({
             label: "नदी तलाव",
             render: (data) => <span>{data.riverlake || "-"}</span>,
         },
+
+        // Newly added fields for full coverage
+        {
+            key: "forestshareholderno",
+            label: "वन हक्क धारक संख्या",
+            render: (data) => <span>{data.forestshareholderno || "-"}</span>,
+        },
+        {
+            key: "collectiveforestry",
+            label: "सामूहिक वनपट्टा",
+            render: (data) => <span>{data.collectiveforestry || "-"}</span>,
+        },
+        {
+            key: "cfrmplan",
+            label: "CFRM आराखडा",
+            render: (data) => <span>{data.cfrmplan || "-"}</span>,
+        },
+      
+        {
+            key: "tribalbenefitnumber",
+            label: "आदिवासी लाभार्थी संख्या",
+            render: (data) => <span>{data.tribalbenefitnumber || "-"}</span>,
+        },
+        {
+            key: "stepfacilities",
+            label: "पायरी सुविधा",
+            render: (data) => <span>{data.stepfacilities || "-"}</span>,
+        },
+       
+        {
+            key: "healthfacilityis",
+            label: "आरोग्य सुविधा आहे",
+            render: (data) => <span>{data.healthfacilityis || "-"}</span>,
+        },
+        {
+            key: "generalhealthcheckup",
+            label: "सर्वसाधारण आरोग्य तपासणी",
+            render: (data) => <span>{data.generalhealthcheckup || "-"}</span>,
+        },
+        {
+            key: "sickleanemia",
+            label: "सिकल अ‍ॅनिमिया",
+            render: (data) => <span>{data.sickleanemia || "-"}</span>,
+        },
+        {
+            key: "kindergarten",
+            label: "अंगणवाडी",
+            render: (data) => <span>{data.kindergarten || "-"}</span>,
+        },
+        {
+            key: "mobilefacilities",
+            label: "मोबाइल सुविधा",
+            render: (data) => <span>{data.mobilefacilities || "-"}</span>,
+        },
+        {
+            key: "mobilemedicalunit",
+            label: "मोबाइल मेडिकल युनिट",
+            render: (data) => <span>{data.mobilemedicalunit || "-"}</span>,
+        },
+        {
+            key: "gotulsocietybuilding",
+            label: "गोटूल समाज भवन",
+            render: (data) => <span>{data.gotulsocietybuilding || "-"}</span>,
+        },
+        {
+            key: "allroadvillages",
+            label: "सर्व रस्ते गाव",
+            render: (data) => <span>{data.allroadvillages || "-"}</span>,
+        },
+        {
+            key: "village_distance",
+            label: "गावाचे अंतर",
+            render: (data) => <span>{data.village_distance || "-"}</span>,
+        },
+
+
+        // Actions column (unchanged)
         {
             key: "actions",
             label: "Actions",
@@ -880,7 +1014,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     onChange={(e) => handleChange('village_id', e.target.value)}
                                 >
                                     <option value="">गाव निवडा</option>
-                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id &&  data.gp_id == formData.gp_id).map((category) => (
+                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id && data.gp_id == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
                                             {category.name}
                                         </option>
@@ -1026,7 +1160,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         onChange={(e) => handleChange('tribalsWholeFamilyNumbers', e.target.value)}
                                     />
                                 </div>
-                           
+
 
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-6 h-5">वैयक्तिक आदिवासी वनपट्टेधारक संख्या</label>
