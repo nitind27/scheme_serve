@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   try {
     const [result] = await pool.query<ResultSetHeader>(
       `INSERT INTO vaykatigatdb (
-        totaltribalecount, totalmembersname, familymembercount, castcertificate,
+        castdata, totalmembersname, familymembercount, agedata, castcertificate, 
         aadharcard, voteridcard, rationcard, jobcard, pmfarmercard, farmercreditcard,
         aayushmancard, headofmember, housetype,
         benefiteofpmhouse, waterdrink, hargharnal, electricity, hospitalphc,
@@ -28,11 +28,12 @@ export async function POST(request: Request) {
         sikklacelloffamily, whichschoolchlid, anyhaveaashramschool, lpggas,
         bankaccount, studtatcoop, pmvimayojna, praklpkaryalaly, itarvibhagudan,
         niymitaarogya, rationcard_no, rationcardtype, contact_no, taluka_id, village_id, gp_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        body.totaltribalecount,
+        body.castdata,
         body.totalmembersname,
         body.familymembercount,
+        body.agedata,
         body.castcertificate,
         body.aadharcard,
         body.voteridcard,
@@ -105,9 +106,10 @@ export async function PUT(request: Request) {
   // Sabhi fields destructure karo
   const {
     id,
-    totaltribalecount,
+    castdata,
     totalmembersname,
     familymembercount,
+    agedata,
     castcertificate,
     aadharcard,
     voteridcard,
@@ -149,7 +151,7 @@ console.log("idid",id)
   // Basic validation
   if (
     !id ||
-    totaltribalecount === undefined ||
+    castdata === undefined ||
     totalmembersname === undefined ||
     familymembercount === undefined ||
     castcertificate === undefined ||
@@ -192,7 +194,7 @@ console.log("idid",id)
   try {
     const [result] = await pool.query<ResultSetHeader>(
       `UPDATE vaykatigatdb SET
-        totaltribalecount = ?, totalmembersname = ?, familymembercount = ?, castcertificate = ?,
+        castdata = ?, totalmembersname = ?, familymembercount = ?, agedata = ?, castcertificate = ?,
         aadharcard = ?, voteridcard = ?, rationcard = ?, jobcard = ?, pmfarmercard = ?, farmercreditcard = ?,
         aayushmancard = ?, headofmember = ?, housetype = ?, benefiteofpmhouse = ?, waterdrink = ?, hargharnal = ?,
         electricity = ?, hospitalphc = ?, sanjaygandhi = ?, studybenefite = ?, farmeavilebleornot = ?, studyvanpatta = ?,
@@ -201,9 +203,10 @@ console.log("idid",id)
         rationcard_no = ?, rationcardtype = ?, contact_no = ?, status = ?, taluka_id = ?, village_id = ?, gp_id = ?
       WHERE id = ?`,
       [
-        totaltribalecount,
+        castdata,
         totalmembersname,
         familymembercount,
+        agedata,
         castcertificate,
         aadharcard,
         voteridcard,
