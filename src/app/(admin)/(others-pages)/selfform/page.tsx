@@ -8,6 +8,7 @@ import { Schemesdatas } from '@/components/schemesdata/schemes';
 
 import {  vyaktikDataall } from '@/components/schemeserve/Bhautikdatatype';
 import Vyaktigatdata from '@/components/schemeserve/Vyaktigatdata';
+import Vyaktigatdatafilter from '@/components/schemeserve/Vyaktigatdatafilter';
 import { Taluka } from '@/components/Taluka/Taluka';
 import { Village } from '@/components/Village/village';
 // import Documentsdata from '@/components/Documentsdata/Documentsdata'
@@ -89,6 +90,7 @@ const page = async () => {
             breadcrumbs={breadcrumbItems}
           />
           <Vyaktigatdata initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/>
+          <Vyaktigatdatafilter initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/>
         </Suspense>
 
       </div>
