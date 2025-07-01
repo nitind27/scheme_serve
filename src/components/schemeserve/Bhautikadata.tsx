@@ -1011,7 +1011,7 @@ const Bhautikadata: React.FC<Props> = ({
 
                             <div className="md:col-span-4 mt-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
-                                    गाव {formData.gp_id}
+                                    गाव 
                                 </label>
                                 <select
                                     name=""
@@ -1022,7 +1022,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     onChange={(e) => handleChange('village_id', e.target.value)}
                                 >
                                     <option value="">गाव निवडा</option>
-                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id && data.gp_id == formData.gp_id).map((category) => (
+                                    {villagedata.filter((data) =>  data.gp_id == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
                                             {category.name}
                                         </option>

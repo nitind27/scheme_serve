@@ -978,7 +978,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     onChange={(e) => handleChange('village_id', e.target.value)}
                                 >
                                     <option value="">गाव निवडा</option>
-                                    {villagedata.filter((data) => data.taluka_id == formData.taluka_id && data.gp_id == formData.gp_id).map((category) => (
+                                    {villagedata.filter((data) => data.gp_id == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
                                             {category.name}
                                         </option>
