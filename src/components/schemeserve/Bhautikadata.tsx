@@ -1022,7 +1022,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     onChange={(e) => handleChange('village_id', e.target.value)}
                                 >
                                     <option value="">गाव निवडा</option>
-                                    {villagedata.filter((data) =>  data.gp_id == formData.gp_id).map((category) => (
+                                    {villagedata.filter((data) =>  data.gp_name == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
                                             {category.name}
                                         </option>
