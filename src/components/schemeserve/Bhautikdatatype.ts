@@ -1,6 +1,7 @@
 export interface BhautikDataall {
     scheme_name: string;
     totalpopulation: string;
+      alltribalegaav: string; 
     tribalpopulation: string;
     tribalpopulationtkkwari: string;
     totalfamilynumbers: string;

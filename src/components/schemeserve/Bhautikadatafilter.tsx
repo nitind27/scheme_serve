@@ -21,7 +21,7 @@ import { Taluka } from '../Taluka/Taluka';
 import { Village } from '../Village/village';
 import { Grampanchayattype } from '../grampanchayat/gptype';
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 // import { Schemesubcategorytype } from '../Schemesubcategory/Schemesubcategory';
 
 // Define interfaces
@@ -899,14 +899,15 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
         try {
             // Prepare headers
-            const headers = selectedFields.map(fieldKey => {
-                const field = fieldOptions.find(f => f.key === fieldKey);
-                return field ? field.label : fieldKey;
-            });
+            // const headers = selectedFields.map(fieldKey => {
+            //     const field = fieldOptions.find(f => f.key === fieldKey);
+            //     return field ? field.label : fieldKey;
+            // });
 
             // Prepare data
             const excelData = filteredData.map(item => {
-                const row: any = {};
+              const row: Record<string, string | number | boolean | null | undefined> = {};
+
                 selectedFields.forEach(fieldKey => {
                     const field = fieldOptions.find(f => f.key === fieldKey);
                     if (field) {

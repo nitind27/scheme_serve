@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/common/BreadcrumbItem'
 import { Grampanchayattype } from '@/components/grampanchayat/gptype';
 import { Schemesdatas } from '@/components/schemesdata/schemes';
 import Bhautikadata from '@/components/schemeserve/Bhautikadata';
-import Bhautikadatafilter from '@/components/schemeserve/Bhautikadatafilter';
+// import Bhautikadatafilter from '@/components/schemeserve/Bhautikadatafilter';
 import { BhautikDataall } from '@/components/schemeserve/Bhautikdatatype';
 import { Taluka } from '@/components/Taluka/Taluka';
 import { Village } from '@/components/Village/village';
@@ -86,7 +86,7 @@ const page = async () => {
             breadcrumbs={breadcrumbItems}
           />
           <Bhautikadata initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/>
-          <Bhautikadatafilter initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/>
+          {/* <Bhautikadatafilter initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/> */}
         </Suspense>
 
       </div>

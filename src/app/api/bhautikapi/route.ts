@@ -30,8 +30,8 @@ export async function POST(request: Request) {
         electrificationforfamilies, healthfacilityis, generalhealthcheckup,
         sickleanemia, elementaryschool, middleschool, kindergarten,
         mobilefacilities, mobilemedicalunit, gotulsocietybuilding, riverlake, scheme_name,
-        allroadvillages, village_distance, taluka_id, village_id, gp_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        allroadvillages, village_distance, taluka_id, village_id, gp_id, alltribalegaav
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         body.totalpopulation,
         body.tribalpopulation,
@@ -69,6 +69,7 @@ export async function POST(request: Request) {
         body.taluka_id,
         body.village_id,
         body.gp_id,
+        body.alltribalegaav,
       ]
     );
 
@@ -119,7 +120,7 @@ export async function PUT(request: Request) {
         electrificationforfamilies = ?, healthfacilityis = ?, generalhealthcheckup = ?,
         sickleanemia = ?, elementaryschool = ?, middleschool = ?, kindergarten = ?,
         mobilefacilities = ?, mobilemedicalunit = ?, gotulsocietybuilding = ?, riverlake = ?, scheme_name = ?,
-        allroadvillages = ?, village_distance = ?, taluka_id = ?, village_id = ?, gp_id = ?
+        allroadvillages = ?, village_distance = ?, taluka_id = ?, village_id = ?, gp_id = ?, alltribalegaav = ?
       WHERE id = ?`,
       [
         body.totalpopulation,
@@ -158,6 +159,7 @@ export async function PUT(request: Request) {
         body.taluka_id,
         body.village_id,
         body.gp_id,
+        body.alltribalegaav,
         id
       ]
     );

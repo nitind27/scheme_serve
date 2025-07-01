@@ -165,7 +165,7 @@ function hasAsleli(obj: unknown): obj is { asleli: string } {
 
 const Vyaktigatdata: React.FC<Props> = ({
     initialdata,
-    schemescrud,
+    // schemescrud,
     talukadata,
     villagedata,
     getgrampanchayatdata
@@ -174,7 +174,7 @@ const Vyaktigatdata: React.FC<Props> = ({
     const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
     // const {  isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
-    const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
+    // const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
 
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
@@ -230,165 +230,165 @@ const Vyaktigatdata: React.FC<Props> = ({
     });
 
     // Handle nested state changes
-const handleNestedChange = (
-    parentField: keyof BhautikData,
-    childField: string,
-    value: string
-) => {
-    // Validate input is a number or empty
-    if (value && !/^\d*$/.test(value)) {
-        return; // Only allow numbers
-    }
+    const handleNestedChange = (
+        parentField: keyof BhautikData,
+        childField: string,
+        value: string
+    ) => {
+        // Validate input is a number or empty
+        if (value && !/^\d*$/.test(value)) {
+            return; // Only allow numbers
+        }
 
-    const familyTotal = Number(formData.familymembercount.total) || 0;
-    const asleliFields = ['castcertificate', 'aadharcard', 'voteridcard', 'pmKisanCard', 'ayushmanCard'];
+        const familyTotal = Number(formData.familymembercount.total) || 0;
+        const asleliFields = ['castcertificate', 'aadharcard', 'voteridcard', 'pmKisanCard', 'ayushmanCard'];
 
-    // Validation for asleli fields
-    if (asleliFields.includes(parentField) && childField === 'asleli') {
-        if (Number(value) > familyTotal) {
-            setFamilyErrors(prev => ({ 
-                ...prev, 
-                [`${parentField}_asleli`]: `असलेली संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.` 
-            }));
-            toast.error(`असलेली संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`);
-            return;
-        } else {
+        // Validation for asleli fields
+        if (asleliFields.includes(parentField) && childField === 'asleli') {
+            if (Number(value) > familyTotal) {
+                setFamilyErrors(prev => ({
+                    ...prev,
+                    [`${parentField}_asleli`]: `असलेली संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`
+                }));
+                toast.error(`असलेली संख्या (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setFamilyErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors[`${parentField}_asleli`];
+                    return newErrors;
+                });
+            }
+        }
+
+        // Validation for family member counts
+        if (parentField === 'familymembercount' && (childField === 'female' || childField === 'male')) {
+            const newTotal = (childField === 'female' ? Number(value) : Number(formData.familymembercount.female || 0)) +
+                (childField === 'male' ? Number(value) : Number(formData.familymembercount.male || 0));
+
+            // Validate against asleli fields
+            for (const field of asleliFields) {
+                const valueObj = formData[field as keyof BhautikData];
+                if (hasAsleli(valueObj)) {
+                    const asleliValue = Number(valueObj.asleli) || 0;
+                    if (newTotal < asleliValue) {
+                        setFamilyErrors(prev => ({
+                            ...prev,
+                            familymembercount: `कुटुंबातील सदस्य संख्या (${newTotal}) असलेली संख्या (${asleliValue}) पेक्षा कमी असू शकत नाही.`
+                        }));
+                        toast.error(`कुटुंबातील सदस्य संख्या (${newTotal}) असलेली संख्या (${asleliValue}) पेक्षा कमी असू शकत नाही.`);
+                        return;
+                    }
+                }
+            }
             setFamilyErrors(prev => {
                 const newErrors = { ...prev };
-                delete newErrors[`${parentField}_asleli`];
+                delete newErrors.familymembercount;
                 return newErrors;
             });
         }
-    }
 
-    // Validation for family member counts
-    if (parentField === 'familymembercount' && (childField === 'female' || childField === 'male')) {
-        const newTotal = (childField === 'female' ? Number(value) : Number(formData.familymembercount.female || 0)) + 
-                         (childField === 'male' ? Number(value) : Number(formData.familymembercount.male || 0));
-
-        // Validate against asleli fields
-        for (const field of asleliFields) {
-            const valueObj = formData[field as keyof BhautikData];
-            if (hasAsleli(valueObj)) {
-                const asleliValue = Number(valueObj.asleli) || 0;
-                if (newTotal < asleliValue) {
-                    setFamilyErrors(prev => ({ 
-                        ...prev, 
-                        familymembercount: `कुटुंबातील सदस्य संख्या (${newTotal}) असलेली संख्या (${asleliValue}) पेक्षा कमी असू शकत नाही.` 
+        // Validation for agedata fields
+        if (parentField === 'agedata') {
+            if (childField === 'female') {
+                const femaleCount = Number(value);
+                const totalFemales = Number(formData.familymembercount.female || 0);
+                if (femaleCount > totalFemales) {
+                    setFamilyErrors(prev => ({
+                        ...prev,
+                        agedata_female: `18 वर्षावरील स्री (${value}) कुटुंबातील स्री (${totalFemales}) पेक्षा जास्त असू शकत नाही.`
                     }));
-                    toast.error(`कुटुंबातील सदस्य संख्या (${newTotal}) असलेली संख्या (${asleliValue}) पेक्षा कमी असू शकत नाही.`);
+                    toast.error(`18 वर्षावरील स्री (${value}) कुटुंबातील स्री (${totalFemales}) पेक्षा जास्त असू शकत नाही.`);
                     return;
                 }
             }
+
+            if (childField === 'male') {
+                const maleCount = Number(value);
+                const totalMales = Number(formData.familymembercount.male || 0);
+                if (maleCount > totalMales) {
+                    setFamilyErrors(prev => ({
+                        ...prev,
+                        agedata_male: `18 वर्षावरील पुरुष (${value}) कुटुंबातील पुरुष (${totalMales}) पेक्षा जास्त असू शकत नाही.`
+                    }));
+                    toast.error(`18 वर्षावरील पुरुष (${value}) कुटुंबातील पुरुष (${totalMales}) पेक्षा जास्त असू शकत नाही.`);
+                    return;
+                }
+            }
+
+            if (childField === 'total') {
+                const totalAdults = Number(value);
+                if (totalAdults > familyTotal) {
+                    setFamilyErrors(prev => ({
+                        ...prev,
+                        agedata_total: `18 वर्षावरील एकूण (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`
+                    }));
+                    toast.error(`18 वर्षावरील एकूण (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`);
+                    return;
+                }
+            }
+
+            // Clear any agedata errors if validation passes
+            setFamilyErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.agedata_female;
+                delete newErrors.agedata_male;
+                delete newErrors.agedata_total;
+                return newErrors;
+            });
         }
-        setFamilyErrors(prev => {
-            const newErrors = { ...prev };
-            delete newErrors.familymembercount;
-            return newErrors;
+
+        // Update the form state
+        setFormData(prev => {
+            const newFormData = { ...prev };
+
+            // Handle familymembercount updates
+            if (parentField === 'familymembercount') {
+                const updated = {
+                    ...newFormData.familymembercount,
+                    [childField]: value
+                };
+
+                if (childField === 'female' || childField === 'male') {
+                    updated.total = String(
+                        Number(childField === 'female' ? value : newFormData.familymembercount.female || 0) +
+                        Number(childField === 'male' ? value : newFormData.familymembercount.male || 0)
+                    );
+                }
+
+                newFormData.familymembercount = updated;
+            }
+            // Handle agedata updates
+            else if (parentField === 'agedata') {
+                const updated = {
+                    ...newFormData.agedata,
+                    [childField]: value
+                };
+
+                if (childField === 'female' || childField === 'male') {
+                    updated.total = String(
+                        Number(childField === 'female' ? value : newFormData.agedata.female || 0) +
+                        Number(childField === 'male' ? value : newFormData.agedata.male || 0)
+                    );
+                }
+
+                newFormData.agedata = updated;
+            }
+            // Handle asleli/nasleli fields
+            else if (asleliFields.includes(parentField)) {
+                const parent = newFormData[parentField] as { asleli: string; nasleli: string };
+                const updated = { ...parent, [childField]: value };
+
+                if (childField === 'asleli') {
+                    updated.nasleli = String(Math.max(0, familyTotal - Number(value)));
+                }
+
+                newFormData[parentField as 'castcertificate' | 'aadharcard' | 'voteridcard' | 'pmKisanCard' | 'ayushmanCard'] = updated;
+            }
+
+            return newFormData;
         });
-    }
-
-    // Validation for agedata fields
-    if (parentField === 'agedata') {
-        if (childField === 'female') {
-            const femaleCount = Number(value);
-            const totalFemales = Number(formData.familymembercount.female || 0);
-            if (femaleCount > totalFemales) {
-                setFamilyErrors(prev => ({
-                    ...prev,
-                    agedata_female: `18 वर्षावरील स्री (${value}) कुटुंबातील स्री (${totalFemales}) पेक्षा जास्त असू शकत नाही.`
-                }));
-                toast.error(`18 वर्षावरील स्री (${value}) कुटुंबातील स्री (${totalFemales}) पेक्षा जास्त असू शकत नाही.`);
-                return;
-            }
-        }
-
-        if (childField === 'male') {
-            const maleCount = Number(value);
-            const totalMales = Number(formData.familymembercount.male || 0);
-            if (maleCount > totalMales) {
-                setFamilyErrors(prev => ({
-                    ...prev,
-                    agedata_male: `18 वर्षावरील पुरुष (${value}) कुटुंबातील पुरुष (${totalMales}) पेक्षा जास्त असू शकत नाही.`
-                }));
-                toast.error(`18 वर्षावरील पुरुष (${value}) कुटुंबातील पुरुष (${totalMales}) पेक्षा जास्त असू शकत नाही.`);
-                return;
-            }
-        }
-
-        if (childField === 'total') {
-            const totalAdults = Number(value);
-            if (totalAdults > familyTotal) {
-                setFamilyErrors(prev => ({
-                    ...prev,
-                    agedata_total: `18 वर्षावरील एकूण (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`
-                }));
-                toast.error(`18 वर्षावरील एकूण (${value}) कुटुंबातील सदस्य संख्या (${familyTotal}) पेक्षा जास्त असू शकत नाही.`);
-                return;
-            }
-        }
-
-        // Clear any agedata errors if validation passes
-        setFamilyErrors(prev => {
-            const newErrors = { ...prev };
-            delete newErrors.agedata_female;
-            delete newErrors.agedata_male;
-            delete newErrors.agedata_total;
-            return newErrors;
-        });
-    }
-
-    // Update the form state
-    setFormData(prev => {
-        const newFormData = { ...prev };
-        
-        // Handle familymembercount updates
-        if (parentField === 'familymembercount') {
-            const updated = { 
-                ...newFormData.familymembercount,
-                [childField]: value 
-            };
-            
-            if (childField === 'female' || childField === 'male') {
-                updated.total = String(
-                    Number(childField === 'female' ? value : newFormData.familymembercount.female || 0) + 
-                    Number(childField === 'male' ? value : newFormData.familymembercount.male || 0)
-                );
-            }
-            
-            newFormData.familymembercount = updated;
-        } 
-        // Handle agedata updates
-        else if (parentField === 'agedata') {
-            const updated = { 
-                ...newFormData.agedata,
-                [childField]: value 
-            };
-            
-            if (childField === 'female' || childField === 'male') {
-                updated.total = String(
-                    Number(childField === 'female' ? value : newFormData.agedata.female || 0) + 
-                    Number(childField === 'male' ? value : newFormData.agedata.male || 0)
-                );
-            }
-            
-            newFormData.agedata = updated;
-        }
-        // Handle asleli/nasleli fields
-        else if (asleliFields.includes(parentField)) {
-            const parent = newFormData[parentField] as { asleli: string; nasleli: string };
-            const updated = { ...parent, [childField]: value };
-            
-            if (childField === 'asleli') {
-                updated.nasleli = String(Math.max(0, familyTotal - Number(value)));
-            }
-            
-            newFormData[parentField as 'castcertificate' | 'aadharcard' | 'voteridcard' | 'pmKisanCard' | 'ayushmanCard'] = updated;
-        }
-        
-        return newFormData;
-    });
-};
+    };
 
     // Handle simple field changes
     const handleChange = (field: keyof BhautikData, value: string) => {
@@ -819,6 +819,11 @@ const handleNestedChange = (
             render: (data) => <span>{data.studybenefite}</span>,
         },
         {
+            key: 'yojnasheti',
+            label: 'कृषि सनमान योजना?',
+            render: (data) => <span>{data.scheme_name}</span>,
+        },
+        {
             key: 'farmeavilebleornot',
             label: 'शेती आहे काय?',
             render: (data) => <span>{data.farmeavilebleornot}</span>,
@@ -983,7 +988,7 @@ const handleNestedChange = (
                             </div>
                         </div>
                         {/* Scheme Selection - Full Width */}
-                        <div className="mb-6">
+                        {/* <div className="mb-6">
                             <label className="block text-sm font-medium text-gray-700 mb-1">योजना निवडा</label>
                             <select
                                 name="scheme_name"
@@ -1000,7 +1005,7 @@ const handleNestedChange = (
                                     </option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
 
 
 
@@ -1086,6 +1091,7 @@ const handleNestedChange = (
                                         <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">एकूण</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             value={formData.familymembercount.total}
                                             onChange={e => handleNestedChange('familymembercount', 'total', e.target.value)}
@@ -1094,7 +1100,7 @@ const handleNestedChange = (
                                 </div>
                             </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 mb-6">
-                                <h3 className="text-sm font-semibold mb-2">18 वर्षावरील</h3>
+                                <h3 className="text-sm font-semibold mb-2">18 वर्षावरील सदस्य संख्या.</h3>
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">स्री</label>
@@ -1121,6 +1127,7 @@ const handleNestedChange = (
                                         <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">एकूण</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             value={formData.agedata.total}
                                             onChange={e => handleNestedChange('agedata', 'total', e.target.value)}
@@ -1146,6 +1153,7 @@ const handleNestedChange = (
                                         <label className="block text-sm font-medium text-gray-700 mb-2 mb-1">नसलेली संख्या</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             value={formData.castcertificate.nasleli}
                                             onChange={e => handleNestedChange('castcertificate', 'nasleli', e.target.value)}
@@ -1173,6 +1181,7 @@ const handleNestedChange = (
                                         <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली संख्या</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             value={formData.aadharcard.nasleli}
                                             onChange={e => handleNestedChange('aadharcard', 'nasleli', e.target.value)}
@@ -1200,6 +1209,7 @@ const handleNestedChange = (
                                         <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली संख्या</label>
                                         <input
                                             type="text"
+                                            disabled
                                             className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                             value={formData.voteridcard.nasleli}
                                             onChange={e => handleNestedChange('voteridcard', 'nasleli', e.target.value)}
@@ -1207,27 +1217,46 @@ const handleNestedChange = (
                                     </div>
                                 </div>
                             </div>
+                            <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-6">राशन कार्ड</label>
+
+                                <div className="flex space-x-3 mt-1">
+                                    <label className="inline-flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="rationcardtype"
+                                            value="yes"
+                                            checked={formData.rationcardtype === 'yes'}
+                                            onChange={e => handleChange('rationcardtype', e.target.value)}
+                                        />
+                                        <span className="ml-1 text-xs text-gray-700">होय</span>
+                                    </label>
+                                    <label className="inline-flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="rationcardtype"
+                                            value="no"
+                                            checked={formData.rationcardtype === 'no'}
+                                            onChange={e => handleChange('rationcardtype', e.target.value)}
+                                        />
+                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                    </label>
+                                </div>
+
+                            </div>
                             {/* Ration Card */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-6">राशन कार्ड क्रमांक</label>
                                 <input
                                     type="text"
+                                    disabled={formData.rationcardtype === 'no' || formData.rationcardtype == ""}
                                     className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                     value={formData.rationcard_no}
                                     onChange={e => handleChange('rationcard_no', e.target.value)}
                                 />
 
                             </div>
-                            <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-6">राशन कार्ड</label>
-                                <input
-                                    type="text"
-                                    className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                    value={formData.rationcardtype}
-                                    onChange={e => handleChange('rationcardtype', e.target.value)}
-                                />
 
-                            </div>
                             {/* <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <h3 className="text-sm font-semibold mb-2">राशन कार्ड </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1662,6 +1691,24 @@ const handleNestedChange = (
                             </div>
 
                             {/* Farming */}
+                            <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">कृषि सनमान योजना</label>
+                                <div className="flex space-x-3 mt-1">
+                                    <label className="inline-flex items-center">
+                                        <input
+                                            type="text"
+                                            name="scheme_name"
+                                            value={formData.scheme_name}
+                                               className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+
+                                            // checked={formData.scheme_name === 'yes'}
+                                            onChange={e => handleChange('scheme_name', e.target.value)}
+                                        />
+                                      
+                                    </label>
+
+                                </div>
+                            </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">शेती आहे काय?</label>
                                 <div className="flex space-x-3 mt-1">
