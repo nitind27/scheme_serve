@@ -714,11 +714,11 @@ const Bhautikadata: React.FC<Props> = ({
             label: "ग्रामपंचायत",
             render: (data) => <span>{data.gp_id || "-"}</span>,
         },
-        {
-            key: 'scheme_name',
-            label: 'योजनाचे नाव',
-            render: (data) => <span>{data.scheme_name || "-"}</span>,
-        },
+        // {
+        //     key: 'scheme_name',
+        //     label: 'योजनाचे नाव',
+        //     render: (data) => <span>{data.scheme_name || "-"}</span>,
+        // },
         {
             key: 'totalpopulation_total',
             label: 'एकूण कुटुंब संख्या',

@@ -54,7 +54,7 @@ export const EcommerceMetrics = ({ metrics }: { metrics: Metrics }) => {
       label: "System Users",
       value: counts.users,
       href: "/users",
-      show: filters.categoryName === "25" || filters.categoryName === "1"
+      show: filters.categoryName === "1"
     },
   ];
   
