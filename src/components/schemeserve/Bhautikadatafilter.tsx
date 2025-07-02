@@ -10,17 +10,18 @@ import React from 'react';
 // import { MultiValue } from 'react-select';
 import { useToggleContext } from '@/context/ToggleContext';
 import Loader from '@/common/Loader';
-import DefaultModal from '../example/ModalExample/DefaultModal';
+// import DefaultModal from '../example/ModalExample/DefaultModal';
 // import { FaEdit } from 'react-icons/fa';
 // import { Schemesdatas } from '../schemesdata/schemes';
-import { BhautikTable } from '../tables/BhautikTable';
-import { FaEdit } from 'react-icons/fa';
+
+// import { FaEdit } from 'react-icons/fa';
 import { FaDownload } from 'react-icons/fa';
 import { Schemesdatas } from '../schemesdata/schemes';
 import { Taluka } from '../Taluka/Taluka';
 import { Village } from '../Village/village';
 import { Grampanchayattype } from '../grampanchayat/gptype';
 import * as XLSX from 'xlsx';
+import { Filtertablebhautik } from '../tables/Filtertablebhautik';
 // import { saveAs } from 'file-saver';
 // import { Schemesubcategorytype } from '../Schemesubcategory/Schemesubcategory';
 
@@ -189,7 +190,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
 }) => {
     // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
-    const { isActive, setIsActive, setIsEditmode, isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
+    const { isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
     const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
 
@@ -758,69 +759,6 @@ const Bhautikadatafilter: React.FC<Props> = ({
         setEditId(null);
     };
 
-    const handleEdit = (item: BhautikDataall) => {
-        setIsmodelopen(true);
-        setIsEditmode(true);
-        setIsActive(!isActive);
-        setEditId(item.id);
-
-        // Helper functions to parse pipe-separated values
-        const parseTriple = (value: string): { female: string; male: string; total: string } => {
-            const [female = '', male = '', total = ''] = value?.split('|') || [];
-            return { female, male, total };
-        };
-
-        const parseDouble = (value: string): { asleli: string; nasleli: string } => {
-            const [asleli = '', nasleli = ''] = value?.split('|') || [];
-            return { asleli, nasleli };
-        };
-
-        const parseAadivasiHouse = (value: string): { pakkeGhar: string; kudaMatiGhar: string } => {
-            const [pakkeGhar = '', kudaMatiGhar = ''] = value?.split('|') || [];
-            return { pakkeGhar, kudaMatiGhar };
-        };
-
-        // Set the form data with all transformed values
-        setFormData({
-            scheme_name: item.scheme_name || '',
-            ekunSankhya: parseTriple(item.totalpopulation),
-            tribalPopulation: parseTriple(item.tribalpopulation),
-            tribalPopulationTkWari: item.tribalpopulationtkkwari || '',
-            totalFamilyNumbers: item.totalfamilynumbers || '',
-            tribalsWholeFamilyNumbers: item.tribalwholefamilynumbers || '',
-            vaitikAadivasi: item.forestshareholderno || '', // Added mapping
-            samuhikVanpatta: item.collectiveforestry || '', // Added mapping
-            cfrmAarakhda: item.cfrmplan || '', // Added mapping
-            aadharcard: parseDouble(item.aadhaarcard),
-            matdarOlahkhap: parseDouble(item.voteridcard),
-            jaticheGmanap: parseDouble(item.breedstandards), // Added mapping
-            rashionCard: parseDouble(item.rationcard),
-            jobCard: parseDouble(item.jobcard),
-            pmKisanCard: parseDouble(item.pmfarmercard),
-            ayushmanCard: parseDouble(item.ayushmancard),
-            aadivasiHouse: parseAadivasiHouse(item.adivasis || ''), // Added mapping
-            pmAwasYojana: item.tribalbenefitnumber || '', // Added mapping
-            panyaPanyachiSuvidha: parseDouble(item.stepfacilities || ''), // Added mapping
-            harGharNalYojana: parseDouble(item.everygharnaalyojana || ''), // Added mapping
-            vidyutikaran: parseDouble(item.electrificationforfamilies),
-            arogyUpcharKendra: item.healthfacilityis || '', // Added mapping
-            generalHealthCheckup: item.generalhealthcheckup || '', // Added mapping
-            sickleCellAnemiaScreening: item.sickleanemia || '', // Added mapping
-            primarySchool: item.elementaryschool || '',
-            middleSchool: item.middleschool || '',
-            kindergarten: item.kindergarten || '', // Added mapping
-            mobileNetwork: item.mobilefacilities || '', // Added mapping
-            gramPanchayatBuilding: '', // Not available in BhautikDataall
-            mobileMedicalUnit: item.mobilemedicalunit || '', // Added mapping
-            gotulSocietyBuilding: item.gotulsocietybuilding || '', // Added mapping
-            nadiTalav: item.riverlake || '',
-            allroadvillages: item.allroadvillages || '',
-            village_distance: item.village_distance || '',
-            taluka_id: item.taluka_id,
-            village_id: item.village_id,
-            gp_id: item.gp_id,
-        });
-    };;
 
     // Download functions
     const handleFieldToggle = (fieldKey: string) => {
@@ -1179,29 +1117,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
 
         // Actions column (unchanged)
-        {
-            key: "actions",
-            label: "Actions",
-            render: (data) => (
-                <div className="flex gap-2 whitespace-nowrap w-full">
-                    <span
-                        onClick={() => handleEdit(data)}
-                        className="cursor-pointer text-blue-600 hover:text-blue-800 transition-colors duration-200"
-                    >
-                        <FaEdit className="inline-block align-middle text-lg" />
-                    </span>
-                    <span>
-                        <DefaultModal
-                            id={data.id}
-                            fetchData={fetchData}
-                            endpoint={"bhautikapi"}
-                            bodyname={"id"}
-                            newstatus={data.status}
-                        />
-                    </span>
-                </div>
-            ),
-        },
+       
     ];
 
 
@@ -1307,7 +1223,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                 )}
             </div>
 
-            <BhautikTable
+            <Filtertablebhautik
                 data={filteredData}
                 title='धरती आबा ( भौतिक तक्ता)'
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}

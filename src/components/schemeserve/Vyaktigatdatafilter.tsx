@@ -10,17 +10,18 @@ import React from 'react';
 // import { MultiValue } from 'react-select';
 import { useToggleContext } from '@/context/ToggleContext';
 import Loader from '@/common/Loader';
-import DefaultModal from '../example/ModalExample/DefaultModal';
+// import DefaultModal from '../example/ModalExample/DefaultModal';
 // import { FaEdit } from 'react-icons/fa';
 // import { Schemesdatas } from '../schemesdata/schemes';
-import { BhautikTable } from '../tables/BhautikTable';
-import { FaEdit } from 'react-icons/fa';
+// import { BhautikTable } from '../tables/BhautikTable';
+// import { FaEdit } from 'react-icons/fa';
 import { FaDownload } from 'react-icons/fa';
 import { Schemesdatas } from '../schemesdata/schemes';
 import { Taluka } from '../Taluka/Taluka';
 import { Village } from '../Village/village';
 import { Grampanchayattype } from '../grampanchayat/gptype';
 import * as XLSX from 'xlsx';
+import { Filtertablebhautik } from '../tables/Filtertablebhautik';
 // import { saveAs } from 'file-saver';
 // import { Schemesubcategorytype } from '../Schemesubcategory/Schemesubcategory';
 
@@ -174,16 +175,16 @@ const Vyaktigatdatafilter: React.FC<Props> = ({
     getgrampanchayatdata
 
 }) => {
-    const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
+    const { isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     // const {  isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
     const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
 
     const [loading, setLoading] = useState(false);
-    const [editId, setEditId] = useState<number | null>(null);
+
     const [familyErrors, setFamilyErrors] = useState<{ [key: string]: string }>({});
     console.log("editId", familyErrors)
-    console.log("editId", editId)
+
 
     // Add filter state variables
     const [selectedTaluka, setSelectedTaluka] = useState<string>('');
@@ -757,69 +758,7 @@ const handleNestedChange = (
     //     setEditId(null);
     // };
 
-    const handleEdit = (item: BhautikDataall) => {
-
-
-        setIsmodelopen(true);
-        setIsEditmode(true);
-        setIsActive(!isActive)
-        setEditId(item.id)
-
-        const parseTriple = (value: string): { female: string; male: string; total: string } => {
-            const [female = '', male = '', total = ''] = value?.split('|') || [];
-            return { female, male, total };
-        };
-        const parseDouble = (value: string): { asleli: string; nasleli: string } => {
-            const [asleli = '', nasleli = ''] = value?.split('|') || [];
-            return { asleli, nasleli };
-        };
-
-        setFormData({
-            id: item.id,
-            scheme_name: item.scheme_name || "",
-            castdata: item.castdata || "",
-            totalmembersname: item.totalmembersname || "",
-            familymembercount: parseTriple(item.familymembercount),
-            agedata: parseTriple(item.familymembercount),
-            castcertificate: parseDouble(item.castcertificate),
-            aadharcard: parseDouble(item.aadharcard),
-            voteridcard: parseDouble(item.voteridcard),
-            rationcard_no: item.rationcard_no || "",
-            rationcard: item.rationcard || "",
-            rationcardtype: item.rationcardtype || "",
-            jobcard: item.jobcard || "",
-            pmfarmercard: item.pmfarmercard || "",
-            farmercreditcard: item.farmercreditcard || "",
-            aayushmancard: item.aayushmancard || "",
-            headofmember: item.headofmember || "",
-            pmKisanCard: parseDouble(item.pmKisanCard),
-            ayushmanCard: parseDouble(item.ayushmanCard),
-            housetype: item.housetype || "",
-            benefiteofpmhouse: item.benefiteofpmhouse || "",
-            waterdrink: item.waterdrink || "",
-            hargharnal: item.hargharnal || "",
-            electricity: item.electricity || "",
-            hospitalphc: item.hospitalphc || "",
-            sanjaygandhi: item.sanjaygandhi || "",
-            studybenefite: item.studybenefite || "",
-            farmeavilebleornot: item.farmeavilebleornot || "",
-            studyvanpatta: item.studyvanpatta || "",
-            sikklacelloffamily: item.sikklacelloffamily || "",
-            whichschoolchlid: item.whichschoolchlid || "",
-            anyhaveaashramschool: item.anyhaveaashramschool || "",
-            lpggas: item.lpggas || "",
-            bankaccount: item.bankaccount || "",
-            studtatcoop: item.studtatcoop || "",
-            contact_no: item.contact_no || "",
-            pmvimayojna: item.pmvimayojna || "",
-            praklpkaryalaly: item.praklpkaryalaly || "",
-            itarvibhagudan: item.itarvibhagudan || "",
-            niymitaarogya: item.niymitaarogya || "",
-            taluka_id: item.taluka_id || "",
-            village_id: item.village_id || "",
-            gp_id: item.gp_id || "",
-        });
-    };
+ 
 
     // Download functions
     const handleFieldToggle = (fieldKey: string) => {
@@ -1131,29 +1070,29 @@ const handleNestedChange = (
             render: (data) => <span>{data.niymitaarogya}</span>,
         },
 
-        {
-            key: "actions",
-            label: "Actions",
-            render: (data) => (
-                <div className="flex gap-2 whitespace-nowrap w-full">
-                    <span
-                        onClick={() => handleEdit(data)}
-                        className="cursor-pointer text-blue-600 hover:text-blue-800 transition-colors duration-200"
-                    >
-                        <FaEdit className="inline-block align-middle text-lg" />
-                    </span>
-                    <span>
-                        <DefaultModal
-                            id={data.id}
-                            fetchData={fetchData}
-                            endpoint={"vyaktikapi"}
-                            bodyname={"id"}
-                            newstatus={data.status}
-                        />
-                    </span>
-                </div>
-            ),
-        },
+        // {
+        //     key: "actions",
+        //     label: "Actions",
+        //     render: (data) => (
+        //         <div className="flex gap-2 whitespace-nowrap w-full">
+        //             <span
+        //                 onClick={() => handleEdit(data)}
+        //                 className="cursor-pointer text-blue-600 hover:text-blue-800 transition-colors duration-200"
+        //             >
+        //                 <FaEdit className="inline-block align-middle text-lg" />
+        //             </span>
+        //             <span>
+        //                 <DefaultModal
+        //                     id={data.id}
+        //                     fetchData={fetchData}
+        //                     endpoint={"vyaktikapi"}
+        //                     bodyname={"id"}
+        //                     newstatus={data.status}
+        //                 />
+        //             </span>
+        //         </div>
+        //     ),
+        // },
     ];
 
 
@@ -1258,7 +1197,7 @@ const handleNestedChange = (
                 )}
             </div>
 
-            <BhautikTable
+            <Filtertablebhautik
                 data={filteredData}
                 title='वैयक्तिक'
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}

@@ -1953,33 +1953,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </label>
                                     </div>
                                 </div>
-                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">सर्व आदिवासी गाव /पाडे रस्त्याने जोडले आहेत काय? आहे / नाही</label>
-                                    <div className="flex space-x-3 mt-1">
-                                        <label className="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="nadiTalav"
-                                                value="yes"
-                                                checked={formData.nadiTalav === "yes"}
-                                                onChange={() => handleChange("nadiTalav", "yes")}
-                                                className="h-3 w-3 text-indigo-600"
-                                            />
-                                            <span className="ml-1 text-xs text-gray-700">होय</span>
-                                        </label>
-                                        <label className="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="nadiTalav"
-                                                value="no"
-                                                checked={formData.nadiTalav === "no"}
-                                                onChange={() => handleChange("nadiTalav", "no")}
-                                                className="h-3 w-3 text-indigo-600"
-                                            />
-                                            <span className="ml-1 text-xs text-gray-700">नाही</span>
-                                        </label>
-                                    </div>
-                                </div>
+                             
                             </div>
                         </div>
                     </div>}

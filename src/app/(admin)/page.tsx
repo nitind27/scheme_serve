@@ -5,6 +5,7 @@ import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 // import Showschemstable from "@/components/ecommerce/Showschemstable";
 import { Suspense } from "react";
 import Loader from "@/common/Loader";
+import Dashboardtabfilter from "@/components/schemeserve/Dashboardtabfilter";
 // import DoTalukadata from "@/components/Do/Talukawisedata/DoTalukadata";
 
 
@@ -21,29 +22,49 @@ export const metadata: Metadata = {
 async function fetchMetrics() {
 
   try {
-    const [ schemesRes, usersRes] = await Promise.all([
+    const [ schemesRes, usersRes, talukaRes, villageRes, grampanchayatRes, vykatiRes, bhautikapiRes  ] = await Promise.all([
    
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/schemescrud`, { cache: 'no-store' }),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, { cache: 'no-store' })
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, { cache: 'no-store' }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/taluka`, { cache: 'no-store' }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/villages`, { cache: 'no-store' }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/grampanchayt`, { cache: 'no-store' }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vyaktikapi`, { cache: 'no-store' }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bhautikapi`, { cache: 'no-store' }),
     ]);
 
-    const [schemes, users] = await Promise.all([
+    const [schemes, users, taluka, village, grampanchayat, vyaktidata, bhautikdata] = await Promise.all([
   
       schemesRes.json(),
-      usersRes.json()
+      usersRes.json(),
+      talukaRes.json(),
+      villageRes.json(),
+      grampanchayatRes.json(),
+      vykatiRes.json(),
+      bhautikapiRes.json()
     ]);
 
     return {
       
       schemes,
-      users
+      users,
+      taluka,
+      village,
+      grampanchayat,
+      vyaktidata,
+      bhautikdata,
     };
   } catch (error) {
     console.error('Error fetching metrics:', error);
     return {
     
       schemes: [],
-      users: []
+      users: [],
+      taluka: [],
+      village: [],
+      grampanchayat: [],
+      vyaktidata: [],
+      bhautikdata: [],
     };
   }
 }
@@ -64,7 +85,9 @@ export default async function Ecommerce() {
         <Suspense fallback={<Loader />}>
 
           <EcommerceMetrics metrics={metrics} />
+          <Dashboardtabfilter  metrics={metrics}/>
 
+ 
         </Suspense>
       </div>
     </div>
