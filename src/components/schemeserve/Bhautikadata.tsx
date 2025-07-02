@@ -79,8 +79,9 @@ interface BhautikData {
     aadivasiHouse: {
         pakkeGhar: string;
         kudaMatiGhar: string;
+        other: string;
     };
-    pmAwasYojana:{
+    pmAwasYojana: {
         asleli: string;
         nasleli: string;
     };
@@ -217,7 +218,7 @@ const Bhautikadata: React.FC<Props> = ({
         jobCard: { asleli: '', nasleli: '' },
         pmKisanCard: { asleli: '', nasleli: '' },
         ayushmanCard: { asleli: '', nasleli: '' },
-        aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' },
+        aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '', other: '' },
         pmAwasYojana: { asleli: '', nasleli: '' },
         panyaPanyachiSuvidha: { asleli: '', nasleli: '' },
         harGharNalYojana: { asleli: '', nasleli: '' },
@@ -303,6 +304,7 @@ const Bhautikadata: React.FC<Props> = ({
             'ayushmanCard',
             'panyaPanyachiSuvidha',
             'harGharNalYojana',
+            'pmAwasYojana',
             'vidyutikaran',
         ];
         if (asleliFields.includes(parentField) && childField === 'asleli') {
@@ -509,6 +511,7 @@ const Bhautikadata: React.FC<Props> = ({
             totalfamilynumbers: data.totalFamilyNumbers,
             tribalwholefamilynumbers: data.tribalsWholeFamilyNumbers,
             forestshareholderno: data.vaitikAadivasi,
+            alltribalegaav: data.alltribalegaav,
             collectiveforestry: data.samuhikVanpatta,
             cfrmplan: data.cfrmAarakhda,
             aadhaarcard: transformDouble(data.aadharcard),
@@ -518,8 +521,8 @@ const Bhautikadata: React.FC<Props> = ({
             jobcard: transformDouble(data.jobCard),
             pmfarmercard: transformDouble(data.pmKisanCard),
             ayushmancard: transformDouble(data.ayushmanCard),
-            adivasis: `${data.aadivasiHouse.pakkeGhar}|${data.aadivasiHouse.kudaMatiGhar}`,
-            tribalbenefitnumber: data.pmAwasYojana,
+            adivasis: `${data.aadivasiHouse.pakkeGhar}|${data.aadivasiHouse.kudaMatiGhar}|${data.aadivasiHouse.other}`,
+            tribalbenefitnumber: transformDouble(data.pmAwasYojana),
             stepfacilities: transformDouble(data.panyaPanyachiSuvidha),
             everygharnaalyojana: transformDouble(data.harGharNalYojana),
             electrificationforfamilies: transformDouble(data.vidyutikaran),
@@ -605,7 +608,7 @@ const Bhautikadata: React.FC<Props> = ({
             jobCard: { asleli: '', nasleli: '' },
             pmKisanCard: { asleli: '', nasleli: '' },
             ayushmanCard: { asleli: '', nasleli: '' },
-            aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '' },
+            aadivasiHouse: { pakkeGhar: '', kudaMatiGhar: '', other: '' },
             pmAwasYojana: { asleli: '', nasleli: '' },
             panyaPanyachiSuvidha: { asleli: '', nasleli: '' },
             harGharNalYojana: { asleli: '', nasleli: '' },
@@ -649,9 +652,9 @@ const Bhautikadata: React.FC<Props> = ({
             return { asleli, nasleli };
         };
 
-        const parseAadivasiHouse = (value: string): { pakkeGhar: string; kudaMatiGhar: string } => {
-            const [pakkeGhar = '', kudaMatiGhar = ''] = value?.split('|') || [];
-            return { pakkeGhar, kudaMatiGhar };
+        const parseAadivasiHouse = (value: string): { pakkeGhar: string; kudaMatiGhar: string; other: string } => {
+            const [pakkeGhar = '', kudaMatiGhar = '', other = ''] = value?.split('|') || [];
+            return { pakkeGhar, kudaMatiGhar, other };
         };
 
         // Set the form data with all transformed values
@@ -704,15 +707,16 @@ const Bhautikadata: React.FC<Props> = ({
             label: "तालुका",
             render: (data) => <span>{data.taluka_id || "-"}</span>,
         },
-        {
-            key: "village_id",
-            label: "गाव",
-            render: (data) => <span>{data.village_id || "-"}</span>,
-        },
+       
         {
             key: "gp_id",
             label: "ग्रामपंचायत",
             render: (data) => <span>{data.gp_id || "-"}</span>,
+        },
+         {
+            key: "village_id",
+            label: "गाव",
+            render: (data) => <span>{data.village_id || "-"}</span>,
         },
         // {
         //     key: 'scheme_name',
@@ -1011,7 +1015,7 @@ const Bhautikadata: React.FC<Props> = ({
 
                             <div className="md:col-span-4 mt-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-1 h-5">
-                                    गाव 
+                                    गाव
                                 </label>
                                 <select
                                     name=""
@@ -1022,7 +1026,7 @@ const Bhautikadata: React.FC<Props> = ({
                                     onChange={(e) => handleChange('village_id', e.target.value)}
                                 >
                                     <option value="">गाव निवडा</option>
-                                    {villagedata.filter((data) =>  data.gp_name == formData.gp_id).map((category) => (
+                                    {villagedata.filter((data) => data.gp_name == formData.gp_id).map((category) => (
                                         <option key={category.village_id} value={category.village_id}>
                                             {category.name}
                                         </option>
@@ -1465,8 +1469,8 @@ const Bhautikadata: React.FC<Props> = ({
                                             <input
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                                value={formData.aadivasiHouse.kudaMatiGhar}
-                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'kudaMatiGhar', e.target.value)}
+                                                value={formData.aadivasiHouse.other}
+                                                onChange={(e) => handleNestedChange('aadivasiHouse', 'other', e.target.value)}
                                             />
                                         </div>
                                     </div>
@@ -1582,7 +1586,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         onChange={(e) => handleChange('allroadvillages', e.target.value)}
                                     />
                                 </div>
-                                   <div className="bg-gray-100 rounded-lg shadow p-2 ">
+                                <div className="bg-gray-100 rounded-lg shadow p-2 ">
                                     <label className="block text-sm font-medium text-gray-700 mb-5 mb-1">सर्व आदिवासी गाव /पाडे रस्त्याने जोडले आहेत काय? आहे / नाही</label>
                                     <div className="flex space-x-3 mt-1">
                                         <label className="inline-flex items-center">
@@ -1619,31 +1623,31 @@ const Bhautikadata: React.FC<Props> = ({
                                     />
                                 </div>
                                 <div className=" p-2  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
-                                      <h3 className="text-sm font-semibold mb-2 h-8">पीएम आवास घरकुल लाभ संख्या</h3>
-        
+                                    <h3 className="text-sm font-semibold mb-2 h-8">पीएम आवास घरकुल लाभ संख्या</h3>
 
-                                       
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <div>
-                                                <label className="block text-xs font-medium text-gray-700 mb-1 ">असलेली आदिवासी कुटुंब संख्या</label>
-                                                <input
-                                                    type="text"
-                                                    className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                                    value={formData.pmAwasYojana.asleli}
-                                                    onChange={(e) => handleNestedChange('pmAwasYojana', 'asleli', e.target.value)}
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
-                                                <input
-                                                    type="text"
-                                                    disabled
-                                                    className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                                    value={formData.pmAwasYojana.nasleli}
-                                                    onChange={(e) => handleNestedChange('pmAwasYojana', 'nasleli', e.target.value)}
-                                                />
-                                            </div>
-                                      
+
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1 ">असलेली आदिवासी कुटुंब संख्या</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                                value={formData.pmAwasYojana.asleli}
+                                                onChange={(e) => handleNestedChange('pmAwasYojana', 'asleli', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
+                                            <input
+                                                type="text"
+                                                disabled
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                                value={formData.pmAwasYojana.nasleli}
+                                                onChange={(e) => handleNestedChange('pmAwasYojana', 'nasleli', e.target.value)}
+                                            />
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -1953,7 +1957,7 @@ const Bhautikadata: React.FC<Props> = ({
                                         </label>
                                     </div>
                                 </div>
-                             
+
                             </div>
                         </div>
                     </div>}

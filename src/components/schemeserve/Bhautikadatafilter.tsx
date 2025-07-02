@@ -888,14 +888,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                 return <span>{taluka ? taluka.name : data.taluka_id || "-"}</span>;
             },
         },
-        {
-            key: "village_id",
-            label: "गाव",
-            render: (data) => {
-                const village = villagedata.find(v => String(v.village_id) === String(data.village_id));
-                return <span>{village ? village.name : data.village_id || "-"}</span>;
-            },
-        },
+        
         {
             key: "gp_id",
             label: "ग्रामपंचायत",
@@ -904,6 +897,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                 return <span>{gp ? gp.name : data.gp_id || "-"}</span>;
             },
         },
+        
         // {
         //     key: 'scheme_name',
         //     label: 'योजनाचे नाव',
