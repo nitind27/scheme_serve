@@ -148,6 +148,9 @@ interface BhautikDataall {
     village_id: string;
     gp_id: string;
     agedata: string;
+    taluka_name: string;
+    village_name: string;
+    grampanchayat_name: string;
 }
 
 interface Props {
@@ -717,7 +720,22 @@ const Vyaktigatdata: React.FC<Props> = ({
         });
     };
     const columns: Column<BhautikDataall>[] = [
+        {
+            key: "taluka_id",
+            label: "तालुका",
+            render: (data) => <span>{data.taluka_name || "-"}</span>,
+        },
 
+        {
+            key: "gp_id",
+            label: "ग्रामपंचायत",
+            render: (data) => <span>{data.grampanchayat_name || "-"}</span>,
+        },
+        {
+            key: "village_id",
+            label: "गाव",
+            render: (data) => <span>{data.village_name || "-"}</span>,
+        },
 
         {
             key: 'totalmembersname',
@@ -776,11 +794,7 @@ const Vyaktigatdata: React.FC<Props> = ({
             label: 'राशन कार्ड',
             render: (data) => <span>{data.rationcard}</span>,
         },
-        {
-            key: 'rationcardtype',
-            label: 'रेशन कार्डचा प्रकार',
-            render: (data) => <span>{data.rationcardtype}</span>,
-        },
+        
         {
             key: 'jobcard',
             label: 'जॉब कार्ड',
@@ -832,11 +846,7 @@ const Vyaktigatdata: React.FC<Props> = ({
             label: 'विद्युतीकरण',
             render: (data) => <span>{data.electricity}</span>,
         },
-        {
-            key: 'hospitalphc',
-            label: 'आरोग्य उपकेंद्र / PHC',
-            render: (data) => <span>{data.hospitalphc}</span>,
-        },
+    
         {
             key: 'sanjaygandhi',
             label: 'संजय गांधी निराधार योजनेचे लाभार्थी आहे/नाही',
@@ -849,7 +859,7 @@ const Vyaktigatdata: React.FC<Props> = ({
         },
         {
             key: 'yojnasheti',
-            label: 'कृषी सन्मान योजना ( रु. 6000) असे लिहावे?',
+            label: 'कृषी सन्मान योजना ( रु. 6000)',
             render: (data) => <span>{data.scheme_name}</span>,
         },
         {
@@ -1738,21 +1748,29 @@ const Vyaktigatdata: React.FC<Props> = ({
 
                             {/* Farming */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">कृषी सन्मान योजना ( रु. 6000) असे लिहावे</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">कृषी सन्मान योजना (रु.6000)</label>
+                               
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input
-                                            type="text"
+                                            type="radio"
                                             name="scheme_name"
-                                            value={formData.scheme_name}
-                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-
-                                            // checked={formData.scheme_name === 'yes'}
+                                            value="yes"
+                                            checked={formData.scheme_name === 'yes'}
                                             onChange={e => handleChange('scheme_name', e.target.value)}
                                         />
-
+                                        <span className="ml-1 text-xs text-gray-700">होय</span>
                                     </label>
-
+                                    <label className="inline-flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="scheme_name"
+                                            value="no"
+                                            checked={formData.scheme_name === 'no'}
+                                            onChange={e => handleChange('scheme_name', e.target.value)}
+                                        />
+                                        <span className="ml-1 text-xs text-gray-700">नाही</span>
+                                    </label>
                                 </div>
                             </div>
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">

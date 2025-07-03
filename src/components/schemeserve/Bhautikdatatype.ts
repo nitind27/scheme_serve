@@ -29,6 +29,9 @@ export interface BhautikDataall {
     everygharnaalyojana: string;
     healthfacilityis: string;
     generalhealthcheckup: string;
+    taluka_name: string;
+    village_name: string;
+    grampanchayat_name: string;
     sickleanemia: string;
     kindergarten: string;
     mobilefacilities: string;
@@ -52,6 +55,9 @@ export interface vyaktikDataall {
     castcertificate: string,
     aadharcard: string,
     voteridcard: string,
+      taluka_name: string;
+    village_name: string;
+    grampanchayat_name: string;
     rationcardtype: string,
     rationcard_no: string,
     rationcard: string,

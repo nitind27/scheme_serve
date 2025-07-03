@@ -200,6 +200,7 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud, gram
     setaddress(item.address)
     setTaluka(item.taluka_id)
     setVillage(item.village_id)
+    setgp(Number(item.gp_id))
   };
 
   const columns: Column<UserData>[] = [

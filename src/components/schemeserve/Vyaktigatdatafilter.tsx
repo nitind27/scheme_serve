@@ -152,6 +152,9 @@ interface BhautikDataall {
     village_id: string;
     gp_id: string;
     agedata: string;
+        taluka_name: string;
+    village_name: string;
+    grampanchayat_name: string;
 }
 
 interface Props {
@@ -816,29 +819,21 @@ const handleNestedChange = (
 
     const columns: Column<BhautikDataall>[] = [
         // Location columns
-        {
+         {
             key: "taluka_id",
             label: "तालुका",
-            render: (data) => {
-                const taluka = talukadata.find(t => String(t.taluka_id) === String(data.taluka_id));
-                return <span>{taluka ? taluka.name : data.taluka_id || "-"}</span>;
-            },
+            render: (data) => <span>{data.taluka_name || "-"}</span>,
+        },
+
+        {
+            key: "gp_id",
+            label: "ग्रामपंचायत",
+            render: (data) => <span>{data.grampanchayat_name || "-"}</span>,
         },
         {
             key: "village_id",
             label: "गाव",
-            render: (data) => {
-                const village = villagedata.find(v => String(v.village_id) === String(data.village_id));
-                return <span>{village ? village.name : data.village_id || "-"}</span>;
-            },
-        },
-        {
-            key: "gp_id",
-            label: "ग्रामपंचायत",
-            render: (data) => {
-                const gp = getgrampanchayatdata.find(g => String(g.id) === String(data.gp_id));
-                return <span>{gp ? gp.name : data.gp_id || "-"}</span>;
-            },
+            render: (data) => <span>{data.village_name || "-"}</span>,
         },
 
         {

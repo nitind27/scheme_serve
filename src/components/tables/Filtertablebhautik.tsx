@@ -103,7 +103,7 @@ export function Filtertablebhautik<T extends object>({
   );
 
   return (
-    <div className="p-4  rounded-lg w-full border">
+      <div className="bg-white rounded-2xl shadow-md  border p-4">
       <DataTable
         columns={reactColumns}
         data={filteredData}

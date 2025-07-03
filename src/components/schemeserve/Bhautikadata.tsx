@@ -163,6 +163,11 @@ interface BhautikDataall {
     village_id: string;
     gp_id: string;
     gramPanchayatBuilding: string;
+    taluka_name: string;
+    village_name: string;
+    grampanchayat_name: string;
+
+
 }
 
 interface Props {
@@ -688,18 +693,18 @@ const Bhautikadata: React.FC<Props> = ({
         {
             key: "taluka_id",
             label: "तालुका",
-            render: (data) => <span>{data.taluka_id || "-"}</span>,
+            render: (data) => <span>{data.taluka_name || "-"}</span>,
         },
 
         {
             key: "gp_id",
             label: "ग्रामपंचायत",
-            render: (data) => <span>{data.gp_id || "-"}</span>,
+            render: (data) => <span>{data.grampanchayat_name || "-"}</span>,
         },
         {
             key: "village_id",
             label: "गाव",
-            render: (data) => <span>{data.village_id || "-"}</span>,
+            render: (data) => <span>{data.village_name || "-"}</span>,
         },
         // {
         //     key: 'scheme_name',

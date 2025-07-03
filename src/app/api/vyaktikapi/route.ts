@@ -5,7 +5,18 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const [rows] = await pool.query<RowDataPacket[]>(
-      'SELECT * FROM vaykatigatdb where status = "Active"'
+      // 'SELECT * FROM vaykatigatdb where status = "Active"'
+
+      `SELECT 
+         vaykatigatdb.*,
+         taluka.name AS taluka_name,
+         village.marathi_name AS village_name,
+         grampanchayat.marathi_name AS grampanchayat_name
+       FROM vaykatigatdb
+       LEFT JOIN taluka ON vaykatigatdb.taluka_id = taluka.taluka_id
+       LEFT JOIN village ON vaykatigatdb.village_id = village.village_id
+       LEFT JOIN grampanchayat ON vaykatigatdb.gp_id = grampanchayat.id
+       WHERE vaykatigatdb.status = "Active"`
     );
     return NextResponse.json(rows);
   } catch (error) {

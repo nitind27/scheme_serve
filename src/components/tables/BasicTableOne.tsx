@@ -112,7 +112,7 @@ export function ReusableTable<T extends object>({
   );
 
   return (
-    <div className="p-4  rounded-lg w-full border">
+    <div className="bg-white rounded-2xl shadow-md  border p-4">
       <DataTable
         columns={reactColumns}
         data={filteredData}
@@ -136,19 +136,25 @@ export function ReusableTable<T extends object>({
               minHeight: "48px",
             },
           },
-          headCells: {
-            style: {
-              fontWeight: "600",
-              fontSize: "14px",
-              border: "1px solid #ddd", // Add border to header cells
-            },
-          },
-          cells: {
-            style: {
-              border: "1px solid #ddd", // Add border to body cells
-            },
-          },
-        }}
+         headCells: {
+        style: {
+          fontWeight: "600",
+          // fontSize: "14px",
+          border: "1px solid #ddd",
+          // borderTop: "white",
+          // borderLeft: "white",
+          // borderRight: "white",
+        },
+      },
+      cells: {
+        style: {
+          border: "1px solid #ddd",
+          // borderTop: "white",
+          // borderLeft: "white",
+          // borderRight: "white",
+        },
+      },
+    }}
       />
     </div>
   );

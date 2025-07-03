@@ -55,7 +55,7 @@ export default function BhautikModal({
   return (
     <>
 
-      <div className="left-0 mb-5 flex">
+      <div className="left-0 flex">
 
         <Button size="sm" onClick={handlepenmodel}>
           Add
