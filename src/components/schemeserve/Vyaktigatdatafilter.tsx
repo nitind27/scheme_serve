@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 // import Label from "../form/Label";
 // import { ReusableTable } from "../tables/BasicTableOne";
-import { Column, FilterOption } from "../tables/tabletype";
+import { Column } from "../tables/tabletype";
 // import Select from 'react-select';
 import { toast } from 'react-toastify';
 import React from 'react';
@@ -191,47 +191,7 @@ const Vyaktigatdatafilter: React.FC<Props> = ({
     const [selectedGrampanchayat, setSelectedGrampanchayat] = useState<string>('');
     const [selectedVillage, setSelectedVillage] = useState<string>('');
 
-    // Generate filter options
-    const talukaFilterOptions: FilterOption[] = useMemo(() => {
-        const uniqueTalukas = [...new Set(data.map(item => item.taluka_id))];
-        return uniqueTalukas.map(talukaId => {
-            const taluka = talukadata.find(t => String(t.taluka_id) === String(talukaId));
-            return {
-                value: String(talukaId),
-                label: taluka ? taluka.name : String(talukaId)
-            };
-        });
-    }, [data, talukadata]);
-
-    const grampanchayatFilterOptions: FilterOption[] = useMemo(() => {
-        const filteredData = selectedTaluka 
-            ? data.filter(item => String(item.taluka_id) === String(selectedTaluka))
-            : data;
-        const uniqueGrampanchayats = [...new Set(filteredData.map(item => item.gp_id))];
-        return uniqueGrampanchayats.map(gpId => {
-            const gp = getgrampanchayatdata.find(g => String(g.id) === String(gpId));
-            return {
-                value: String(gpId),
-                label: gp ? gp.name : String(gpId)
-            };
-        });
-    }, [data, selectedTaluka, getgrampanchayatdata]);
-
-    const villageFilterOptions: FilterOption[] = useMemo(() => {
-        const filteredData = data.filter(item => {
-            if (selectedTaluka && String(item.taluka_id) !== String(selectedTaluka)) return false;
-            if (selectedGrampanchayat && String(item.gp_id) !== String(selectedGrampanchayat)) return false;
-            return true;
-        });
-        const uniqueVillages = [...new Set(filteredData.map(item => item.village_id))];
-        return uniqueVillages.map(villageId => {
-            const village = villagedata.find(v => String(v.village_id) === String(villageId));
-            return {
-                value: String(villageId),
-                label: village ? village.name : String(villageId)
-            };
-        });
-    }, [data, selectedTaluka, selectedGrampanchayat, villagedata]);
+    
 
     // Filter data based on selected filters
     const filteredData = useMemo(() => {
@@ -1127,9 +1087,9 @@ const handleNestedChange = (
                             onChange={(e) => handleTalukaFilterChange(e.target.value)}
                         >
                             <option value="">सर्व तालुका</option>
-                            {talukaFilterOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                            {talukadata.map((option) => (
+                                <option key={option.taluka_id} value={option.taluka_id}>
+                                    {option.name}
                                 </option>
                             ))}
                         </select>
@@ -1139,19 +1099,18 @@ const handleNestedChange = (
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">ग्रामपंचायत</label>
                         <select
-                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                                !selectedTaluka 
-                                    ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' 
-                                    : 'border-gray-300 bg-white text-gray-800'
-                            }`}
+                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!selectedTaluka
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'border-gray-300 bg-white text-gray-800'
+                                }`}
                             value={selectedGrampanchayat}
                             onChange={(e) => handleGrampanchayatFilterChange(e.target.value)}
                             disabled={!selectedTaluka}
                         >
                             <option value="">सर्व ग्रामपंचायत</option>
-                            {grampanchayatFilterOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                            {getgrampanchayatdata.filter((data) => data.taluka_id == selectedTaluka).map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
                                 </option>
                             ))}
                         </select>
@@ -1161,24 +1120,24 @@ const handleNestedChange = (
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">गाव</label>
                         <select
-                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                                !selectedTaluka || !selectedGrampanchayat 
-                                    ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' 
-                                    : 'border-gray-300 bg-white text-gray-800'
-                            }`}
+                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!selectedTaluka || !selectedGrampanchayat
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'border-gray-300 bg-white text-gray-800'
+                                }`}
                             value={selectedVillage}
                             onChange={(e) => handleVillageFilterChange(e.target.value)}
                             disabled={!selectedTaluka || !selectedGrampanchayat}
                         >
                             <option value="">सर्व गाव</option>
-                            {villageFilterOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                            {villagedata.filter((data) => data.gp_name == selectedGrampanchayat).map((category) => (
+                                <option key={category.village_id} value={category.village_id}>
+                                    {category.name}
                                 </option>
                             ))}
                         </select>
                     </div>
                 </div>
+
                 
                 {/* Clear Filters Button */}
                 {(selectedTaluka || selectedGrampanchayat || selectedVillage) && (

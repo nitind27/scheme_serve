@@ -40,6 +40,7 @@ export interface BhautikDataall {
     taluka_id: string;
     village_id: string;
     gp_id: string;
+    gramPanchayatBuilding: string;
 }
 export interface vyaktikDataall {
     id: number,

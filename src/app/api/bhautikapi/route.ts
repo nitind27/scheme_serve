@@ -29,9 +29,9 @@ export async function POST(request: Request) {
         tribalbenefitnumber, stepfacilities, everygharnaalyojana,
         electrificationforfamilies, healthfacilityis, generalhealthcheckup,
         sickleanemia, elementaryschool, middleschool, kindergarten,
-        mobilefacilities, mobilemedicalunit, gotulsocietybuilding, riverlake, scheme_name,
+        mobilefacilities, mobilemedicalunit, gramPanchayatBuilding, gotulsocietybuilding, riverlake, scheme_name,
         allroadvillages, village_distance, taluka_id, village_id, gp_id, alltribalegaav
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         body.totalpopulation,
         body.tribalpopulation,
@@ -55,6 +55,7 @@ export async function POST(request: Request) {
         body.electrificationforfamilies,
         body.healthfacilityis,
         body.generalhealthcheckup,
+        body.gramPanchayatBuilding,
         body.sickleanemia,
         body.elementaryschool,
         body.middleschool,
@@ -119,7 +120,7 @@ export async function PUT(request: Request) {
         tribalbenefitnumber = ?, stepfacilities = ?, everygharnaalyojana = ?,
         electrificationforfamilies = ?, healthfacilityis = ?, generalhealthcheckup = ?,
         sickleanemia = ?, elementaryschool = ?, middleschool = ?, kindergarten = ?,
-        mobilefacilities = ?, mobilemedicalunit = ?, gotulsocietybuilding = ?, riverlake = ?, scheme_name = ?,
+        mobilefacilities = ?, mobilemedicalunit = ?, gramPanchayatBuilding = ?, gotulsocietybuilding = ?, riverlake = ?, scheme_name = ?,
         allroadvillages = ?, village_distance = ?, taluka_id = ?, village_id = ?, gp_id = ?, alltribalegaav = ?
       WHERE id = ?`,
       [
@@ -151,6 +152,7 @@ export async function PUT(request: Request) {
         body.kindergarten,
         body.mobilefacilities,
         body.mobilemedicalunit,
+        body.gramPanchayatBuilding,
         body.gotulsocietybuilding,
         body.riverlake,
         body.scheme_name,

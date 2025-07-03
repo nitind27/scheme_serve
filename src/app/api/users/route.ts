@@ -14,6 +14,7 @@ interface User extends RowDataPacket {
   address: string;
   taluka_id: number;
   village_id: number;
+  gp_id: number;
   status: number | string;
   created_at: string;
   updated_at: string;

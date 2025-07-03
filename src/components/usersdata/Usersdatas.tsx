@@ -16,12 +16,14 @@ import { Taluka } from '../Taluka/Taluka';
 import { Village } from '../Village/village';
 import DefaultModal from '../example/ModalExample/DefaultModal';
 import { FaEdit } from 'react-icons/fa';
+import { Grampanchayattype } from '../grampanchayat/gptype';
 
 type Props = {
   users: UserData[];
   datavillage: Village[];
   datataluka: Taluka[];
   datausercategorycrud: UserCategory[];
+  grampanchayat: Grampanchayattype[];
 };
 type FormErrors = {
 
@@ -33,9 +35,10 @@ type FormErrors = {
   address?: string;
   Taluka?: string;
   Village?: string;
+  gp?: string;
 
 };
-const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Props) => {
+const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud, grampanchayat }: Props) => {
 
   const [data, setData] = useState<UserData[]>(users || []);
   const [usercategory, setUsercategory] = useState(0);
@@ -47,6 +50,7 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Pr
   const [address, setaddress] = useState('');
   const [Taluka, setTaluka] = useState(0);
   const [Village, setVillage] = useState(0);
+  const [gp, setgp] = useState(0);
   const [editId, setEditId] = useState<number | null>(null);
   const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, isvalidation, setisvalidation } = useToggleContext();
   const [loading, setLoading] = useState(false);
@@ -83,6 +87,7 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Pr
     setaddress("")
     setTaluka(Number(""))
     setVillage(Number(""))
+    setgp(Number(""))
     setEditId(0);
   }
 
@@ -122,6 +127,9 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Pr
     if (!Village) {
       newErrors.Village = "Village is required";
     }
+    if (!gp) {
+      newErrors.gp = "Grampanchyat is required";
+    }
 
 
     setErrors(newErrors);
@@ -147,6 +155,7 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Pr
           address: address,
           taluka_id: Taluka,
           village_id: Village,
+          gp_id: gp,
           status: "Active"
 
         })
@@ -415,6 +424,26 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Pr
             </div>
 
             <div>
+              <Label>Grampanchayat </Label>
+              <select name="" id="" className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 ${error.Village ? "border-red-500" : ""
+                }`}
+                value={gp}
+                onChange={(e) => setgp(Number(e.target.value))}
+              >
+                <option value="">Grampanchayat</option>
+                {grampanchayat.filter((data) => data.taluka_id == Taluka.toString()).map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.marathi_name}
+                  </option>
+                ))}
+              </select>
+              {error && (
+                <div className="text-red-500 text-sm mt-1 pl-1">
+                  {error.Village}
+                </div>
+              )}
+            </div>
+            <div>
               <Label>Village</Label>
               <select name="" id="" className={`h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 ${error.Village ? "border-red-500" : ""
                 }`}
@@ -422,7 +451,7 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud }: Pr
                 onChange={(e) => setVillage(Number(e.target.value))}
               >
                 <option value="">Village</option>
-                {datavillage.filter((data) => data.taluka_id == Taluka.toString()).map((category) => (
+                {datavillage.filter((data) => data.gp_name == gp.toString()).map((category) => (
                   <option key={category.village_id} value={category.village_id}>
                     {category.name}
                   </option>

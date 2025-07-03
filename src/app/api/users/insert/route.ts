@@ -14,6 +14,7 @@ interface User {
   address?: string | null;
   taluka_id?: number | null;
   village_id?: number | null;
+  gp_id?: number | null;
   status?: string | null;
 }
 
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
       address,
       taluka_id,
       village_id,
+      gp_id,
       status
     } = await request.json();
 
@@ -51,8 +53,9 @@ export async function POST(request: Request) {
           address,
           taluka_id,
           village_id,
+          gp_id,
           status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           name,
           user_category_id,
@@ -62,6 +65,7 @@ export async function POST(request: Request) {
           address,
           taluka_id,
           village_id,
+          gp_id,
           status
         ]
       );
@@ -102,6 +106,7 @@ export async function GET() {
           address,
           taluka_id,
           village_id,
+          gp_id,
           status
         FROM users
       `);
@@ -131,6 +136,7 @@ export async function PUT(request: Request) {
       address,
       taluka_id,
       village_id,
+      gp_id,
       status
     } = await request.json();
 
@@ -153,6 +159,7 @@ export async function PUT(request: Request) {
           address = ?,
           taluka_id = ?,
           village_id = ?,
+          gp_id = ?,
           status = ?
         WHERE user_id = ?`,
         [
@@ -164,6 +171,7 @@ export async function PUT(request: Request) {
           address,
           taluka_id,
           village_id,
+          gp_id,
           status,
           user_id
         ]

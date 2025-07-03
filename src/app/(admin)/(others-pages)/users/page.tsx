@@ -8,6 +8,7 @@ import { Village } from '@/components/Village/village';
 import { UserCategory } from '@/components/usercategory/userCategory';
 import { Suspense } from 'react';
 import Loader from '@/common/Loader';
+import { Grampanchayattype } from '@/components/grampanchayat/gptype';
 
 const getUsers = async (): Promise<UserData[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, { cache: 'no-store' });
@@ -23,6 +24,14 @@ const getTalukas = async (): Promise<Taluka[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/taluka`, { cache: 'no-store' });
   return res.json();
 };
+const getgrampanchayat = async (): Promise<Grampanchayattype[]> => {
+
+  const schemescrud = await fetch(`https://schemeserve.weclocks.online/api/grampanchayt`, { cache: 'no-store' });
+  // console.log("reess", res)
+  return schemescrud.json();
+
+};
+
 
 const getUserCategories = async (): Promise<UserCategory[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/usercategorycrud`, { cache: 'no-store' });
@@ -30,11 +39,12 @@ const getUserCategories = async (): Promise<UserCategory[]> => {
 };
 
 const Page = async () => {
-  const [users, villages, talukas, categories] = await Promise.all([
+  const [users, villages, talukas, categories, grampanchayat] = await Promise.all([
     getUsers(),
     getVillages(),
     getTalukas(),
-    getUserCategories()
+    getUserCategories(),
+    getgrampanchayat()
   ]);
 
   const breadcrumbItems = [
@@ -53,6 +63,7 @@ const Page = async () => {
           datavillage={villages}
           datataluka={talukas}
           datausercategorycrud={categories}
+          grampanchayat={grampanchayat}
         />
       </Suspense>
     </div>

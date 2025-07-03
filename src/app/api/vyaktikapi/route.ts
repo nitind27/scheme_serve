@@ -149,7 +149,7 @@ export async function PUT(request: Request) {
     gp_id,
     status
   } = body;
-console.log("idid",id)
+  console.log("idid", id)
   // Basic validation
   if (
     !id ||
@@ -202,7 +202,7 @@ console.log("idid",id)
         electricity = ?, hospitalphc = ?, sanjaygandhi = ?, studybenefite = ?, scheme_name = ?, farmeavilebleornot = ?, studyvanpatta = ?,
         sikklacelloffamily = ?, whichschoolchlid = ?, anyhaveaashramschool = ?, lpggas = ?, bankaccount = ?,
         studtatcoop = ?, pmvimayojna = ?, praklpkaryalaly = ?, itarvibhagudan = ?, niymitaarogya = ?,
-        rationcard_no = ?, rationcardtype = ?, contact_no = ?, status = ?, taluka_id = ?, village_id = ?, gp_id = ?
+        rationcard_no = ?, rationcardtype = ?, contact_no = ?, status = ?, taluka_id = ?, village_id = ?, gp_id = ?, status = 'Active'
       WHERE id = ?`,
       [
         castdata,

@@ -261,6 +261,25 @@ const Vyaktigatdata: React.FC<Props> = ({
             }
         }
 
+        // Validation for voteridcard.asleli should not exceed agedata.total
+        if (parentField === 'voteridcard' && childField === 'asleli') {
+            const agedataTotal = Number(formData.agedata.total) || 0;
+            if (Number(value) > agedataTotal) {
+                setFamilyErrors(prev => ({
+                    ...prev,
+                    voteridcard_asleli: `मतदार ओळखपत्र असलेली संख्या (${value}) 18 वर्षावरील एकूण (${agedataTotal}) पेक्षा जास्त असू शकत नाही.`
+                }));
+                toast.error(`मतदार ओळखपत्र असलेली संख्या (${value}) 18 वर्षावरील एकूण (${agedataTotal}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setFamilyErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.voteridcard_asleli;
+                    return newErrors;
+                });
+            }
+        }
+
         // Validation for family member counts
         if (parentField === 'familymembercount' && (childField === 'female' || childField === 'male')) {
             const newTotal = (childField === 'female' ? Number(value) : Number(formData.familymembercount.female || 0)) +
@@ -384,6 +403,16 @@ const Vyaktigatdata: React.FC<Props> = ({
                 }
 
                 newFormData[parentField as 'castcertificate' | 'aadharcard' | 'voteridcard' | 'pmKisanCard' | 'ayushmanCard'] = updated;
+            }
+
+            // Special: voteridcard.nasleli = agedata.total - voteridcard.asleli
+            if ((parentField === 'voteridcard' && childField === 'asleli') || (parentField === 'agedata' && childField === 'total')) {
+                const agedataTotal = Number(parentField === 'agedata' ? value : newFormData.agedata.total) || 0;
+                const asleliValue = Number(parentField === 'voteridcard' ? value : newFormData.voteridcard.asleli) || 0;
+                newFormData.voteridcard = {
+                    ...newFormData.voteridcard,
+                    nasleli: String(Math.max(0, agedataTotal - asleliValue))
+                };
             }
 
             return newFormData;
@@ -820,7 +849,7 @@ const Vyaktigatdata: React.FC<Props> = ({
         },
         {
             key: 'yojnasheti',
-            label: 'कृषि सनमान योजना?',
+            label: 'कृषी सन्मान योजना ( रु. 6000) असे लिहावे?',
             render: (data) => <span>{data.scheme_name}</span>,
         },
         {
@@ -1029,7 +1058,16 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     type="text"
                                     className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                     value={formData.contact_no}
-                                    onChange={e => handleChange('contact_no', e.target.value)}
+                                    // onChange={e => handleChange('contact_no', e.target.value)}
+
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        // Allow only digits and maximum length of 10
+                                        if (/^\d*$/.test(val) && val.length <= 10) {
+                                            handleChange('contact_no', val);
+                                        }
+                                    }}
+
                                 />
                             </div>     <div className="bg-gray-100 rounded-lg shadow p-4 md:mb-6 mb-0">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">जात</label>
@@ -1252,7 +1290,15 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     disabled={formData.rationcardtype === 'no' || formData.rationcardtype == ""}
                                     className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                     value={formData.rationcard_no}
-                                    onChange={e => handleChange('rationcard_no', e.target.value)}
+                                    // onChange={e => handleChange('rationcard_no', e.target.value)}
+
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        // Allow only digits and maximum length of 10
+                                        if (/^\d*$/.test(val) && val.length <= 10) {
+                                            handleChange('rationcard_no', val);
+                                        }
+                                    }}
                                 />
 
                             </div>
@@ -1692,19 +1738,19 @@ const Vyaktigatdata: React.FC<Props> = ({
 
                             {/* Farming */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">कृषि सनमान योजना</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">कृषी सन्मान योजना ( रु. 6000) असे लिहावे</label>
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input
                                             type="text"
                                             name="scheme_name"
                                             value={formData.scheme_name}
-                                               className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
+                                            className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
 
                                             // checked={formData.scheme_name === 'yes'}
                                             onChange={e => handleChange('scheme_name', e.target.value)}
                                         />
-                                      
+
                                     </label>
 
                                 </div>
@@ -1776,7 +1822,16 @@ const Vyaktigatdata: React.FC<Props> = ({
                                         value={formData.sikklacelloffamily}
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
 
-                                        onChange={e => handleChange('sikklacelloffamily', e.target.value)}
+                                        // onChange={e => handleChange('sikklacelloffamily', e.target.value)}
+
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            // Allow only digits and maximum length of 10
+                                            if (/^\d*$/.test(val)) {
+                                                handleChange('sikklacelloffamily', val);
+                                            }
+                                        }}
+
                                     />
 
                                 </div>

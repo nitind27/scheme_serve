@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 // import Label from "../form/Label";
 // import { ReusableTable } from "../tables/BasicTableOne";
-import { Column, FilterOption } from "../tables/tabletype";
+import { Column } from "../tables/tabletype";
 // import Select from 'react-select';
 import { toast } from 'react-toastify';
 import React from 'react';
@@ -203,47 +203,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
     const [selectedVillage, setSelectedVillage] = useState<string>('');
 
     // Generate filter options
-    const talukaFilterOptions: FilterOption[] = useMemo(() => {
-        const uniqueTalukas = [...new Set(data.map(item => item.taluka_id))];
-        return uniqueTalukas.map(talukaId => {
-            const taluka = talukadata.find(t => String(t.taluka_id) === String(talukaId));
-            return {
-                value: String(talukaId),
-                label: taluka ? taluka.name : String(talukaId)
-            };
-        });
-    }, [data, talukadata]);
-
-    const grampanchayatFilterOptions: FilterOption[] = useMemo(() => {
-        const filteredData = selectedTaluka 
-            ? data.filter(item => String(item.taluka_id) === String(selectedTaluka))
-            : data;
-        const uniqueGrampanchayats = [...new Set(filteredData.map(item => item.gp_id))];
-        return uniqueGrampanchayats.map(gpId => {
-            const gp = getgrampanchayatdata.find(g => String(g.id) === String(gpId));
-            return {
-                value: String(gpId),
-                label: gp ? gp.name : String(gpId)
-            };
-        });
-    }, [data, selectedTaluka, getgrampanchayatdata]);
-
-    const villageFilterOptions: FilterOption[] = useMemo(() => {
-        const filteredData = data.filter(item => {
-            if (selectedTaluka && String(item.taluka_id) !== String(selectedTaluka)) return false;
-            if (selectedGrampanchayat && String(item.gp_id) !== String(selectedGrampanchayat)) return false;
-            return true;
-        });
-        const uniqueVillages = [...new Set(filteredData.map(item => item.village_id))];
-        return uniqueVillages.map(villageId => {
-            const village = villagedata.find(v => String(v.village_id) === String(villageId));
-            return {
-                value: String(villageId),
-                label: village ? village.name : String(villageId)
-            };
-        });
-    }, [data, selectedTaluka, selectedGrampanchayat, villagedata]);
-
+ 
     // Filter data based on selected filters
     const filteredData = useMemo(() => {
         return data.filter(item => {
@@ -318,7 +278,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
     // Filtered field options based on search
     const filteredFieldOptions = useMemo(() => {
         if (!searchField) return fieldOptions;
-        return fieldOptions.filter(field => 
+        return fieldOptions.filter(field =>
             field.label.toLowerCase().includes(searchField.toLowerCase()) ||
             field.category.toLowerCase().includes(searchField.toLowerCase())
         );
@@ -762,8 +722,8 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
     // Download functions
     const handleFieldToggle = (fieldKey: string) => {
-        setSelectedFields(prev => 
-            prev.includes(fieldKey) 
+        setSelectedFields(prev =>
+            prev.includes(fieldKey)
                 ? prev.filter(f => f !== fieldKey)
                 : [...prev, fieldKey]
         );
@@ -844,7 +804,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
             // Prepare data
             const excelData = filteredData.map(item => {
-              const row: Record<string, string | number | boolean | null | undefined> = {};
+                const row: Record<string, string | number | boolean | null | undefined> = {};
 
                 selectedFields.forEach(fieldKey => {
                     const field = fieldOptions.find(f => f.key === fieldKey);
@@ -868,7 +828,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
             // Save file
             XLSX.writeFile(wb, filename);
-            
+
             toast.success('Excel फाईल यशस्वीरित्या डाउनलोड झाली');
             setShowDownloadModal(false);
             setSelectedFields([]);
@@ -888,7 +848,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                 return <span>{taluka ? taluka.name : data.taluka_id || "-"}</span>;
             },
         },
-        
+
         {
             key: "gp_id",
             label: "ग्रामपंचायत",
@@ -897,7 +857,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                 return <span>{gp ? gp.name : data.gp_id || "-"}</span>;
             },
         },
-        
+
         // {
         //     key: 'scheme_name',
         //     label: 'योजनाचे नाव',
@@ -988,7 +948,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
         {
             key: "ayushmancard",
             label: "आयुष्मान कार्ड",
-               render: (data) => {
+            render: (data) => {
                 const [asleli, nasleli] = data.ayushmancard ? data.ayushmancard.split('|') : ['', ''];
                 return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
             }
@@ -996,7 +956,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
         {
             key: "waterdeink",
             label: "पिण्याच्या पाण्याची सुविधा",
-               render: (data) => {
+            render: (data) => {
                 const [asleli, nasleli] = data.adivasis ? data.adivasis.split('|') : ['', ''];
                 return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
             }
@@ -1006,7 +966,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
         {
             key: "hargharnal",
             label: "हर घर नळ योजना",
-               render: (data) => {
+            render: (data) => {
                 const [asleli, nasleli] = data.everygharnaalyojana ? data.everygharnaalyojana.split('|') : ['', ''];
                 return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
             }
@@ -1014,7 +974,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
         {
             key: "electrificationforfamilies",
             label: "हर घर नळ योजना",
-               render: (data) => {
+            render: (data) => {
                 const [asleli, nasleli] = data.electrificationforfamilies ? data.electrificationforfamilies.split('|') : ['', ''];
                 return `असलेली: ${asleli || 'N/A'}, नसलेली: ${nasleli || 'N/A'}`;
             }
@@ -1051,7 +1011,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
             label: "CFRM आराखडा",
             render: (data) => <span>{data.cfrmplan || "-"}</span>,
         },
-      
+
         {
             key: "tribalbenefitnumber",
             label: "आदिवासी लाभार्थी संख्या",
@@ -1062,7 +1022,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
             label: "पायरी सुविधा",
             render: (data) => <span>{data.stepfacilities || "-"}</span>,
         },
-       
+
         {
             key: "healthfacilityis",
             label: "आरोग्य सुविधा आहे",
@@ -1111,7 +1071,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
 
 
         // Actions column (unchanged)
-       
+
     ];
 
 
@@ -1119,7 +1079,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
     return (
         <div className="">
             {loading && <Loader />}
-            
+
             {/* Custom Filter UI */}
             <div className="bg-white p-4 rounded-lg shadow mb-4">
                 <div className="flex justify-between items-center mb-4">
@@ -1147,9 +1107,9 @@ const Bhautikadatafilter: React.FC<Props> = ({
                             onChange={(e) => handleTalukaFilterChange(e.target.value)}
                         >
                             <option value="">सर्व तालुका</option>
-                            {talukaFilterOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                            {talukadata.map((option) => (
+                                <option key={option.taluka_id} value={option.taluka_id}>
+                                    {option.name}
                                 </option>
                             ))}
                         </select>
@@ -1159,19 +1119,18 @@ const Bhautikadatafilter: React.FC<Props> = ({
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">ग्रामपंचायत</label>
                         <select
-                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                                !selectedTaluka 
-                                    ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' 
-                                    : 'border-gray-300 bg-white text-gray-800'
-                            }`}
+                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!selectedTaluka
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'border-gray-300 bg-white text-gray-800'
+                                }`}
                             value={selectedGrampanchayat}
                             onChange={(e) => handleGrampanchayatFilterChange(e.target.value)}
                             disabled={!selectedTaluka}
                         >
                             <option value="">सर्व ग्रामपंचायत</option>
-                            {grampanchayatFilterOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                            {getgrampanchayatdata.filter((data) => data.taluka_id == selectedTaluka).map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
                                 </option>
                             ))}
                         </select>
@@ -1181,25 +1140,24 @@ const Bhautikadatafilter: React.FC<Props> = ({
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">गाव</label>
                         <select
-                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                                !selectedTaluka || !selectedGrampanchayat 
-                                    ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' 
-                                    : 'border-gray-300 bg-white text-gray-800'
-                            }`}
+                            className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!selectedTaluka || !selectedGrampanchayat
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'border-gray-300 bg-white text-gray-800'
+                                }`}
                             value={selectedVillage}
                             onChange={(e) => handleVillageFilterChange(e.target.value)}
                             disabled={!selectedTaluka || !selectedGrampanchayat}
                         >
                             <option value="">सर्व गाव</option>
-                            {villageFilterOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                            {villagedata.filter((data) => data.gp_name == selectedGrampanchayat).map((category) => (
+                                <option key={category.village_id} value={category.village_id}>
+                                    {category.name}
                                 </option>
                             ))}
                         </select>
                     </div>
                 </div>
-                
+
                 {/* Clear Filters Button */}
                 {(selectedTaluka || selectedGrampanchayat || selectedVillage) && (
                     <div className="mt-4">
@@ -2205,10 +2163,10 @@ const Bhautikadatafilter: React.FC<Props> = ({
                 searchKey="beneficiery_name"
                 columns={columns}
             />
-            
+
             {/* Download Modal */}
             {showDownloadModal && (
-              <div className="fixed inset-0 bg-[#0303033f] bg-opacity-50 flex items-center justify-center z-999">
+                <div className="fixed inset-0 bg-[#0303033f] bg-opacity-50 flex items-center justify-center z-999">
                     <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-semibold text-gray-800">Excel डाउनलोड - फील्ड निवडा</h2>
@@ -2223,7 +2181,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                                 ×
                             </button>
                         </div>
-                        
+
                         {/* Search Field */}
                         <div className="mb-4">
                             <input
@@ -2234,7 +2192,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
-                        
+
                         {/* Select All/Deselect All Buttons */}
                         <div className="flex gap-2 mb-4">
                             <button
@@ -2250,7 +2208,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                                 सर्व निवड रद्द करा
                             </button>
                         </div>
-                        
+
                         {/* Field Selection */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                             {filteredFieldOptions.map((field) => (
@@ -2269,7 +2227,7 @@ const Bhautikadatafilter: React.FC<Props> = ({
                                 </div>
                             ))}
                         </div>
-                        
+
                         {/* Download Button */}
                         <div className="flex justify-end gap-3">
                             <button
@@ -2285,11 +2243,10 @@ const Bhautikadatafilter: React.FC<Props> = ({
                             <button
                                 onClick={downloadExcel}
                                 disabled={selectedFields.length === 0}
-                                className={`px-4 py-2 rounded-md text-sm transition-colors ${
-                                    selectedFields.length === 0
-                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                        : 'bg-green-600 text-white hover:bg-green-700'
-                                }`}
+                                className={`px-4 py-2 rounded-md text-sm transition-colors ${selectedFields.length === 0
+                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                    : 'bg-green-600 text-white hover:bg-green-700'
+                                    }`}
                             >
                                 डाउनलोड करा ({selectedFields.length} फील्ड)
                             </button>

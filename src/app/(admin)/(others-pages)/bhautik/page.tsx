@@ -15,9 +15,7 @@ import React, { Suspense } from 'react'
 
 const getUsers = async (): Promise<BhautikDataall[]> => {
   const res = await fetch(`https://schemeserve.weclocks.online/api/bhautikapi`, { cache: 'no-store' });
-
   return res.json();
-
 };
 const getschemescrud = async (): Promise<Schemesdatas[]> => {
 
