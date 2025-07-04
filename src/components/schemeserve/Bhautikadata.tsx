@@ -253,15 +253,15 @@ const Bhautikadata: React.FC<Props> = ({
 
     const asleliFields = [
         'aadharcard',
-        'matdarOlahkhap',
+        // 'matdarOlahkhap',
         'jaticheGmanap',
-        'rashionCard',
+        // 'rashionCard',
         'jobCard',
         'pmKisanCard',
         'ayushmanCard',
         'panyaPanyachiSuvidha',
         'harGharNalYojana',
-        'pmAwasYojana',
+        // 'pmAwasYojana',
         'vidyutikaran',
     ];
 
@@ -271,7 +271,53 @@ const Bhautikadata: React.FC<Props> = ({
         childField: string,
         value: string
     ) => {
-        // Validation for jobCard.asleli
+        // आयुष्मान कार्ड मिळालेली लाभार्थी संख्या validation
+        if (parentField === 'ayushmanCard' && childField === 'asleli') {
+            const rashionCardAsleli = Number(formData.rashionCard.asleli) || 0;
+            let newValue = value;
+            if (Number(value) > rashionCardAsleli) {
+                newValue = String(rashionCardAsleli);
+                toast.warn(`आयुष्मान कार्ड मिळालेली लाभार्थी संख्या राशन कार्ड असलेली आदिवासी संख्या (${rashionCardAsleli}) पेक्षा जास्त असू शकत नाही. जास्तीत जास्त किंमत स्वीकारली गेली.`);
+            }
+            setFormData(prev => ({
+                ...prev,
+                ayushmanCard: {
+                    ...prev.ayushmanCard,
+                    asleli: newValue,
+                }
+            }));
+            setPopulationErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.ayushmanCard_asleli;
+                return newErrors;
+            });
+            return;
+        }
+
+        // आयुष्मान कार्ड न मिळालेली लाभार्थी संख्या validation
+        if (parentField === 'ayushmanCard' && childField === 'nasleli') {
+            const rashionCardNasleli = Number(formData.rashionCard.nasleli) || 0;
+            let newValue = value;
+            if (Number(value) > rashionCardNasleli) {
+                newValue = String(rashionCardNasleli);
+                toast.warn(`आयुष्मान कार्ड न मिळालेली लाभार्थी संख्या राशन कार्ड नसलेली आदिवासी संख्या (${rashionCardNasleli}) पेक्षा जास्त असू शकत नाही. जास्तीत जास्त किंमत स्वीकारली गेली.`);
+            }
+            setFormData(prev => ({
+                ...prev,
+                ayushmanCard: {
+                    ...prev.ayushmanCard,
+                    nasleli: newValue,
+                }
+            }));
+            setPopulationErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.ayushmanCard_nasleli;
+                return newErrors;
+            });
+            return;
+        }
+
+        // 1. Validation for jobCard.asleli
         if (parentField === 'jobCard' && childField === 'asleli') {
             const matdarOlahkhapAsleli = Number(formData.matdarOlahkhap.asleli) || 0;
             if (Number(value) > matdarOlahkhapAsleli) {
@@ -285,6 +331,36 @@ const Bhautikadata: React.FC<Props> = ({
                 setPopulationErrors(prev => {
                     const newErrors = { ...prev };
                     delete newErrors.jobCard_asleli;
+                    return newErrors;
+                });
+            }
+            // Auto-calculate nasleli
+            const matdarOlahkhapNasleli = Number(formData.matdarOlahkhap.nasleli) || 0;
+            setFormData(prev => ({
+                ...prev,
+                jobCard: {
+                    ...prev.jobCard,
+                    asleli: value,
+                    nasleli: String(matdarOlahkhapNasleli - (Number(formData.matdarOlahkhap.asleli) - Number(value)))
+                }
+            }));
+            return;
+        }
+
+        // 2. Validation for jobCard.nasleli
+        if (parentField === 'jobCard' && childField === 'nasleli') {
+            const matdarOlahkhapNasleli = Number(formData.matdarOlahkhap.nasleli) || 0;
+            if (Number(value) > matdarOlahkhapNasleli) {
+                setPopulationErrors(prev => ({
+                    ...prev,
+                    jobCard_nasleli: `जॉब कार्ड नसलेली आदिवासी संख्या (${value}) मतदार ओळखपत्र (18 वर्षावरील) नसलेली आदिवासी संख्या (${matdarOlahkhapNasleli}) पेक्षा जास्त असू शकत नाही.`,
+                }));
+                toast.error(`जॉब कार्ड नसलेली आदिवासी संख्या (${value}) मतदार ओळखपत्र (18 वर्षावरील) नसलेली आदिवासी संख्या (${matdarOlahkhapNasleli}) पेक्षा जास्त असू शकत नाही.`);
+                return;
+            } else {
+                setPopulationErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors.jobCard_nasleli;
                     return newErrors;
                 });
             }
@@ -1350,7 +1426,7 @@ const Bhautikadata: React.FC<Props> = ({
                                             </label>
                                             <input
                                                 type="text"
-                                                disabled
+                                                // disabled
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.matdarOlahkhap.nasleli}
                                                 onChange={(e) => handleNestedChange('matdarOlahkhap', 'nasleli', e.target.value)}
@@ -1439,7 +1515,7 @@ const Bhautikadata: React.FC<Props> = ({
                                             <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
                                             <input
                                                 type="text"
-                                                disabled
+                                               
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.rashionCard.nasleli}
                                                 onChange={(e) => handleNestedChange('rashionCard', 'nasleli', e.target.value)}
@@ -1472,7 +1548,7 @@ const Bhautikadata: React.FC<Props> = ({
                                             <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
                                             <input
                                                 type="text"
-                                                disabled
+                                                // disabled
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.jobCard.nasleli}
                                                 onChange={(e) => handleNestedChange('jobCard', 'nasleli', e.target.value)}
@@ -1602,7 +1678,7 @@ const Bhautikadata: React.FC<Props> = ({
                                             <label className="block text-xs font-medium text-gray-700 mb-1 h-12"> न मिळालेली लाभार्थी संख्या</label>
                                             <input
                                                 type="text"
-                                                disabled
+                                                // disabled
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.ayushmanCard.nasleli}
                                                 onChange={(e) => handleNestedChange('ayushmanCard', 'nasleli', e.target.value)}
@@ -1788,7 +1864,7 @@ const Bhautikadata: React.FC<Props> = ({
                                             <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
                                             <input
                                                 type="text"
-                                                disabled
+                                                
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.pmAwasYojana.nasleli}
                                                 onChange={(e) => handleNestedChange('pmAwasYojana', 'nasleli', e.target.value)}
