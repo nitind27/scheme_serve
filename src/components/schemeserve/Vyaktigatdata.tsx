@@ -151,6 +151,7 @@ interface BhautikDataall {
     taluka_name: string;
     village_name: string;
     grampanchayat_name: string;
+    userId: string;
 }
 
 interface Props {
@@ -179,12 +180,26 @@ const Vyaktigatdata: React.FC<Props> = ({
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
     // const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
 
+    const [storedValue, setStoredValue] = useState<string | null>(null);
+    // const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
+    const filterdata = storedValue === "1"
+        ? data
+        : data.filter(item => item.userId == storedValue);
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
     const [familyErrors, setFamilyErrors] = useState<{ [key: string]: string }>({});
     console.log("editId", familyErrors)
     console.log("editId", editId)
+
     // Initialize form state
+    useEffect(() => {
+        const value = sessionStorage.getItem('userid');
+
+        setStoredValue(value);
+
+    }, []);
+
+
     const [formData, setFormData] = useState<BhautikData>({
         id: 0,
         scheme_name: "",
@@ -537,7 +552,7 @@ const Vyaktigatdata: React.FC<Props> = ({
         const method = isEditMode ? 'PUT' : 'POST';
 
         try {
-            const transformedData: Record<string, string | number> = {
+            const transformedData: Record<string, string | number | null> = {
                 ...(isEditMode && { id: formData.id }), // ✅ Include ID for PUT
                 scheme_name: formData.scheme_name,
                 castdata: formData.castdata,
@@ -581,7 +596,8 @@ const Vyaktigatdata: React.FC<Props> = ({
                 taluka_id: formData.taluka_id,
                 village_id: formData.village_id,
                 gp_id: formData.gp_id,
-                status: 'Active' // ✅ Optional, add if backend requires it
+                status: 'Active', // ✅ Optional, add if backend requires it
+                userId: storedValue
             };
 
             console.log("Sending data:", transformedData);
@@ -794,7 +810,7 @@ const Vyaktigatdata: React.FC<Props> = ({
             label: 'राशन कार्ड',
             render: (data) => <span>{data.rationcard}</span>,
         },
-        
+
         {
             key: 'jobcard',
             label: 'जॉब कार्ड',
@@ -846,7 +862,7 @@ const Vyaktigatdata: React.FC<Props> = ({
             label: 'विद्युतीकरण',
             render: (data) => <span>{data.electricity}</span>,
         },
-    
+
         {
             key: 'sanjaygandhi',
             label: 'संजय गांधी निराधार योजनेचे लाभार्थी आहे/नाही',
@@ -953,7 +969,7 @@ const Vyaktigatdata: React.FC<Props> = ({
         <div className="">
             {loading && <Loader />}
             <BhautikTable
-                data={data}
+                data={filterdata}
                 title='वैयक्तिक'
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={
@@ -1749,7 +1765,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                             {/* Farming */}
                             <div className="bg-gray-100 rounded-lg shadow p-4 flex-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">कृषी सन्मान योजना (रु.6000)</label>
-                               
+
                                 <div className="flex space-x-3 mt-1">
                                     <label className="inline-flex items-center">
                                         <input

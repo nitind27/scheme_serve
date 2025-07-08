@@ -166,6 +166,7 @@ interface BhautikDataall {
     taluka_name: string;
     village_name: string;
     grampanchayat_name: string;
+    userId: string;
 
 
 }
@@ -200,10 +201,20 @@ const Bhautikadata: React.FC<Props> = ({
     // const { isActive, setIsActive, isEditMode, setIsEditmode, setIsmodelopen, setisvalidation } = useToggleContext();
     const { isActive, setIsActive, setIsEditmode, isEditMode, setIsmodelopen, setisvalidation } = useToggleContext();
     const [data, setData] = useState<BhautikDataall[]>(initialdata || []);
+    const [storedValue, setStoredValue] = useState<string | null>(null);
     // const [schemedata] = useState<Schemesdatas[]>(schemescrud || []);
+    useEffect(() => {
+        const value = sessionStorage.getItem('userid');
 
+        setStoredValue(value);
+
+    }, []);
+const filterdata = storedValue === "1"
+            ? data
+            : data.filter(item => item.userId == storedValue);
     const [loading, setLoading] = useState(false);
     const [editId, setEditId] = useState<number | null>(null);
+
 
     // Initialize form state
     const [formData, setFormData] = useState<BhautikData>({
@@ -604,7 +615,8 @@ const Bhautikadata: React.FC<Props> = ({
             village_distance: data.village_distance,
             taluka_id: data.taluka_id,
             village_id: data.village_id,
-            gp_id: data.gp_id
+            gp_id: data.gp_id,
+            userId: storedValue
         };
     };
 
@@ -1026,7 +1038,7 @@ const Bhautikadata: React.FC<Props> = ({
         <div className="">
             {loading && <Loader />}
             <BhautikTable
-                data={data}
+                data={filterdata}
                 title='धरती आबा ( भौतिक तक्ता)'
                 classname={"h-[650px] overflow-y-auto scrollbar-hide"}
                 inputfiled={

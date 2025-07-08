@@ -39,8 +39,8 @@ export async function POST(request: Request) {
         electrificationforfamilies, healthfacilityis, generalhealthcheckup,
         sickleanemia, elementaryschool, middleschool, kindergarten,
         mobilefacilities, mobilemedicalunit, gramPanchayatBuilding, gotulsocietybuilding, riverlake, scheme_name,
-        allroadvillages, village_distance, taluka_id, village_id, gp_id, alltribalegaav
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        allroadvillages, village_distance, taluka_id, village_id, gp_id, alltribalegaav, userId
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         body.totalpopulation,
         body.tribalpopulation,
@@ -80,6 +80,7 @@ export async function POST(request: Request) {
         body.village_id,
         body.gp_id,
         body.alltribalegaav,
+        body.userId,
       ]
     );
 

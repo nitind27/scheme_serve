@@ -38,8 +38,8 @@ export async function POST(request: Request) {
         sanjaygandhi, studybenefite, scheme_name, farmeavilebleornot, studyvanpatta,
         sikklacelloffamily, whichschoolchlid, anyhaveaashramschool, lpggas,
         bankaccount, studtatcoop, pmvimayojna, praklpkaryalaly, itarvibhagudan,
-        niymitaarogya, rationcard_no, rationcardtype, contact_no, taluka_id, village_id, gp_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        niymitaarogya, rationcard_no, rationcardtype, contact_no, taluka_id, village_id, gp_id, userId
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         body.castdata,
         body.totalmembersname,
@@ -54,7 +54,6 @@ export async function POST(request: Request) {
         body.farmercreditcard,
         body.aayushmancard,
         body.headofmember,
-
         body.housetype,
         body.benefiteofpmhouse,
         body.waterdrink,
@@ -82,6 +81,7 @@ export async function POST(request: Request) {
         body.taluka_id,
         body.village_id,
         body.gp_id,
+        body.userId,
       ]
     );
 

@@ -50,6 +50,7 @@ export default function SignInForm() {
         sessionStorage.setItem('category_id', data.user.category_id);
         sessionStorage.setItem('village_id', data.user.village_id);
         sessionStorage.setItem('taluka_id', data.user.taluka_id);
+        sessionStorage.setItem('userid', data.user.user_id);
       }
       if (isChecked) {
         localStorage.setItem('rememberedUsername', formData.username);
