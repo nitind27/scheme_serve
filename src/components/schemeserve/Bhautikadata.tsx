@@ -1411,8 +1411,8 @@ const Bhautikadata: React.FC<Props> = ({
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.matdarOlahkhap.asleli}
-                                         
-                                                 onChange={(e) => {
+
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('matdarOlahkhap', 'asleli', val);
@@ -1469,13 +1469,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.jaticheGmanap.asleli}
                                                 // onChange={(e) => handleNestedChange('jaticheGmanap', 'asleli', e.target.value)}
-                                                    onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('jaticheGmanap', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1502,31 +1502,31 @@ const Bhautikadata: React.FC<Props> = ({
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.rashionCard.asleli}
                                                 // onChange={(e) => handleNestedChange('rashionCard', 'asleli', e.target.value)}
-                                                    onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('rashionCard', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1">नसलेली आदिवासी संख्या</label>
                                             <input
                                                 type="text"
-                                               
+
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.rashionCard.nasleli}
                                                 // onChange={(e) => handleNestedChange('rashionCard', 'nasleli', e.target.value)}
 
-                                                  onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('rashionCard', 'nasleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -1543,13 +1543,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 // onChange={(e) => handleNestedChange('jobCard', 'asleli', e.target.value)}
 
 
-                                                    onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('jobCard', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1561,13 +1561,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 value={formData.jobCard.nasleli}
                                                 // onChange={(e) => handleNestedChange('jobCard', 'nasleli', e.target.value)}
 
-                                                   onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('jobCard', 'nasleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -1585,13 +1585,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 value={formData.pmKisanCard.asleli}
                                                 // onChange={(e) => handleNestedChange('pmKisanCard', 'asleli', e.target.value)}
 
-                                                 onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('pmKisanCard', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1627,13 +1627,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 value={formData.aadivasiHouse.pakkeGhar}
                                                 // onChange={(e) => handleNestedChange('aadivasiHouse', 'pakkeGhar', e.target.value)}
 
-                                                 onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('aadivasiHouse', 'pakkeGhar', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1649,7 +1649,7 @@ const Bhautikadata: React.FC<Props> = ({
                                                         handleNestedChange('aadivasiHouse', 'kudaMatiGhar', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1665,7 +1665,7 @@ const Bhautikadata: React.FC<Props> = ({
                                                         handleNestedChange('aadivasiHouse', 'other', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -1681,13 +1681,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.ayushmanCard.asleli}
                                                 // onChange={(e) => handleNestedChange('ayushmanCard', 'asleli', e.target.value)}
-                                                  onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('ayushmanCard', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1705,7 +1705,7 @@ const Bhautikadata: React.FC<Props> = ({
                                                         handleNestedChange('ayushmanCard', 'nasleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -1722,13 +1722,13 @@ const Bhautikadata: React.FC<Props> = ({
                                                 value={formData.panyaPanyachiSuvidha.asleli}
                                                 // onChange={(e) => handleNestedChange('panyaPanyachiSuvidha', 'asleli', e.target.value)}
 
-                                                  onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('panyaPanyachiSuvidha', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1759,7 +1759,7 @@ const Bhautikadata: React.FC<Props> = ({
                                                         handleNestedChange('harGharNalYojana', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
@@ -1786,14 +1786,14 @@ const Bhautikadata: React.FC<Props> = ({
                                                 type="text"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.vidyutikaran.asleli}
-                                                 onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('vidyutikaran', 'asleli', val);
                                                     }
                                                 }
-                                            }
-                                                // onChange={(e) => handleNestedChange('vidyutikaran', 'asleli', e.target.value)}
+                                                }
+                                            // onChange={(e) => handleNestedChange('vidyutikaran', 'asleli', e.target.value)}
                                             />
                                         </div>
                                         <div>
@@ -1817,13 +1817,13 @@ const Bhautikadata: React.FC<Props> = ({
                                         value={formData.allroadvillages}
                                         // onChange={(e) => handleChange('allroadvillages', e.target.value)}
 
-                                             onChange={(e) => {
-                                                    const val = e.target.value;
-                                                    if (/^\d*$/.test(val)) {
-                                                        handleChange('allroadvillages', val);
-                                                    }
-                                                }
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            if (/^\d*$/.test(val)) {
+                                                handleChange('allroadvillages', val);
                                             }
+                                        }
+                                        }
                                     />
                                 </div>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
@@ -1854,14 +1854,17 @@ const Bhautikadata: React.FC<Props> = ({
                                     </div>
                                 </div>
                                 <div className="bg-gray-100 rounded-lg shadow p-2 ">
-                                    <label className="block text-sm font-medium text-gray-700 mb-7 h-12">५ किमी अंतरापर्यंत बाजारपेठ नसलेल्या गावांची नावे </label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-7 h-12">
+                                        ५ किमी अंतरापर्यंत बाजारपेठ नसलेल्या गावांची नावे
+                                    </label>
                                     <input
                                         type="text"
                                         className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
-                                        value={formData.village_distance}
-                                        onChange={(e) => handleChange('village_distance', e.target.value)}
+                                        value={formData.village_distance.toUpperCase()} // Always display uppercase
+                                        onChange={(e) => handleChange('village_distance', e.target.value.toUpperCase())} // Always store uppercase
                                     />
                                 </div>
+
                                 <div className=" p-2  bg-gray-100  rounded-lg shadow mt-5 md:mt-0">
                                     <h3 className="text-sm font-semibold mb-2 h-8">पीएम आवास घरकुल लाभ संख्या</h3>
 
@@ -1875,31 +1878,31 @@ const Bhautikadata: React.FC<Props> = ({
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.pmAwasYojana.asleli}
                                                 // onChange={(e) => handleNestedChange('pmAwasYojana', 'asleli', e.target.value)}
-                                                  onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('pmAwasYojana', 'asleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-medium text-gray-700 mb-1"> नसलेली आदिवासी कुटुंबसंख्या</label>
                                             <input
                                                 type="text"
-                                                
+
                                                 className="w-full px-2 py-1 border border-gray-300 rounded-md text-sm bg-white"
                                                 value={formData.pmAwasYojana.nasleli}
                                                 // onChange={(e) => handleNestedChange('pmAwasYojana', 'nasleli', e.target.value)}
 
-                                                  onChange={(e) => {
+                                                onChange={(e) => {
                                                     const val = e.target.value;
                                                     if (/^\d*$/.test(val)) {
                                                         handleNestedChange('pmAwasYojana', 'nasleli', val);
                                                     }
                                                 }
-                                            }
+                                                }
                                             />
                                         </div>
 

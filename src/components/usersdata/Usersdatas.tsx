@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 import Label from "../form/Label";
 import { ReusableTable } from "../tables/BasicTableOne";
@@ -203,6 +205,25 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud, gram
     setgp(Number(item.gp_id))
   };
 
+  const handleDownloadExcel = () => {
+    // Prepare data for Excel (remove unwanted fields if needed)
+    const exportData = data.map(({ ...rest }) => rest); // Example: exclude password
+
+    // Convert JSON to worksheet
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+
+    // Create a new workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+    // Generate buffer
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+
+    // Save file
+    const file = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(file, "users.xlsx");
+  };
+
   const columns: Column<UserData>[] = [
 
     {
@@ -283,7 +304,14 @@ const Usersdatas = ({ users, datavillage, datataluka, datausercategorycrud, gram
 
   return (
     <div className="">
-
+      <div className="flex justify-end">
+        <button
+          onClick={handleDownloadExcel}
+          className="bg-green-600 text-white py-2 px-4 rounded mb-4 hover:bg-green-700 transition-colors"
+        >
+          Download Excel
+        </button>
+      </div>
       <ReusableTable
         data={data}
         classname={"h-[550px] overflow-y-auto scrollbar-hide"}
