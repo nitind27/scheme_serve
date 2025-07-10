@@ -6,6 +6,7 @@ import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 import { Suspense } from "react";
 import Loader from "@/common/Loader";
 import Dashboardtabfilter from "@/components/schemeserve/Dashboardtabfilter";
+import Onloadimageshow from "@/components/ecommerce/Onloadimageshow";
 // import DoTalukadata from "@/components/Do/Talukawisedata/DoTalukadata";
 
 
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
 async function fetchMetrics() {
 
   try {
-    const [ schemesRes, usersRes, talukaRes, villageRes, grampanchayatRes, vykatiRes, bhautikapiRes  ] = await Promise.all([
-   
+    const [schemesRes, usersRes, talukaRes, villageRes, grampanchayatRes, vykatiRes, bhautikapiRes] = await Promise.all([
+
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/schemescrud`, { cache: 'no-store' }),
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, { cache: 'no-store' }),
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/taluka`, { cache: 'no-store' }),
@@ -34,7 +35,7 @@ async function fetchMetrics() {
     ]);
 
     const [schemes, users, taluka, village, grampanchayat, vyaktidata, bhautikdata] = await Promise.all([
-  
+
       schemesRes.json(),
       usersRes.json(),
       talukaRes.json(),
@@ -45,7 +46,7 @@ async function fetchMetrics() {
     ]);
 
     return {
-      
+
       schemes,
       users,
       taluka,
@@ -57,7 +58,7 @@ async function fetchMetrics() {
   } catch (error) {
     console.error('Error fetching metrics:', error);
     return {
-    
+
       schemes: [],
       users: [],
       taluka: [],
@@ -78,19 +79,32 @@ export default async function Ecommerce() {
 
   return (
     <>
-    
-    <div className="grid grid-cols-6 gap-4 md:gap-6">
-      <div className="col-span-12 space-y-0 xl:col-span-7 ">
 
-        <Suspense fallback={<Loader />}>
+      <div className="grid grid-cols-6 gap-4 md:gap-6">
+        <div className="col-span-12 space-y-0 xl:col-span-7 ">
 
-          <EcommerceMetrics metrics={metrics} />
-          <Dashboardtabfilter  metrics={metrics}/>
+          <Suspense fallback={<Loader />}>
+          <Onloadimageshow />
+            <img
+              src="/images/dashboard/Screenshot 2025-07-10 165651.png"
+              alt="ok"
+              style={{
+                width: '100%',
+                height: '60%',
+                display: 'block',
+                // objectFit: 'cover', // or 'contain' as needed
+                backgroundRepeat: 'no-repeat',
+                marginBottom: "20px"
+              }}
+            />
 
- 
-        </Suspense>
+            <EcommerceMetrics metrics={metrics} />
+            <Dashboardtabfilter metrics={metrics} />
+
+
+          </Suspense>
+        </div>
       </div>
-    </div>
     </>
   );
 }
