@@ -59,7 +59,7 @@ const Onloadimageshow = () => {
               &times;
             </button>
             <img
-              src="/images/dashboard/Screenshot 2025-07-10 165651.png"
+              src="/images/dashboard/dashboard.png"
               alt="ok"
               style={{
                 width: '100%',
