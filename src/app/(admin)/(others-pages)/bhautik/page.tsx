@@ -4,6 +4,7 @@
 import Loader from '@/common/Loader';
 import Breadcrumbs from '@/components/common/BreadcrumbItem'
 import { Grampanchayattype } from '@/components/grampanchayat/gptype';
+// import PinCodeAddress from '@/components/PinCodeAddress';
 import { Schemesdatas } from '@/components/schemesdata/schemes';
 import Bhautikadata from '@/components/schemeserve/Bhautikadata';
 // import Bhautikadatafilter from '@/components/schemeserve/Bhautikadatafilter';
@@ -85,6 +86,7 @@ const page = async () => {
           />
           <Bhautikadata initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/>
           {/* <Bhautikadatafilter initialdata={users} schemescrud={schemescrud} talukadata={talukadata} villagedata={villagedata} getgrampanchayatdata={getgrampanchayatdata}/> */}
+          {/* <PinCodeAddress /> */}
         </Suspense>
 
       </div>

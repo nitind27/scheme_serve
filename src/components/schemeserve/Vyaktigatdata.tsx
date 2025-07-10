@@ -1321,7 +1321,7 @@ const Vyaktigatdata: React.FC<Props> = ({
                                     onChange={(e) => {
                                         const val = e.target.value;
                                         // Allow only digits and maximum length of 10
-                                        if (/^\d*$/.test(val) && val.length <= 10) {
+                                        if (/^\d*$/.test(val) && val.length <= 12) {
                                             handleChange('rationcard_no', val);
                                         }
                                     }}
