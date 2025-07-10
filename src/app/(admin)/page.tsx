@@ -88,9 +88,10 @@ export default async function Ecommerce() {
             <img
               src="/images/dashboard/Screenshot 2025-07-10 165651.png"
               alt="ok"
+              className="h-auto md:h-[60%]"
               style={{
                 width: '100%',
-                height: '60%',
+                // height: '60%',
                 display: 'block',
                 // objectFit: 'cover', // or 'contain' as needed
                 backgroundRepeat: 'no-repeat',
