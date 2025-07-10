@@ -6,7 +6,7 @@ import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 import { Suspense } from "react";
 import Loader from "@/common/Loader";
 import Dashboardtabfilter from "@/components/schemeserve/Dashboardtabfilter";
-import Onloadimageshow from "@/components/ecommerce/Onloadimageshow";
+// import Onloadimageshow from "@/components/ecommerce/Onloadimageshow";
 // import DoTalukadata from "@/components/Do/Talukawisedata/DoTalukadata";
 
 
@@ -84,9 +84,9 @@ export default async function Ecommerce() {
         <div className="col-span-12 space-y-0 xl:col-span-7 ">
 
           <Suspense fallback={<Loader />}>
-          <Onloadimageshow />
+          {/* <Onloadimageshow /> */}
             <img
-              src="/images/dashboard/Screenshot 2025-07-10 165651.png"
+              src="/images/dashboard/dashboard.png"
               alt="ok"
               className="h-auto md:h-[60%]"
               style={{
