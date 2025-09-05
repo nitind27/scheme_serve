@@ -768,6 +768,16 @@ const handleNestedChange = (
         }
     };
 
+    // Helpers to split pipe-separated values with strict tuple types
+    const split2 = (v?: string): [string, string] => {
+        const [a = '', b = ''] = (v ?? '').split('|');
+        return [a, b];
+    };
+    const split3 = (v?: string): [string, string, string] => {
+        const [a = '', b = '', c = ''] = (v ?? '').split('|');
+        return [a, b, c];
+    };
+
     const downloadExcel = () => {
         if (selectedFields.length === 0) {
             toast.error('कृपया डाउनलोड करण्यासाठी किमान एक फील्ड निवडा');
@@ -775,39 +785,145 @@ const handleNestedChange = (
         }
 
         try {
-            // Prepare headers
-            // const headers = selectedFields.map(fieldKey => {
-            //     const field = fieldOptions.find(f => f.key === fieldKey);
-            //     return field ? field.label : fieldKey;
-            // });
+            type ColDef =
+                | { type: 'single'; title: string; getter: (row: BhautikDataall) => string | number }
+                | { type: 'group3'; title: string; children: Array<{ title: string; getter: (row: BhautikDataall) => string | number }> }
+                | { type: 'group2'; title: string; children: Array<{ title: string; getter: (row: BhautikDataall) => string | number }> };
 
-            // Prepare data
-            const excelData = filteredData.map(item => {
-               const row: Record<string, string | number | boolean | null | undefined> = {};
+            const colDefs: ColDef[] = [];
 
-                selectedFields.forEach(fieldKey => {
-                    const field = fieldOptions.find(f => f.key === fieldKey);
-                    if (field) {
-                        row[field.label] = getFieldValue(item, fieldKey);
-                    }
+            const pushPopulationGroup = (title: string, splitter: (row: BhautikDataall) => [string, string, string]) => {
+                colDefs.push({
+                    type: 'group3',
+                    title,
+                    children: [
+                        { title: 'स्री', getter: (r) => splitter(r)[0] || '-' },
+                        { title: 'पुरुष', getter: (r) => splitter(r)[1] || '-' },
+                        { title: 'एकूण', getter: (r) => splitter(r)[2] || '-' },
+                    ],
                 });
-                return row;
+            };
+
+            const pushPairGroup = (title: string, splitter: (row: BhautikDataall) => [string, string]) => {
+                colDefs.push({
+                    type: 'group2',
+                    title,
+                    children: [
+                        { title: 'असलेली', getter: (r) => splitter(r)[0] || '-' },
+                        { title: 'नसलेली', getter: (r) => splitter(r)[1] || '-' },
+                    ],
+                });
+            };
+
+            selectedFields.forEach((fieldKey) => {
+                const field = fieldOptions.find((f) => f.key === fieldKey);
+                if (!field) return;
+
+                switch (fieldKey) {
+                    // Population groups (3 columns)
+                    case 'familymembercount': {
+                        pushPopulationGroup(field.label, (row) => split3(row.familymembercount));
+                        break;
+                    }
+                    case 'agedata': {
+                        pushPopulationGroup(field.label, (row) => split3(row.agedata));
+                        break;
+                    }
+
+                    // Documents pairs (2 columns)
+                    case 'castcertificate': {
+                        pushPairGroup(field.label, (row) => split2(row.castcertificate));
+                        break;
+                    }
+                    case 'aadharcard': {
+                        pushPairGroup(field.label, (row) => split2(row.aadharcard));
+                        break;
+                    }
+                    case 'voteridcard': {
+                        pushPairGroup(field.label, (row) => split2(row.voteridcard));
+                        break;
+                    }
+                    case 'pmKisanCard': {
+                        pushPairGroup(field.label, (row) => split2(row.pmKisanCard));
+                        break;
+                    }
+                    case 'ayushmanCard': {
+                        pushPairGroup(field.label, (row) => split2(row.ayushmanCard));
+                        break;
+                    }
+
+                    default: {
+                        colDefs.push({
+                            type: 'single',
+                            title: field.label,
+                            getter: (row) => {
+                                if (fieldKey === 'taluka_id') return row.taluka_name || '-';
+                                if (fieldKey === 'gp_id') return row.grampanchayat_name || '-';
+                                if (fieldKey === 'village_id') return row.village_name || '-';
+                                return getFieldValue(row, fieldKey);
+                            },
+                        });
+                    }
+                }
             });
 
-            // Create workbook and worksheet
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.json_to_sheet(excelData);
+            const headerRow1: Array<string> = [];
+            const headerRow2: Array<string> = [];
+            const merges: Array<{ s: { r: number; c: number }; e: { r: number; c: number } }> = [];
 
-            // Add worksheet to workbook
+            let colIndex = 0;
+            colDefs.forEach((def) => {
+                if (def.type === 'single') {
+                    headerRow1.push(def.title);
+                    headerRow2.push('');
+                    merges.push({ s: { r: 0, c: colIndex }, e: { r: 1, c: colIndex } });
+                    colIndex += 1;
+                } else if (def.type === 'group3') {
+                    headerRow1.push(def.title, '', '');
+                    headerRow2.push(def.children[0].title, def.children[1].title, def.children[2].title);
+                    merges.push({ s: { r: 0, c: colIndex }, e: { r: 0, c: colIndex + 2 } });
+                    colIndex += 3;
+                } else {
+                    headerRow1.push(def.title, '');
+                    headerRow2.push(def.children[0].title, def.children[1].title);
+                    merges.push({ s: { r: 0, c: colIndex }, e: { r: 0, c: colIndex + 1 } });
+                    colIndex += 2;
+                }
+            });
+
+            const bodyRows: Array<Array<string | number>> = filteredData.map((row) => {
+                const out: Array<string | number> = [];
+                colDefs.forEach((def) => {
+                    if (def.type === 'single') {
+                        out.push(def.getter(row) ?? '-');
+                    } else {
+                        def.children.forEach((child) => out.push(child.getter(row) ?? '-'));
+                    }
+                });
+                return out;
+            });
+
+            const aoa = [headerRow1, headerRow2, ...bodyRows];
+            const ws = XLSX.utils.aoa_to_sheet(aoa);
+            ws['!merges'] = merges;
+
+            const colWidths = aoa[2]?.map((_, idx) => {
+                const maxLen = Math.max(
+                    String(headerRow1[idx] || '').length,
+                    String(headerRow2[idx] || '').length,
+                    ...bodyRows.map((r) => String(r[idx] ?? '').length),
+                );
+                return { wch: Math.min(Math.max(10, maxLen + 2), 40) };
+            }) || [];
+            ws['!cols'] = colWidths;
+
+            const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Vyaktigat Data');
 
-            // Generate filename with timestamp
             const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
             const filename = `vyaktigat_data_${timestamp}.xlsx`;
-
-            // Save file
             XLSX.writeFile(wb, filename);
-            
+
             toast.success('Excel फाईल यशस्वीरित्या डाउनलोड झाली');
             setShowDownloadModal(false);
             setSelectedFields([]);
